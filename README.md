@@ -1,2 +1,2 @@
-# Csharp-example-code
+# C# example code
 SkillBox C# homework
