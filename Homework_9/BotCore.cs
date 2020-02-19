@@ -42,12 +42,12 @@ namespace Homework_9
             Console.WriteLine($"{DateTime.Now.ToLongTimeString()} from user: {e.Message.Chat.FirstName}, " +
                 $"in chat: {e.Message.Chat.Id}, message: {e.Message.Text}, message type: {e.Message.Type.ToString()}");
 
-            if (e.Message.Text == "info")                       // Check unique keyword
+            if (e.Message.Text == "/start")                       // Check /start
             {
                 botClient.SendTextMessageAsync(chatId: e.Message.Chat, text: $"Hi! I'm bot id'{botClient.BotId}'");
             }
 
-            if (e.Message.Type == MessageType.Text)             // If text
+            if (e.Message.Type == MessageType.Text && e.Message.Text != "/start")             // If text
             {
                 Console.WriteLine($"Received new text message '{e.Message.Text}' in chat {e.Message.Chat.Id}");
                 botClient.SendTextMessageAsync(chatId: e.Message.Chat, text: "I got some text");
