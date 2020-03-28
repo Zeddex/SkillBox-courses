@@ -1,2 +1,2 @@
-# C# example code
+# C# examples code
 SkillBox C# course homeworks
