@@ -1,0 +1,90 @@
+﻿<Window x:Class="Homework_13.MainWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:Homework_13"
+        mc:Ignorable="d"
+        Title="MyBank" Height="600" Width="900" MinHeight="200" MinWidth="300">
+    <Window.Resources>
+        <Style TargetType="{x:Type GridViewColumnHeader}">
+            <Setter Property="HorizontalContentAlignment" Value="Left" />
+        </Style>
+        <ContextMenu x:Key="cmButton">
+            <MenuItem Header="Edit" Click="MenuItemEdit_OnClick" />
+            <MenuItem Header="Delete" Click="MenuItemDelete_OnClick" />
+        </ContextMenu>
+    </Window.Resources>
+    <Grid>
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="40*" />
+            <ColumnDefinition Width="Auto"/>
+            <ColumnDefinition Width="100*"/>
+        </Grid.ColumnDefinitions>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="*"/>
+        </Grid.RowDefinitions>
+
+        <GridSplitter Grid.Row="1" Grid.Column="1" ShowsPreview="False" Width="3" HorizontalAlignment="Center" VerticalAlignment="Stretch" />
+
+        <DockPanel Grid.ColumnSpan="3">
+            <Menu DockPanel.Dock="Top">
+                <MenuItem Header="_File">
+                    <MenuItem Header="_Load data" Click="MenuItem_OnClick_Load"></MenuItem>
+                    <MenuItem Header="_Save data" Click="MenuItem_OnClick_Save"></MenuItem>
+                    <MenuItem Header="_Debug mode" Click="MenuItem_OnClick_Debug"></MenuItem>
+                    <Separator/>
+                    <MenuItem Header="_Exit" Click="MenuItem_Click_Exit"></MenuItem>
+                </MenuItem>
+                <MenuItem Header="_View">
+                    <MenuItem Header="_Clear data" Click="MenuItem_OnClick_Clear"></MenuItem>
+                    <MenuItem Header="_Generate new" Click="MenuItem_OnClick_Generate"></MenuItem>
+                </MenuItem>
+                <MenuItem Header="_Help">
+                    <MenuItem Header="_About" Click="MenuItem_Click_About"></MenuItem>
+                </MenuItem>
+            </Menu>
+        </DockPanel>
+
+        <TreeView Grid.Row="1" x:Name="CompanyList" TreeViewItem.Expanded="CompanyList_OnExpanded" />
+
+        <ListView Grid.Row="1" Grid.Column="2" x:Name="empList" PreviewMouseRightButtonUp="EmpList_OnPreviewMouseRightButtonUp">
+            <ListView.View>
+                <GridView>
+                    <GridViewColumn Width="40" DisplayMemberBinding="{Binding Id}">
+                        <GridViewColumn.Header>
+                            <GridViewColumnHeader Tag="Id" Click="UsersColumnHeader_OnClick">ID</GridViewColumnHeader>
+                        </GridViewColumn.Header>
+                    </GridViewColumn>
+                    <GridViewColumn Width="150" DisplayMemberBinding="{Binding Name}">
+                        <GridViewColumn.Header>
+                            <GridViewColumnHeader Tag="Name" Click="UsersColumnHeader_OnClick">Name</GridViewColumnHeader>
+                        </GridViewColumn.Header>
+                    </GridViewColumn>
+                    <GridViewColumn Width="50" DisplayMemberBinding="{Binding Age}">
+                        <GridViewColumn.Header>
+                            <GridViewColumnHeader Tag="Age" Click="UsersColumnHeader_OnClick">Age</GridViewColumnHeader>
+                        </GridViewColumn.Header>
+                    </GridViewColumn>
+                    <GridViewColumn Width="150" DisplayMemberBinding="{Binding Position}">
+                        <GridViewColumn.Header>
+                            <GridViewColumnHeader Tag="Position" Click="UsersColumnHeader_OnClick">Position</GridViewColumnHeader>
+                        </GridViewColumn.Header>
+                    </GridViewColumn>
+                    <GridViewColumn Width="50" DisplayMemberBinding="{Binding Projects}">
+                        <GridViewColumn.Header>
+                            <GridViewColumnHeader Tag="Projects" Click="UsersColumnHeader_OnClick">Projects</GridViewColumnHeader>
+                        </GridViewColumn.Header>
+                    </GridViewColumn>
+                    <GridViewColumn Width="70" DisplayMemberBinding="{Binding Salary}">
+                        <GridViewColumn.Header>
+                            <GridViewColumnHeader Tag="Salary" Click="UsersColumnHeader_OnClick">Salary</GridViewColumnHeader>
+                        </GridViewColumn.Header>
+                    </GridViewColumn>
+                </GridView>
+            </ListView.View>
+        </ListView>
+
+    </Grid>
+</Window>
