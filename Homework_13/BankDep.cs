@@ -11,31 +11,31 @@ namespace Homework_13
         public abstract string Department { get; set; }
     }
 
-    internal class IndividDep : BankDep
+    internal class IndividBank : BankDep
     {
         public override string Department { get; set; } = "IndividualDepartment";
 
-        public IndividDep()
+        public IndividBank()
         {
             Clients = new ObservableCollection<Client>();
         }
     }
 
-    internal class BusinessDep : BankDep
+    internal class BusinessBank : BankDep
     {
         public override string Department { get; set; } = "BusinessDepartment";
 
-        public BusinessDep()
+        public BusinessBank()
         {
             Clients = new ObservableCollection<Client>();
         }
     }
 
-    internal class VipDep : BankDep
+    internal class VipBank : BankDep
     {
         public override string Department { get; set; } = "VipDepartment";
 
-        public VipDep()
+        public VipBank()
         {
             Clients = new ObservableCollection<Client>();
         }

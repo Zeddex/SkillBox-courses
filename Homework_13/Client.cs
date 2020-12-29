@@ -7,7 +7,7 @@ namespace Homework_13
     public abstract class Client
     {
         public string Name { get; set; }
-        public uint Money { get; set; }
+        public int Money { get; set; }
         public abstract byte Rate { get; set; }
 
         public Client(string name = "RandomClient")
