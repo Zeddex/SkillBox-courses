@@ -10,10 +10,10 @@
         <Style TargetType="{x:Type GridViewColumnHeader}">
             <Setter Property="HorizontalContentAlignment" Value="Left" />
         </Style>
-        <ContextMenu x:Key="cmButton">
+        <!--<ContextMenu x:Key="cmButton">
             <MenuItem Header="Edit" Click="MenuItemEdit_OnClick" />
             <MenuItem Header="Delete" Click="MenuItemDelete_OnClick" />
-        </ContextMenu>
+        </ContextMenu>-->
     </Window.Resources>
     <Grid>
         <Grid.ColumnDefinitions>
@@ -47,39 +47,24 @@
             </Menu>
         </DockPanel>
 
-        <TreeView Grid.Row="1" x:Name="CompanyList" TreeViewItem.Expanded="CompanyList_OnExpanded" />
+        <TreeView Grid.Row="1" x:Name="BankList" />
 
-        <ListView Grid.Row="1" Grid.Column="2" x:Name="empList" PreviewMouseRightButtonUp="EmpList_OnPreviewMouseRightButtonUp">
+        <ListView Grid.Row="1" Grid.Column="2" x:Name="ClientList" PreviewMouseRightButtonUp="ClientList_OnPreviewMouseRightButtonUp">
             <ListView.View>
                 <GridView>
-                    <GridViewColumn Width="40" DisplayMemberBinding="{Binding Id}">
-                        <GridViewColumn.Header>
-                            <GridViewColumnHeader Tag="Id" Click="UsersColumnHeader_OnClick">ID</GridViewColumnHeader>
-                        </GridViewColumn.Header>
-                    </GridViewColumn>
-                    <GridViewColumn Width="150" DisplayMemberBinding="{Binding Name}">
+                    <GridViewColumn Width="200" DisplayMemberBinding="{Binding Name}">
                         <GridViewColumn.Header>
                             <GridViewColumnHeader Tag="Name" Click="UsersColumnHeader_OnClick">Name</GridViewColumnHeader>
                         </GridViewColumn.Header>
                     </GridViewColumn>
-                    <GridViewColumn Width="50" DisplayMemberBinding="{Binding Age}">
+                    <GridViewColumn Width="100" DisplayMemberBinding="{Binding Money}">
                         <GridViewColumn.Header>
-                            <GridViewColumnHeader Tag="Age" Click="UsersColumnHeader_OnClick">Age</GridViewColumnHeader>
+                            <GridViewColumnHeader Tag="Money" Click="UsersColumnHeader_OnClick">Money</GridViewColumnHeader>
                         </GridViewColumn.Header>
                     </GridViewColumn>
-                    <GridViewColumn Width="150" DisplayMemberBinding="{Binding Position}">
+                    <GridViewColumn Width="50" DisplayMemberBinding="{Binding Rate}">
                         <GridViewColumn.Header>
-                            <GridViewColumnHeader Tag="Position" Click="UsersColumnHeader_OnClick">Position</GridViewColumnHeader>
-                        </GridViewColumn.Header>
-                    </GridViewColumn>
-                    <GridViewColumn Width="50" DisplayMemberBinding="{Binding Projects}">
-                        <GridViewColumn.Header>
-                            <GridViewColumnHeader Tag="Projects" Click="UsersColumnHeader_OnClick">Projects</GridViewColumnHeader>
-                        </GridViewColumn.Header>
-                    </GridViewColumn>
-                    <GridViewColumn Width="70" DisplayMemberBinding="{Binding Salary}">
-                        <GridViewColumn.Header>
-                            <GridViewColumnHeader Tag="Salary" Click="UsersColumnHeader_OnClick">Salary</GridViewColumnHeader>
+                            <GridViewColumnHeader Tag="Rate" Click="UsersColumnHeader_OnClick">Rate</GridViewColumnHeader>
                         </GridViewColumn.Header>
                     </GridViewColumn>
                 </GridView>

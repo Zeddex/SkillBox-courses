@@ -47,13 +47,13 @@ namespace Homework_13
             // add business clients to business department
             for (int i = 0; i < business; i++)
             {
-                bank[0].Clients.Add(new Business());
+                bank[1].Clients.Add(new Business());
             }
 
             // add vip clients to vip department
             for (int i = 0; i < vip; i++)
             {
-                bank[0].Clients.Add(new Vip());
+                bank[2].Clients.Add(new Vip());
             }
         }
 
