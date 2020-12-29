@@ -13,7 +13,7 @@ namespace Homework_13
 
     internal class IndividBank : BankDep
     {
-        public override string Department { get; set; } = "IndividualDepartment";
+        public override string Department { get; set; } = "Individual";
 
         public IndividBank()
         {
@@ -23,7 +23,7 @@ namespace Homework_13
 
     internal class BusinessBank : BankDep
     {
-        public override string Department { get; set; } = "BusinessDepartment";
+        public override string Department { get; set; } = "Business";
 
         public BusinessBank()
         {
@@ -33,7 +33,7 @@ namespace Homework_13
 
     internal class VipBank : BankDep
     {
-        public override string Department { get; set; } = "VipDepartment";
+        public override string Department { get; set; } = "VIP";
 
         public VipBank()
         {

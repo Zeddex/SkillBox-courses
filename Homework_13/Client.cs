@@ -19,19 +19,19 @@ namespace Homework_13
     public class Individual : Client
     {
         public override byte Rate { get; set; } = 5;
-        public Individual() : base($"individual_{Guid.NewGuid().ToString().Substring(0, 5)}") {}
+        public Individual() : base($"Individual Client-{Guid.NewGuid().ToString().Substring(0, 5)}") {}
     }
 
     internal class Business : Client
     {
         public override byte Rate { get; set; } = 10;
-        public Business() : base($"business_{Guid.NewGuid().ToString().Substring(0, 5)}") {}
+        public Business() : base($"Business Client-{Guid.NewGuid().ToString().Substring(0, 5)}") {}
     }
 
     internal class Vip : Client
     {
         public override byte Rate { get; set; } = 15;
-        public Vip() : base($"vip_{Guid.NewGuid().ToString().Substring(0, 5)}") {}
+        public Vip() : base($"VIP Client-{Guid.NewGuid().ToString().Substring(0, 5)}") {}
     }
 
 }

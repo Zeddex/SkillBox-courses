@@ -23,6 +23,7 @@
         </Grid.ColumnDefinitions>
         <Grid.RowDefinitions>
             <RowDefinition Height="Auto"/>
+            <RowDefinition Height="20"/>
             <RowDefinition Height="*"/>
         </Grid.RowDefinitions>
 
@@ -31,15 +32,15 @@
         <DockPanel Grid.ColumnSpan="3">
             <Menu DockPanel.Dock="Top">
                 <MenuItem Header="_File">
-                    <MenuItem Header="_Load data" Click="MenuItem_OnClick_Load"></MenuItem>
-                    <MenuItem Header="_Save data" Click="MenuItem_OnClick_Save"></MenuItem>
+                    <MenuItem Header="_Load data" Click="MenuItem_OnClick_Load" IsEnabled="False"></MenuItem>
+                    <MenuItem Header="_Save data" Click="MenuItem_OnClick_Save" IsEnabled="False"></MenuItem>
                     <MenuItem Header="_Debug mode" Click="MenuItem_OnClick_Debug"></MenuItem>
                     <Separator/>
                     <MenuItem Header="_Exit" Click="MenuItem_Click_Exit"></MenuItem>
                 </MenuItem>
                 <MenuItem Header="_View">
-                    <MenuItem Header="_Clear data" Click="MenuItem_OnClick_Clear"></MenuItem>
-                    <MenuItem Header="_Generate new" Click="MenuItem_OnClick_Generate"></MenuItem>
+                    <MenuItem Header="_Clear data" Click="MenuItem_OnClick_Clear" IsEnabled="False"></MenuItem>
+                    <MenuItem Header="_Generate new" Click="MenuItem_OnClick_Generate" IsEnabled="False"></MenuItem>
                 </MenuItem>
                 <MenuItem Header="_Help">
                     <MenuItem Header="_About" Click="MenuItem_Click_About"></MenuItem>
@@ -47,14 +48,19 @@
             </Menu>
         </DockPanel>
 
-        <TreeView Grid.Row="1" x:Name="BankList" />
+        <StackPanel Grid.Row="1">
+            <TextBlock FontWeight="Bold" Text="Bank departments:"/>
+        </StackPanel>
 
-        <ListView Grid.Row="1" Grid.Column="2" x:Name="ClientList" PreviewMouseRightButtonUp="ClientList_OnPreviewMouseRightButtonUp">
+        <ListBox Grid.Row="2" x:Name="bankList" ItemsSource="{Binding BankDep}" DisplayMemberPath="Department" SelectionChanged="BankList_OnSelectionChanged"/>
+
+            <!--<ListView Grid.Row="1" Grid.Column="2" x:Name="clientList" PreviewMouseRightButtonUp="ClientList_OnPreviewMouseRightButtonUp">-->
+        <ListView Grid.Row="1" Grid.RowSpan="2" Grid.Column="2" x:Name="clientList">
             <ListView.View>
                 <GridView>
                     <GridViewColumn Width="200" DisplayMemberBinding="{Binding Name}">
                         <GridViewColumn.Header>
-                            <GridViewColumnHeader Tag="Name" Click="UsersColumnHeader_OnClick">Name</GridViewColumnHeader>
+                            <GridViewColumnHeader Tag="Name" Click="UsersColumnHeader_OnClick">Client Name</GridViewColumnHeader>
                         </GridViewColumn.Header>
                     </GridViewColumn>
                     <GridViewColumn Width="100" DisplayMemberBinding="{Binding Money}">

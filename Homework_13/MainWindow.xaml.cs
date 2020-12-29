@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Collections.ObjectModel;
 using System.ComponentModel;
 using System.Linq;
 using System.Text;
@@ -69,7 +70,7 @@ namespace Homework_13
         public MainWindow()
         {
             InitializeComponent();
-            //BankList.Items.Add(TreeViewItem(core.CreateBank()));
+            bankList.ItemsSource = core.CreateBank();
         }
 
         private void MenuItem_OnClick_Load(object sender, RoutedEventArgs e)
@@ -105,6 +106,18 @@ namespace Homework_13
         }
 
         // Right button menu
+        private void ClientList_OnPreviewMouseRightButtonUp(object sender, MouseButtonEventArgs e)
+        {
+            var item = (sender as ListView).SelectedItem;
+            if (item != null)
+            {
+                ContextMenu cm = this.FindResource("cmButton") as ContextMenu;
+                cm.PlacementTarget = sender as Button;
+                cm.IsOpen = true;
+            }
+        }
+
+        // Right button menu
         private void MenuItemEdit_OnClick(object sender, RoutedEventArgs e)
         {
             throw new NotImplementedException();
@@ -116,10 +129,18 @@ namespace Homework_13
             throw new NotImplementedException();
         }
 
-        // Right button menu
-        private void ClientList_OnPreviewMouseRightButtonUp(object sender, MouseButtonEventArgs e)
+        /// <summary>
+        /// Select bank's department
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void BankList_OnSelectionChanged(object sender, SelectionChangedEventArgs e)
         {
-            throw new NotImplementedException();
+            if (bankList.SelectedItems != null)
+            {
+                var clients = (e.OriginalSource as ListBox).SelectedItems[0] as BankDep;
+                clientList.ItemsSource = clients.Clients;
+            }
         }
 
         private void UsersColumnHeader_OnClick(object sender, RoutedEventArgs e)
@@ -129,7 +150,7 @@ namespace Homework_13
             if (listViewSortCol != null)
             {
                 AdornerLayer.GetAdornerLayer(listViewSortCol).Remove(listViewSortAdorner);
-                ClientList.Items.SortDescriptions.Clear();
+                clientList.Items.SortDescriptions.Clear();
             }
 
             ListSortDirection newDir = ListSortDirection.Ascending;
@@ -139,7 +160,7 @@ namespace Homework_13
             listViewSortCol = column;
             listViewSortAdorner = new SortAdorner(listViewSortCol, newDir);
             AdornerLayer.GetAdornerLayer(listViewSortCol).Add(listViewSortAdorner);
-            ClientList.Items.SortDescriptions.Add(new SortDescription(sortBy, newDir));
+            clientList.Items.SortDescriptions.Add(new SortDescription(sortBy, newDir));
         }
     }
 
