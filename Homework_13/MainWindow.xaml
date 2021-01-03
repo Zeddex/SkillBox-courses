@@ -10,14 +10,21 @@
         <Style TargetType="{x:Type GridViewColumnHeader}">
             <Setter Property="HorizontalContentAlignment" Value="Left" />
         </Style>
-        <!--<ContextMenu x:Key="cmButton">
-            <MenuItem Header="Edit" Click="MenuItemEdit_OnClick" />
-            <MenuItem Header="Delete" Click="MenuItemDelete_OnClick" />
-        </ContextMenu>-->
+        <ContextMenu x:Key="CmButton">
+            <MenuItem Header="Make a transfer" Click="MenuItemTransfer_OnClick" />
+            <MenuItem Header="Make a deposit">
+                <MenuItem Header="Simple interest" Click="MenuItemSimpleDeposit_OnClick" />
+                <MenuItem Header="Capitalized interest" Click="MenuItemCapitalizedDeposit_OnClick" />
+            </MenuItem>
+            <MenuItem Header="Get a loan" Click="MenuItemLoan_OnClick" />
+            <MenuItem Header="Full information" Click="MenuItemInfo_OnClick" />
+        </ContextMenu>
     </Window.Resources>
     <Grid>
         <Grid.ColumnDefinitions>
             <ColumnDefinition Width="40*" />
+            <ColumnDefinition Width="Auto"/>
+            <ColumnDefinition Width="100*"/>
             <ColumnDefinition Width="Auto"/>
             <ColumnDefinition Width="100*"/>
         </Grid.ColumnDefinitions>
@@ -27,20 +34,18 @@
             <RowDefinition Height="*"/>
         </Grid.RowDefinitions>
 
-        <GridSplitter Grid.Row="1" Grid.Column="1" ShowsPreview="False" Width="3" HorizontalAlignment="Center" VerticalAlignment="Stretch" />
-
-        <DockPanel Grid.ColumnSpan="3">
+        <DockPanel Grid.ColumnSpan="5">
             <Menu DockPanel.Dock="Top">
                 <MenuItem Header="_File">
-                    <MenuItem Header="_Load data" Click="MenuItem_OnClick_Load" IsEnabled="False"></MenuItem>
-                    <MenuItem Header="_Save data" Click="MenuItem_OnClick_Save" IsEnabled="False"></MenuItem>
+                    <MenuItem Header="_Load data" IsEnabled="False"></MenuItem>
+                    <MenuItem Header="_Save data" IsEnabled="False"></MenuItem>
                     <MenuItem Header="_Debug mode" Click="MenuItem_OnClick_Debug"></MenuItem>
                     <Separator/>
                     <MenuItem Header="_Exit" Click="MenuItem_Click_Exit"></MenuItem>
                 </MenuItem>
                 <MenuItem Header="_View">
-                    <MenuItem Header="_Clear data" Click="MenuItem_OnClick_Clear" IsEnabled="False"></MenuItem>
-                    <MenuItem Header="_Generate new" Click="MenuItem_OnClick_Generate" IsEnabled="False"></MenuItem>
+                    <MenuItem Header="_Clear data" IsEnabled="False"></MenuItem>
+                    <MenuItem Header="_Generate new" IsEnabled="False"></MenuItem>
                 </MenuItem>
                 <MenuItem Header="_Help">
                     <MenuItem Header="_About" Click="MenuItem_Click_About"></MenuItem>
@@ -49,13 +54,20 @@
         </DockPanel>
 
         <StackPanel Grid.Row="1">
-            <TextBlock FontWeight="Bold" Text="Bank departments:"/>
+            <TextBlock FontWeight="Bold" Margin="5 0" Text="Bank departments:"/>
         </StackPanel>
 
-        <ListBox Grid.Row="2" x:Name="bankList" ItemsSource="{Binding BankDep}" DisplayMemberPath="Department" SelectionChanged="BankList_OnSelectionChanged"/>
+        <ListBox Grid.Row="2" x:Name="bankList" SelectionChanged="BankList_OnSelectionChanged">
+            <ListBox.ItemTemplate>
+                <DataTemplate>
+                    <TextBlock Text="{Binding Department}"/>
+                </DataTemplate>
+            </ListBox.ItemTemplate>
+        </ListBox>
 
-            <!--<ListView Grid.Row="1" Grid.Column="2" x:Name="clientList" PreviewMouseRightButtonUp="ClientList_OnPreviewMouseRightButtonUp">-->
-        <ListView Grid.Row="1" Grid.RowSpan="2" Grid.Column="2" x:Name="clientList">
+        <GridSplitter Grid.Row="1" Grid.Column="1" Grid.RowSpan="2" ShowsPreview="False" Width="3" HorizontalAlignment="Center" VerticalAlignment="Stretch" />
+
+        <ListView Grid.Row="1" Grid.RowSpan="2" Grid.Column="2" x:Name="clientList" SelectionChanged="ClientInfo_OnSelectionChanged" PreviewMouseRightButtonUp="ClientList_OnPreviewMouseRightButtonUp">
             <ListView.View>
                 <GridView>
                     <GridViewColumn Width="200" DisplayMemberBinding="{Binding Name}">
@@ -63,19 +75,63 @@
                             <GridViewColumnHeader Tag="Name" Click="UsersColumnHeader_OnClick">Client Name</GridViewColumnHeader>
                         </GridViewColumn.Header>
                     </GridViewColumn>
-                    <GridViewColumn Width="100" DisplayMemberBinding="{Binding Money}">
+                    <GridViewColumn Width="140" DisplayMemberBinding="{Binding Money}">
                         <GridViewColumn.Header>
                             <GridViewColumnHeader Tag="Money" Click="UsersColumnHeader_OnClick">Money</GridViewColumnHeader>
-                        </GridViewColumn.Header>
-                    </GridViewColumn>
-                    <GridViewColumn Width="50" DisplayMemberBinding="{Binding Rate}">
-                        <GridViewColumn.Header>
-                            <GridViewColumnHeader Tag="Rate" Click="UsersColumnHeader_OnClick">Rate</GridViewColumnHeader>
                         </GridViewColumn.Header>
                     </GridViewColumn>
                 </GridView>
             </ListView.View>
         </ListView>
+
+        <GridSplitter Grid.Row="1" Grid.RowSpan="2" Grid.Column="3" ShowsPreview="False" Width="3" HorizontalAlignment="Center" VerticalAlignment="Stretch" />
+
+        <StackPanel Grid.Row="1" Grid.Column="4">
+            <TextBlock FontWeight="Bold" Margin="5 0" Text="Information:"/>
+        </StackPanel>
+
+        <ListBox Grid.Row="2" Grid.Column="4" x:Name="clientInfo">
+            <ListBox.ItemTemplate>
+                <DataTemplate>
+                    <StackPanel>
+                        <TextBlock Text="Client Status: "/>
+                        <TextBlock Text="{Binding Status}"/>
+                        <TextBlock Text="---"/>
+                        <TextBlock Text="Loan:"/>
+                        <TextBlock Text="{Binding IsLoan}"/>
+                        <TextBlock Text="---"/>
+                        <TextBlock Text="Loan rate (%): "/>
+                        <TextBlock Text="{Binding LoanRate}"/>
+                        <TextBlock Text="---"/>
+                        <TextBlock Text="Deposit:"/>
+                        <TextBlock Text="{Binding IsDeposit}"/>
+                        <TextBlock Text="---"/>
+                        <TextBlock Text="Deposit rate (%): "/>
+                        <TextBlock Text="{Binding DepositRate}"/>
+                        <TextBlock Text="---"/>
+                        <TextBlock Text="Type of deposit:"/>
+                        <TextBlock Text="{Binding DepositType}"/>
+                        <TextBlock Text="---"/>
+                        <TextBlock Text="Good credit score:"/>
+                        <TextBlock Text="{Binding CreditScore}"/>
+                        <TextBlock Text="---"/>
+                    </StackPanel>
+                </DataTemplate>
+            </ListBox.ItemTemplate>
+        </ListBox>
+
+        <Popup Name="pTransfer" StaysOpen="False" Placement="Mouse" MaxWidth="150"
+               PopupAnimation="Scroll" AllowsTransparency="True">
+            <GroupBox Header="Edit fields" Margin="10" Padding="10">
+                <StackPanel Width="80">
+                    <TextBlock>Transfer to:</TextBlock>
+                    <TextBox x:Name="transferToTextBox" />
+                    <TextBlock>Amount:</TextBlock>
+                    <TextBox x:Name="amountTextBox" />
+                    <Button Margin="0,10" Click="MenuItemMakeTransfer_OnClick">Make transfer</Button>
+                </StackPanel>
+            </GroupBox>
+        </Popup>
 
     </Grid>
 </Window>

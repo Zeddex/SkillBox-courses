@@ -22,7 +22,7 @@ namespace Homework_13
 
     // Создать прототип банковской системы, позволяющей управлять клиентами и клиентскими счетами.
     // В информационной системе есть возможность перевода денежных средств между счетами пользователей
-    // Открывать вклады, с капитализацией и без
+    // Открывать вклады, с капитализацией и без (Capitalized Interest / Simple Interest)
     // 100 12%
     // 12 меc - 112
     // 100 12%
@@ -73,16 +73,6 @@ namespace Homework_13
             bankList.ItemsSource = core.CreateBank();
         }
 
-        private void MenuItem_OnClick_Load(object sender, RoutedEventArgs e)
-        {
-            throw new NotImplementedException();
-        }
-
-        private void MenuItem_OnClick_Save(object sender, RoutedEventArgs e)
-        {
-            throw new NotImplementedException();
-        }
-
         private void MenuItem_OnClick_Debug(object sender, RoutedEventArgs e) {}
 
         private void MenuItem_Click_Exit(object sender, RoutedEventArgs e)
@@ -90,47 +80,68 @@ namespace Homework_13
             this.Close();
         }
 
-        private void MenuItem_OnClick_Clear(object sender, RoutedEventArgs e)
-        {
-            throw new NotImplementedException();
-        }
-
-        private void MenuItem_OnClick_Generate(object sender, RoutedEventArgs e)
-        {
-            throw new NotImplementedException();
-        }
-
         private void MenuItem_Click_About(object sender, RoutedEventArgs e)
         {
             MessageBox.Show("MyBank v.0.1", this.Title, MessageBoxButton.OK, MessageBoxImage.Information);
         }
 
-        // Right button menu
+        /// <summary>
+        /// Right button menu
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void ClientList_OnPreviewMouseRightButtonUp(object sender, MouseButtonEventArgs e)
         {
             var item = (sender as ListView).SelectedItem;
             if (item != null)
             {
-                ContextMenu cm = this.FindResource("cmButton") as ContextMenu;
+                ContextMenu cm = this.FindResource("CmButton") as ContextMenu;
                 cm.PlacementTarget = sender as Button;
                 cm.IsOpen = true;
             }
         }
 
-        // Right button menu
-        private void MenuItemEdit_OnClick(object sender, RoutedEventArgs e)
+        private void MenuItemTransfer_OnClick(object sender, RoutedEventArgs e)
         {
             throw new NotImplementedException();
         }
 
-        // Right button menu
-        private void MenuItemDelete_OnClick(object sender, RoutedEventArgs e)
+        private void MenuItemSimpleDeposit_OnClick(object sender, RoutedEventArgs e)
+        {
+            throw new NotImplementedException();
+        }
+
+        private void MenuItemCapitalizedDeposit_OnClick(object sender, RoutedEventArgs e)
+        {
+            throw new NotImplementedException();
+        }
+
+        private void MenuItemLoan_OnClick(object sender, RoutedEventArgs e)
+        {
+            throw new NotImplementedException();
+        }
+
+        private void MenuItemInfo_OnClick(object sender, RoutedEventArgs e)
+        {
+            pTransfer.IsOpen = true;
+
+            //nameTextBox.Text = ...;
+            //ageTextBox.Text = ...;
+            //projectTextBox.Text = ...;
+        }
+
+        private void MenuItemClose_OnClick(object sender, RoutedEventArgs e)
+        {
+            pTransfer.IsOpen = false;
+        }
+
+        private void MenuItemMakeTransfer_OnClick(object sender, RoutedEventArgs e)
         {
             throw new NotImplementedException();
         }
 
         /// <summary>
-        /// Select bank's department
+        /// Show clients in current bank department
         /// </summary>
         /// <param name="sender"></param>
         /// <param name="e"></param>
@@ -138,8 +149,22 @@ namespace Homework_13
         {
             if (bankList.SelectedItems != null)
             {
-                var clients = (e.OriginalSource as ListBox).SelectedItems[0] as BankDep;
+                var clients = (e.OriginalSource as ListBox).SelectedItem as BankDep;
                 clientList.ItemsSource = clients.Clients;
+            }
+        }
+
+        /// <summary>
+        /// Show current client info
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void ClientInfo_OnSelectionChanged(object sender, SelectionChangedEventArgs e)
+        {
+            if (clientList.SelectedItems != null)
+            {
+                var client = (e.OriginalSource as ListBox).SelectedItems;
+                clientInfo.ItemsSource = client;
             }
         }
 
