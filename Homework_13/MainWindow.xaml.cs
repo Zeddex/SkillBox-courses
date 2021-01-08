@@ -103,41 +103,58 @@ namespace Homework_13
 
         private void MenuItemTransfer_OnClick(object sender, RoutedEventArgs e)
         {
-            throw new NotImplementedException();
-        }
-
-        private void MenuItemSimpleDeposit_OnClick(object sender, RoutedEventArgs e)
-        {
-            throw new NotImplementedException();
-        }
-
-        private void MenuItemCapitalizedDeposit_OnClick(object sender, RoutedEventArgs e)
-        {
-            throw new NotImplementedException();
-        }
-
-        private void MenuItemLoan_OnClick(object sender, RoutedEventArgs e)
-        {
-            throw new NotImplementedException();
-        }
-
-        private void MenuItemInfo_OnClick(object sender, RoutedEventArgs e)
-        {
             pTransfer.IsOpen = true;
-
+            transferTo.ItemsSource = clientList.ItemsSource;
             //nameTextBox.Text = ...;
             //ageTextBox.Text = ...;
             //projectTextBox.Text = ...;
         }
 
-        private void MenuItemClose_OnClick(object sender, RoutedEventArgs e)
+        private void MenuItemSimpleDeposit_OnClick(object sender, RoutedEventArgs e)
         {
-            pTransfer.IsOpen = false;
+            MessageBox.Show("Make simple deposit");
+        }
+
+        private void MenuItemCapitalizedDeposit_OnClick(object sender, RoutedEventArgs e)
+        {
+            MessageBox.Show("Make capitalized deposit");
+        }
+
+        private void MenuItemLoan_OnClick(object sender, RoutedEventArgs e)
+        {
+            MessageBox.Show("Get loan");
         }
 
         private void MenuItemMakeTransfer_OnClick(object sender, RoutedEventArgs e)
         {
-            throw new NotImplementedException();
+            if (clientInfo.Items.CurrentItem == transferTo.SelectedItem)
+            {
+                MessageBox.Show("You cannot make a transfer to yourself", "Error", MessageBoxButton.OK, MessageBoxImage.Error);
+                return;
+            }
+            
+            bool result = UInt32.TryParse(amountTextBox.Text, out uint amountTransfer);
+            if (!result)
+            {
+                MessageBox.Show("Wrong amount", "Error", MessageBoxButton.OK, MessageBoxImage.Error);
+                return;
+            }
+
+            // check the sender have enough money to make transfer
+            bool checkFunds = core.CheckTransferMoney(clientInfo.Items.CurrentItem as Client, UInt32.Parse(amountTextBox.Text));
+            if (!checkFunds)
+            {
+                MessageBox.Show("Insufficient funds", "Insufficient funds", MessageBoxButton.OK, MessageBoxImage.Exclamation);
+                return;
+            }
+
+
+            Client transferDest = transferTo.SelectedItem as Client;
+
+            // TODO метод перевода средств
+
+            pTransfer.IsOpen = false;
+            MessageBox.Show("Transfer completed");
         }
 
         /// <summary>
@@ -187,6 +204,7 @@ namespace Homework_13
             AdornerLayer.GetAdornerLayer(listViewSortCol).Add(listViewSortAdorner);
             clientList.Items.SortDescriptions.Add(new SortDescription(sortBy, newDir));
         }
+
     }
 
     public class SortAdorner : Adorner

@@ -6,6 +6,7 @@ namespace Homework_13
 {
     public enum DepositType
     {
+        No,
         Simple,
         Capitalization
     }
@@ -17,7 +18,7 @@ namespace Homework_13
         private int randCash = rnd.Next(0, 10000);
 
         public string Name { get; set; }
-        public int Money { get; set; }
+        public uint Money { get; set; }
         public bool IsLoan { get; set; }
         public abstract int LoanRate { get; set; }
         public bool IsDeposit { get; set; }
@@ -38,10 +39,12 @@ namespace Homework_13
                     break;
                 default:
                     CreditScore = true;
+                    LoanRate -= 3;              // extra rate to good clients
+                    DepositRate += 3;
                     break;
             }
 
-            Money = randCash;
+            Money = (uint)randCash;
 
         }
     }

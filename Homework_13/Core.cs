@@ -10,7 +10,7 @@ namespace Homework_13
     internal class Core
     {
         public ObservableCollection<BankDep> bank;
-        Random rnd  = new Random();
+        Random rnd = new Random();
 
         /// <summary>
         /// Create bank structure with 3 departments
@@ -57,5 +57,21 @@ namespace Homework_13
             }
         }
 
+        /// <summary>
+        /// Check the sender have enough money to make transfer
+        /// </summary>
+        /// <param name="client"></param>
+        /// <param name="amount"></param>
+        /// <returns></returns>
+        public bool CheckTransferMoney(Client client, uint amount)
+        {
+            bool result = client.Money >= amount;
+            return result;
+        }
+
+    public void TransferFunds(Client client)
+        {
+            //client.Money
+        }
     }
 }

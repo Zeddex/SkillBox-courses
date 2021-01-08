@@ -17,7 +17,6 @@
                 <MenuItem Header="Capitalized interest" Click="MenuItemCapitalizedDeposit_OnClick" />
             </MenuItem>
             <MenuItem Header="Get a loan" Click="MenuItemLoan_OnClick" />
-            <MenuItem Header="Full information" Click="MenuItemInfo_OnClick" />
         </ContextMenu>
     </Window.Resources>
     <Grid>
@@ -65,9 +64,15 @@
             </ListBox.ItemTemplate>
         </ListBox>
 
-        <GridSplitter Grid.Row="1" Grid.Column="1" Grid.RowSpan="2" ShowsPreview="False" Width="3" HorizontalAlignment="Center" VerticalAlignment="Stretch" />
+        <GridSplitter Grid.Row="1" Grid.Column="1" Grid.RowSpan="2" 
+                      ShowsPreview="False" 
+                      Width="3" 
+                      HorizontalAlignment="Center" 
+                      VerticalAlignment="Stretch" />
 
-        <ListView Grid.Row="1" Grid.RowSpan="2" Grid.Column="2" x:Name="clientList" SelectionChanged="ClientInfo_OnSelectionChanged" PreviewMouseRightButtonUp="ClientList_OnPreviewMouseRightButtonUp">
+        <ListView Grid.Row="1" Grid.RowSpan="2" Grid.Column="2" x:Name="clientList" 
+                  SelectionChanged="ClientInfo_OnSelectionChanged" 
+                  PreviewMouseRightButtonUp="ClientList_OnPreviewMouseRightButtonUp">
             <ListView.View>
                 <GridView>
                     <GridViewColumn Width="200" DisplayMemberBinding="{Binding Name}">
@@ -77,14 +82,18 @@
                     </GridViewColumn>
                     <GridViewColumn Width="140" DisplayMemberBinding="{Binding Money}">
                         <GridViewColumn.Header>
-                            <GridViewColumnHeader Tag="Money" Click="UsersColumnHeader_OnClick">Money</GridViewColumnHeader>
+                            <GridViewColumnHeader Tag="Money" Click="UsersColumnHeader_OnClick">Available funds</GridViewColumnHeader>
                         </GridViewColumn.Header>
                     </GridViewColumn>
                 </GridView>
             </ListView.View>
         </ListView>
 
-        <GridSplitter Grid.Row="1" Grid.RowSpan="2" Grid.Column="3" ShowsPreview="False" Width="3" HorizontalAlignment="Center" VerticalAlignment="Stretch" />
+        <GridSplitter Grid.Row="1" Grid.RowSpan="2" Grid.Column="3" 
+                      ShowsPreview="False" 
+                      Width="3" 
+                      HorizontalAlignment="Center" 
+                      VerticalAlignment="Stretch" />
 
         <StackPanel Grid.Row="1" Grid.Column="4">
             <TextBlock FontWeight="Bold" Margin="5 0" Text="Information:"/>
@@ -120,15 +129,23 @@
             </ListBox.ItemTemplate>
         </ListBox>
 
-        <Popup Name="pTransfer" StaysOpen="False" Placement="Mouse" MaxWidth="150"
+        <Popup Name="pTransfer" StaysOpen="False" Placement="Mouse"
                PopupAnimation="Scroll" AllowsTransparency="True">
-            <GroupBox Header="Edit fields" Margin="10" Padding="10">
-                <StackPanel Width="80">
+            <GroupBox Header="Make transfer" Width="200" Margin="10" Padding="10">
+                <StackPanel Width="150">
                     <TextBlock>Transfer to:</TextBlock>
-                    <TextBox x:Name="transferToTextBox" />
+                    <ComboBox x:Name="transferTo">
+                        <ComboBox.ItemTemplate>
+                            <DataTemplate>
+                                <StackPanel>
+                                    <TextBlock Text="{Binding Name}" />
+                                </StackPanel>
+                            </DataTemplate>
+                        </ComboBox.ItemTemplate>
+                    </ComboBox>
                     <TextBlock>Amount:</TextBlock>
                     <TextBox x:Name="amountTextBox" />
-                    <Button Margin="0,10" Click="MenuItemMakeTransfer_OnClick">Make transfer</Button>
+                    <Button Margin="0,10" Click="MenuItemMakeTransfer_OnClick">Transfer</Button>
                 </StackPanel>
             </GroupBox>
         </Popup>
