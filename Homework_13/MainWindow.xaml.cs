@@ -135,7 +135,7 @@ namespace Homework_13
             core.MakeSimpleDeposit(currentClient, amountSimpDeposit);
 
             pSimpDep.IsOpen = false;
-            MessageBox.Show("Make simple deposit");
+            MessageBox.Show("Success", "Simple deposit", MessageBoxButton.OK, MessageBoxImage.Asterisk);
         }
 
         private void MenuItemCapitalizedDeposit_OnClick(object sender, RoutedEventArgs e)
@@ -166,7 +166,7 @@ namespace Homework_13
             core.MakeCapitalizedDeposit(currentClient, amountCapDeposit);
 
             pCapDep.IsOpen = false;
-            MessageBox.Show("Make capitalized deposit");
+            MessageBox.Show("Success", "Capitalized deposit", MessageBoxButton.OK, MessageBoxImage.Asterisk);
         }
 
         private void MenuItemLoan_OnClick(object sender, RoutedEventArgs e)
@@ -189,7 +189,11 @@ namespace Homework_13
             core.GetLoan(currentClient, amountLoan);
 
             pLoan.IsOpen = false;
-            MessageBox.Show("Get loan");
+            MessageBox.Show("Success" ,"Get loan", MessageBoxButton.OK, MessageBoxImage.Asterisk);
+
+            //TODO refresh list
+            //var client = bankList.Items.CurrentItem as BankDep;
+            //clientList.ItemsSource = client.Clients;
         }
 
         private void MenuItemMakeTransfer_OnClick(object sender, RoutedEventArgs e)
@@ -222,7 +226,7 @@ namespace Homework_13
             core.TransferFunds(sendFrom, sendTo, amountTransfer);
 
             pTransfer.IsOpen = false;
-            MessageBox.Show("Transfer completed");
+            MessageBox.Show("Transfer completed", "Funds transfer", MessageBoxButton.OK, MessageBoxImage.Asterisk);
         }
 
         /// <summary>
