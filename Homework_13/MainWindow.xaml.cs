@@ -105,23 +105,90 @@ namespace Homework_13
         {
             pTransfer.IsOpen = true;
             transferTo.ItemsSource = clientList.ItemsSource;
-            //nameTextBox.Text = ...;
-            //ageTextBox.Text = ...;
-            //projectTextBox.Text = ...;
         }
 
         private void MenuItemSimpleDeposit_OnClick(object sender, RoutedEventArgs e)
         {
+            pSimpDep.IsOpen = true;
+        }
+
+        private void MenuItemSimpDep_OnClick(object sender, RoutedEventArgs e)
+        {
+            bool result = UInt32.TryParse(amountSimpDepTextBox.Text, out uint amountSimpDeposit);
+            if (!result)
+            {
+                MessageBox.Show("Wrong amount", "Error", MessageBoxButton.OK, MessageBoxImage.Error);
+                return;
+            }
+
+            // check the client have enough money to make deposit
+            bool checkFunds = core.CheckSuffAmount(clientInfo.Items.CurrentItem as Client, UInt32.Parse(amountSimpDepTextBox.Text));
+            if (!checkFunds)
+            {
+                MessageBox.Show("Insufficient funds", "Insufficient funds", MessageBoxButton.OK, MessageBoxImage.Exclamation);
+                return;
+            }
+
+            Client currentClient = clientInfo.Items.CurrentItem as Client;
+
+            // make simple deposit
+            core.MakeSimpleDeposit(currentClient, amountSimpDeposit);
+
+            pSimpDep.IsOpen = false;
             MessageBox.Show("Make simple deposit");
         }
 
         private void MenuItemCapitalizedDeposit_OnClick(object sender, RoutedEventArgs e)
         {
+            pCapDep.IsOpen = true;
+        }
+
+        private void MenuItemCapDep_OnClick(object sender, RoutedEventArgs e)
+        {
+            bool result = UInt32.TryParse(amountCapDepTextBox.Text, out uint amountCapDeposit);
+            if (!result)
+            {
+                MessageBox.Show("Wrong amount", "Error", MessageBoxButton.OK, MessageBoxImage.Error);
+                return;
+            }
+
+            // check the client have enough money to make deposit
+            bool checkFunds = core.CheckSuffAmount(clientInfo.Items.CurrentItem as Client, UInt32.Parse(amountCapDepTextBox.Text));
+            if (!checkFunds)
+            {
+                MessageBox.Show("Insufficient funds", "Insufficient funds", MessageBoxButton.OK, MessageBoxImage.Exclamation);
+                return;
+            }
+
+            Client currentClient = clientInfo.Items.CurrentItem as Client;
+
+            // make capitalized deposit
+            core.MakeCapitalizedDeposit(currentClient, amountCapDeposit);
+
+            pCapDep.IsOpen = false;
             MessageBox.Show("Make capitalized deposit");
         }
 
         private void MenuItemLoan_OnClick(object sender, RoutedEventArgs e)
         {
+            pLoan.IsOpen = true;
+        }
+
+        private void MenuItemGetLoan_OnClick(object sender, RoutedEventArgs e)
+        {
+            bool result = UInt32.TryParse(amountLoanTextBox.Text, out uint amountLoan);
+            if (!result)
+            {
+                MessageBox.Show("Wrong amount", "Error", MessageBoxButton.OK, MessageBoxImage.Error);
+                return;
+            }
+
+            Client currentClient = clientInfo.Items.CurrentItem as Client;
+
+            // get loan
+            core.GetLoan(currentClient, amountLoan);
+
+            pLoan.IsOpen = false;
             MessageBox.Show("Get loan");
         }
 
@@ -133,7 +200,7 @@ namespace Homework_13
                 return;
             }
             
-            bool result = UInt32.TryParse(amountTextBox.Text, out uint amountTransfer);
+            bool result = UInt32.TryParse(amountTransferTextBox.Text, out uint amountTransfer);
             if (!result)
             {
                 MessageBox.Show("Wrong amount", "Error", MessageBoxButton.OK, MessageBoxImage.Error);
@@ -141,17 +208,18 @@ namespace Homework_13
             }
 
             // check the sender have enough money to make transfer
-            bool checkFunds = core.CheckTransferMoney(clientInfo.Items.CurrentItem as Client, UInt32.Parse(amountTextBox.Text));
+            bool checkFunds = core.CheckSuffAmount(clientInfo.Items.CurrentItem as Client, UInt32.Parse(amountTransferTextBox.Text));
             if (!checkFunds)
             {
                 MessageBox.Show("Insufficient funds", "Insufficient funds", MessageBoxButton.OK, MessageBoxImage.Exclamation);
                 return;
             }
 
+            Client sendFrom = clientInfo.Items.CurrentItem as Client;
+            Client sendTo = transferTo.SelectedItem as Client;
 
-            Client transferDest = transferTo.SelectedItem as Client;
-
-            // TODO метод перевода средств
+            // transfer funds
+            core.TransferFunds(sendFrom, sendTo, amountTransfer);
 
             pTransfer.IsOpen = false;
             MessageBox.Show("Transfer completed");
@@ -204,7 +272,6 @@ namespace Homework_13
             AdornerLayer.GetAdornerLayer(listViewSortCol).Add(listViewSortAdorner);
             clientList.Items.SortDescriptions.Add(new SortDescription(sortBy, newDir));
         }
-
     }
 
     public class SortAdorner : Adorner

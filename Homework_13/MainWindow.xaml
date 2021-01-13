@@ -103,6 +103,9 @@
             <ListBox.ItemTemplate>
                 <DataTemplate>
                     <StackPanel>
+                        <TextBlock Text="Client's name: "/>
+                        <TextBlock Text="{Binding Name}"/>
+                        <TextBlock Text="---"/>
                         <TextBlock Text="Client Status: "/>
                         <TextBlock Text="{Binding Status}"/>
                         <TextBlock Text="---"/>
@@ -131,7 +134,7 @@
 
         <Popup Name="pTransfer" StaysOpen="False" Placement="Mouse"
                PopupAnimation="Scroll" AllowsTransparency="True">
-            <GroupBox Header="Make transfer" Width="200" Margin="10" Padding="10">
+            <GroupBox Header="Make Transfer" Width="200" Margin="10" Padding="10">
                 <StackPanel Width="150">
                     <TextBlock>Transfer to:</TextBlock>
                     <ComboBox x:Name="transferTo">
@@ -144,8 +147,41 @@
                         </ComboBox.ItemTemplate>
                     </ComboBox>
                     <TextBlock>Amount:</TextBlock>
-                    <TextBox x:Name="amountTextBox" />
+                    <TextBox x:Name="amountTransferTextBox" />
                     <Button Margin="0,10" Click="MenuItemMakeTransfer_OnClick">Transfer</Button>
+                </StackPanel>
+            </GroupBox>
+        </Popup>
+
+        <Popup Name="pLoan" StaysOpen="False" Placement="Mouse"
+               PopupAnimation="Scroll" AllowsTransparency="True">
+            <GroupBox Header="Get Loan" Width="150" Margin="10" Padding="10">
+                <StackPanel Width="110">
+                    <TextBlock>Enter amount: </TextBlock>
+                    <TextBox x:Name="amountLoanTextBox"></TextBox>
+                    <Button Margin="0,10" Click="MenuItemGetLoan_OnClick">Get loan</Button>
+                </StackPanel>
+            </GroupBox>
+        </Popup>
+
+        <Popup Name="pSimpDep" StaysOpen="False" Placement="Mouse"
+               PopupAnimation="Scroll" AllowsTransparency="True">
+            <GroupBox Header="Simple deposit" Width="150" Margin="10" Padding="10">
+                <StackPanel Width="110">
+                    <TextBlock>Enter amount:</TextBlock>
+                    <TextBox x:Name="amountSimpDepTextBox"></TextBox>
+                    <Button Margin="0,10" Click="MenuItemSimpDep_OnClick">Make deposit</Button>
+                </StackPanel>
+            </GroupBox>
+        </Popup>
+
+        <Popup Name="pCapDep" StaysOpen="False" Placement="Mouse"
+               PopupAnimation="Scroll" AllowsTransparency="True">
+            <GroupBox Header="Capitalized deposit" Width="150" Margin="10" Padding="10">
+                <StackPanel Width="110">
+                    <TextBlock>Enter amount:</TextBlock>
+                    <TextBox x:Name="amountCapDepTextBox"></TextBox>
+                    <Button Margin="0,10" Click="MenuItemCapDep_OnClick">Make deposit</Button>
                 </StackPanel>
             </GroupBox>
         </Popup>

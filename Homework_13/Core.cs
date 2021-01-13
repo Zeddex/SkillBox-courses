@@ -63,15 +63,51 @@ namespace Homework_13
         /// <param name="client"></param>
         /// <param name="amount"></param>
         /// <returns></returns>
-        public bool CheckTransferMoney(Client client, uint amount)
+        public bool CheckSuffAmount(Client client, uint amount)
         {
             bool result = client.Money >= amount;
             return result;
         }
 
-    public void TransferFunds(Client client)
+        /// <summary>
+        /// Transfer money from one client to another
+        /// </summary>
+        /// <param name="client"></param>
+        /// <param name="amount"></param>
+        public void TransferFunds(Client sender, Client recipient, uint amount)
         {
-            //client.Money
+            sender.Money -= amount;
+            recipient.Money += amount;
+        }
+
+        /// <summary>
+        /// Make simple deposit without capitalization
+        /// </summary>
+        /// <param name="client"></param>
+        /// <param name="amount"></param>
+        public void MakeSimpleDeposit(Client client, uint amount)
+        {
+            client.Money -= amount;
+        }
+
+        /// <summary>
+        /// Make deposit with capitalization
+        /// </summary>
+        /// <param name="client"></param>
+        /// <param name="amount"></param>
+        public void MakeCapitalizedDeposit(Client client, uint amount)
+        {
+            client.Money -= amount;
+        }
+
+        /// <summary>
+        /// Get loan
+        /// </summary>
+        /// <param name="client"></param>
+        /// <param name="amount"></param>
+        public void GetLoan(Client client, uint amount)
+        {
+            client.Money += amount;
         }
     }
 }
