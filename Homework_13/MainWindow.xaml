@@ -103,36 +103,49 @@
             <ListBox.ItemTemplate>
                 <DataTemplate>
                     <StackPanel>
-                        <TextBlock Text="Client's name: "/>
-                        <TextBlock Text="{Binding Name}"/>
-                        <TextBlock Text="---"/>
-                        <TextBlock Text="Client Status: "/>
-                        <TextBlock Text="{Binding Status}"/>
-                        <TextBlock Text="---"/>
-                        <TextBlock Text="Loan:"/>
-                        <TextBlock Text="{Binding IsLoan}"/>
-                        <TextBlock Text="---"/>
-                        <TextBlock Text="Loan rate (%): "/>
-                        <TextBlock Text="{Binding LoanRate}"/>
-                        <TextBlock Text="---"/>
-                        <TextBlock Text="Deposit:"/>
-                        <TextBlock Text="{Binding IsDeposit}"/>
-                        <TextBlock Text="---"/>
-                        <TextBlock Text="Deposit rate (%): "/>
-                        <TextBlock Text="{Binding DepositRate}"/>
-                        <TextBlock Text="---"/>
-                        <TextBlock Text="Type of deposit:"/>
-                        <TextBlock Text="{Binding DepositType}"/>
-                        <TextBlock Text="---"/>
-                        <TextBlock Text="Good credit score:"/>
-                        <TextBlock Text="{Binding CreditScore}"/>
-                        <TextBlock Text="---"/>
+                        <StackPanel Orientation="Horizontal">
+                            <TextBlock Text="Client's name: "/>
+                            <TextBlock Text="{Binding Name}"/>
+                        </StackPanel>
+                        <StackPanel Orientation="Horizontal">
+                            <TextBlock Text="Funds available: "/>
+                            <TextBlock Text="{Binding Money}"/>
+                        </StackPanel>
+                        <StackPanel Orientation="Horizontal">
+                            <TextBlock Text="Client Status: "/>
+                            <TextBlock Text="{Binding Status}"/>
+                        </StackPanel>
+                        <StackPanel Orientation="Horizontal">
+                            <TextBlock Text="Good credit score: "/>
+                            <TextBlock Text="{Binding CreditScore}"/>
+                        </StackPanel>
+                        <StackPanel Orientation="Horizontal">
+                            <TextBlock Text="Active loan: "/>
+                            <TextBlock Text="{Binding IsLoan}"/>
+                        </StackPanel>
+                        <StackPanel Orientation="Horizontal">
+                            <TextBlock Text="Loan rate (%): "/>
+                            <TextBlock Text="{Binding LoanRate}"/>
+                        </StackPanel>
+                        <StackPanel Orientation="Horizontal">
+                            <TextBlock Text="Active deposit: "/>
+                            <TextBlock Text="{Binding IsDeposit}"/>
+                        </StackPanel>
+                        <StackPanel Orientation="Horizontal">
+                            <TextBlock Text="Deposit rate (%): "/>
+                            <TextBlock Text="{Binding DepositRate}"/>
+                        </StackPanel>
+                        <StackPanel Orientation="Horizontal">
+                            <TextBlock Text="Deposit interest: "/>
+                            <TextBlock Text="{Binding DepositType}"/>
+                        </StackPanel>
+                        <Button Click="ButtonDepInfo_OnClick" HorizontalAlignment="Left" MaxWidth="120">Deposit information</Button>
                     </StackPanel>
                 </DataTemplate>
             </ListBox.ItemTemplate>
         </ListBox>
 
-        <Popup Name="pTransfer" StaysOpen="False" Placement="Mouse"
+        <Popup x:Name="pTransfer" StaysOpen="False" Placement="Mouse"
                PopupAnimation="Scroll" AllowsTransparency="True">
             <GroupBox Header="Make Transfer" Width="200" Margin="10" Padding="10">
                 <StackPanel Width="150">
@@ -153,7 +166,7 @@
             </GroupBox>
         </Popup>
 
-        <Popup Name="pLoan" StaysOpen="False" Placement="Mouse"
+        <Popup x:Name="pLoan" StaysOpen="False" Placement="Mouse"
                PopupAnimation="Scroll" AllowsTransparency="True">
             <GroupBox Header="Get Loan" Width="150" Margin="10" Padding="10">
                 <StackPanel Width="110">
@@ -164,7 +177,7 @@
             </GroupBox>
         </Popup>
 
-        <Popup Name="pSimpDep" StaysOpen="False" Placement="Mouse"
+        <Popup x:Name="pSimpDep" StaysOpen="False" Placement="Mouse"
                PopupAnimation="Scroll" AllowsTransparency="True">
             <GroupBox Header="Simple deposit" Width="150" Margin="10" Padding="10">
                 <StackPanel Width="110">
@@ -175,13 +188,71 @@
             </GroupBox>
         </Popup>
 
-        <Popup Name="pCapDep" StaysOpen="False" Placement="Mouse"
+        <Popup x:Name="pCapDep" StaysOpen="False" Placement="Mouse"
                PopupAnimation="Scroll" AllowsTransparency="True">
             <GroupBox Header="Capitalized deposit" Width="150" Margin="10" Padding="10">
                 <StackPanel Width="110">
                     <TextBlock>Enter amount:</TextBlock>
                     <TextBox x:Name="amountCapDepTextBox"></TextBox>
                     <Button Margin="0,10" Click="MenuItemCapDep_OnClick">Make deposit</Button>
+                </StackPanel>
+            </GroupBox>
+        </Popup>
+
+        <Popup x:Name="pDepInfo" StaysOpen="False" Placement="Mouse"
+               PopupAnimation="Scroll" AllowsTransparency="True">
+            <GroupBox Header="Deposit Info" Width="150" Margin="10" Padding="10">
+                <StackPanel Width="110">
+                    <TextBlock>Monthly income:</TextBlock>
+                    <StackPanel Orientation="Horizontal">
+                        <TextBlock>1st month: </TextBlock>
+                        <TextBlock>100500$</TextBlock>
+                    </StackPanel>
+                    <StackPanel Orientation="Horizontal">
+                        <TextBlock>2nd month: </TextBlock>
+                        <TextBlock>100500$</TextBlock>
+                    </StackPanel>
+                    <StackPanel Orientation="Horizontal">
+                        <TextBlock>3rd month:</TextBlock>
+                        <TextBlock>100500$</TextBlock>
+                    </StackPanel>
+                    <StackPanel Orientation="Horizontal">
+                        <TextBlock>4th month:</TextBlock>
+                        <TextBlock>100500$</TextBlock>
+                    </StackPanel>
+                    <StackPanel Orientation="Horizontal">
+                        <TextBlock>5th month:</TextBlock>
+                        <TextBlock>100500$</TextBlock>
+                    </StackPanel>
+                    <StackPanel Orientation="Horizontal">
+                        <TextBlock>6th month:</TextBlock>
+                        <TextBlock>100500$</TextBlock>
+                    </StackPanel>
+                    <StackPanel Orientation="Horizontal">
+                        <TextBlock>7th month:</TextBlock>
+                        <TextBlock>100500$</TextBlock>
+                    </StackPanel>
+                    <StackPanel Orientation="Horizontal">
+                        <TextBlock>8th month:</TextBlock>
+                        <TextBlock>100500$</TextBlock>
+                    </StackPanel>
+                    <StackPanel Orientation="Horizontal">
+                        <TextBlock>9th month:</TextBlock>
+                        <TextBlock>100500$</TextBlock>
+                    </StackPanel>
+                    <StackPanel Orientation="Horizontal">
+                        <TextBlock>10th month:</TextBlock>
+                        <TextBlock>100500$</TextBlock>
+                    </StackPanel>
+                    <StackPanel Orientation="Horizontal">
+                        <TextBlock>11th month:</TextBlock>
+                        <TextBlock>100500$</TextBlock>
+                    </StackPanel>
+                    <StackPanel Orientation="Horizontal">
+                        <TextBlock>12th month:</TextBlock>
+                        <TextBlock>100500$</TextBlock>
+                    </StackPanel>
+                    <Button Margin="0,10" Click="MenuItemDepInfo_OnClick">OK</Button>
                 </StackPanel>
             </GroupBox>
         </Popup>

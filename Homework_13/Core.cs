@@ -88,6 +88,9 @@ namespace Homework_13
         public void MakeSimpleDeposit(Client client, uint amount)
         {
             client.Money -= amount;
+            client.DepositType = DepositType.Simple;
+            client.IsDeposit = Deposit.Yes;
+            client.DepositAmount += amount;
         }
 
         /// <summary>
@@ -98,6 +101,9 @@ namespace Homework_13
         public void MakeCapitalizedDeposit(Client client, uint amount)
         {
             client.Money -= amount;
+            client.DepositType = DepositType.Capitalization;
+            client.IsDeposit = Deposit.Yes;
+            client.DepositAmount += amount;
         }
 
         /// <summary>
@@ -108,6 +114,46 @@ namespace Homework_13
         public void GetLoan(Client client, uint amount)
         {
             client.Money += amount;
+            client.IsLoan = Loan.Yes;
+        }
+
+        /// <summary>
+        /// Calculate deposit monthly interest
+        /// </summary>
+        /// <param name="client"></param>
+        /// <returns></returns>
+        public double[] DepositInfo(Client client)
+        {
+            int deposit = (int) client.DepositAmount;
+            double[] months = new double[13];
+            int rate = client.DepositRate;
+
+            if (client.DepositType == DepositType.Simple)
+            {
+                for (int i = 0; i < months.Length-1; i++)
+                {
+                    months[i] = ((double)deposit / 100 * rate) / 12;
+                    months[12] += months[i];
+                }
+            }
+
+            else
+            {
+                for (int i = 0; i < months.Length-1; i++)
+                {
+                    if (i == 0)
+                    {
+                        months[i] = ((double)deposit / 100 * rate) / 12;
+                        months[12] += months[i];
+                        continue;
+                    }
+
+                    months[i] = ((double)deposit / 100 * rate) / 12 + (months[i - 1] / 100 * rate) / 12;
+                    months[12] += months[i];
+                }
+            }
+
+            return months;
         }
     }
 }

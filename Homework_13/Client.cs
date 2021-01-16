@@ -11,6 +11,24 @@ namespace Homework_13
         Capitalization
     }
 
+    public enum CreditScore
+    {
+        No,
+        Yes
+    }
+
+    public enum Loan
+    {
+        No,
+        Yes
+    }
+
+    public enum Deposit
+    {
+        No,
+        Yes
+    }
+
     public abstract class Client
     {
         static Random rnd = new Random();
@@ -19,12 +37,13 @@ namespace Homework_13
 
         public string Name { get; set; }
         public uint Money { get; set; }
-        public bool IsLoan { get; set; }
+        public Loan IsLoan { get; set; }
         public abstract int LoanRate { get; set; }
-        public bool IsDeposit { get; set; }
+        public Deposit IsDeposit { get; set; }
         public abstract int DepositRate { get; set; }
         public DepositType DepositType { get; set; }
-        public bool CreditScore { get; set; }
+        public uint DepositAmount { get; set; }
+        public CreditScore CreditScore { get; set; }
         public abstract string Status { get; set; }
 
         public Client(string name = "RandomClient")
@@ -35,10 +54,10 @@ namespace Homework_13
             {
                 case 0:
                 case 1:
-                    CreditScore = false;
+                    CreditScore = CreditScore.No;
                     break;
                 default:
-                    CreditScore = true;
+                    CreditScore = CreditScore.Yes;
                     LoanRate -= 3;              // extra rate to good clients
                     DepositRate += 3;
                     break;

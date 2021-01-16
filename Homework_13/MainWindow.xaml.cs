@@ -101,19 +101,39 @@ namespace Homework_13
             }
         }
 
-        private void MenuItemTransfer_OnClick(object sender, RoutedEventArgs e)
+        /// <summary>
+        /// Refresh client's data
+        /// </summary>
+        void RefreshList()
         {
-            pTransfer.IsOpen = true;
-            transferTo.ItemsSource = clientList.ItemsSource;
+            // refresh clients list
+            var bankDep = bankList.SelectedItem as BankDep;
+            clientList.ItemsSource = (bankDep.Clients).Where(x => x != null);
+
+            //TODO refresh clients info list
+            //var clientInf = clientList.SelectedItem as Client;
+            //clientInfo.ItemsSource = (bankDep.Clients).Where(x => x != null);
         }
 
+        /// <summary>
+        /// Simple deposit popup menu enable
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void MenuItemSimpleDeposit_OnClick(object sender, RoutedEventArgs e)
         {
             pSimpDep.IsOpen = true;
         }
 
+        /// <summary>
+        /// Make simple deposit
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void MenuItemSimpDep_OnClick(object sender, RoutedEventArgs e)
         {
+            Client currentClient = clientList.SelectedItem as Client;
+
             bool result = UInt32.TryParse(amountSimpDepTextBox.Text, out uint amountSimpDeposit);
             if (!result)
             {
@@ -122,29 +142,42 @@ namespace Homework_13
             }
 
             // check the client have enough money to make deposit
-            bool checkFunds = core.CheckSuffAmount(clientInfo.Items.CurrentItem as Client, UInt32.Parse(amountSimpDepTextBox.Text));
+            bool checkFunds = core.CheckSuffAmount(currentClient, UInt32.Parse(amountSimpDepTextBox.Text));
             if (!checkFunds)
             {
                 MessageBox.Show("Insufficient funds", "Insufficient funds", MessageBoxButton.OK, MessageBoxImage.Exclamation);
                 return;
             }
 
-            Client currentClient = clientInfo.Items.CurrentItem as Client;
-
             // make simple deposit
             core.MakeSimpleDeposit(currentClient, amountSimpDeposit);
 
             pSimpDep.IsOpen = false;
+
+            RefreshList();
+
             MessageBox.Show("Success", "Simple deposit", MessageBoxButton.OK, MessageBoxImage.Asterisk);
         }
 
+        /// <summary>
+        /// Capitalized deposit popup menu enable
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void MenuItemCapitalizedDeposit_OnClick(object sender, RoutedEventArgs e)
         {
             pCapDep.IsOpen = true;
         }
 
+        /// <summary>
+        /// Make capitalized deposit
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void MenuItemCapDep_OnClick(object sender, RoutedEventArgs e)
         {
+            Client currentClient = clientList.SelectedItem as Client;
+
             bool result = UInt32.TryParse(amountCapDepTextBox.Text, out uint amountCapDeposit);
             if (!result)
             {
@@ -153,27 +186,38 @@ namespace Homework_13
             }
 
             // check the client have enough money to make deposit
-            bool checkFunds = core.CheckSuffAmount(clientInfo.Items.CurrentItem as Client, UInt32.Parse(amountCapDepTextBox.Text));
+            bool checkFunds = core.CheckSuffAmount(currentClient, UInt32.Parse(amountCapDepTextBox.Text));
             if (!checkFunds)
             {
                 MessageBox.Show("Insufficient funds", "Insufficient funds", MessageBoxButton.OK, MessageBoxImage.Exclamation);
                 return;
             }
 
-            Client currentClient = clientInfo.Items.CurrentItem as Client;
-
             // make capitalized deposit
             core.MakeCapitalizedDeposit(currentClient, amountCapDeposit);
 
             pCapDep.IsOpen = false;
+
+            RefreshList();
+
             MessageBox.Show("Success", "Capitalized deposit", MessageBoxButton.OK, MessageBoxImage.Asterisk);
         }
 
+        /// <summary>
+        /// Loan popup menu enable
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void MenuItemLoan_OnClick(object sender, RoutedEventArgs e)
         {
             pLoan.IsOpen = true;
         }
 
+        /// <summary>
+        /// Get a loan
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void MenuItemGetLoan_OnClick(object sender, RoutedEventArgs e)
         {
             bool result = UInt32.TryParse(amountLoanTextBox.Text, out uint amountLoan);
@@ -183,22 +227,41 @@ namespace Homework_13
                 return;
             }
 
-            Client currentClient = clientInfo.Items.CurrentItem as Client;
+            Client currentClient = clientList.SelectedItem as Client;
 
             // get loan
             core.GetLoan(currentClient, amountLoan);
 
             pLoan.IsOpen = false;
+
+            RefreshList();
+
             MessageBox.Show("Success" ,"Get loan", MessageBoxButton.OK, MessageBoxImage.Asterisk);
 
-            //TODO refresh list
-            //var client = bankList.Items.CurrentItem as BankDep;
-            //clientList.ItemsSource = client.Clients;
         }
 
+        /// <summary>
+        /// Transfer popup menu enable
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void MenuItemTransfer_OnClick(object sender, RoutedEventArgs e)
+        {
+            pTransfer.IsOpen = true;
+            transferTo.ItemsSource = clientList.ItemsSource;
+        }
+
+        /// <summary>
+        /// Make a transfer
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void MenuItemMakeTransfer_OnClick(object sender, RoutedEventArgs e)
         {
-            if (clientInfo.Items.CurrentItem == transferTo.SelectedItem)
+            Client currentClient = clientList.SelectedItem as Client;
+            Client recipient = transferTo.SelectedItem as Client;
+
+            if (currentClient == transferTo.SelectedItem)
             {
                 MessageBox.Show("You cannot make a transfer to yourself", "Error", MessageBoxButton.OK, MessageBoxImage.Error);
                 return;
@@ -212,21 +275,50 @@ namespace Homework_13
             }
 
             // check the sender have enough money to make transfer
-            bool checkFunds = core.CheckSuffAmount(clientInfo.Items.CurrentItem as Client, UInt32.Parse(amountTransferTextBox.Text));
+            bool checkFunds = core.CheckSuffAmount(currentClient, UInt32.Parse(amountTransferTextBox.Text));
             if (!checkFunds)
             {
                 MessageBox.Show("Insufficient funds", "Insufficient funds", MessageBoxButton.OK, MessageBoxImage.Exclamation);
                 return;
             }
 
-            Client sendFrom = clientInfo.Items.CurrentItem as Client;
-            Client sendTo = transferTo.SelectedItem as Client;
-
             // transfer funds
-            core.TransferFunds(sendFrom, sendTo, amountTransfer);
+            core.TransferFunds(currentClient, recipient, amountTransfer);
 
             pTransfer.IsOpen = false;
+
+            RefreshList();
+
             MessageBox.Show("Transfer completed", "Funds transfer", MessageBoxButton.OK, MessageBoxImage.Asterisk);
+        }
+
+        /// <summary>
+        /// Show deposit info popup menu
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void ButtonDepInfo_OnClick(object sender, RoutedEventArgs e)
+        {
+            Client currentClient = clientList.SelectedItem as Client;
+
+            if (currentClient.IsDeposit == Deposit.No)
+            {
+                MessageBox.Show("No information available", "Deposit information", MessageBoxButton.OK,
+                    MessageBoxImage.Exclamation);
+                return;
+            }
+
+            pDepInfo.IsOpen = true;
+
+            // TODO вывод информации о депозите
+            double[] months =  core.DepositInfo(currentClient);
+
+
+        }
+
+        private void MenuItemDepInfo_OnClick(object sender, RoutedEventArgs e)
+        {
+            pDepInfo.IsOpen = false;
         }
 
         /// <summary>
