@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.ComponentModel;
@@ -110,9 +111,9 @@ namespace Homework_13
             var bankDep = bankList.SelectedItem as BankDep;
             clientList.ItemsSource = (bankDep.Clients).Where(x => x != null);
 
-            //TODO refresh clients info list
-            //var clientInf = clientList.SelectedItem as Client;
-            //clientInfo.ItemsSource = (bankDep.Clients).Where(x => x != null);
+            // refresh clients info list
+            clientInfo.ItemsSource = clientList.SelectedItems;
+            CollectionViewSource.GetDefaultView(clientList.SelectedItems).Refresh();
         }
 
         /// <summary>
@@ -308,12 +309,22 @@ namespace Homework_13
                 return;
             }
 
+            double[] months = core.DepositInfo(currentClient);
+
+            month1.Text = months[0].ToString();
+            month2.Text = months[1].ToString();
+            month3.Text = months[2].ToString();
+            month4.Text = months[3].ToString();
+            month5.Text = months[4].ToString();
+            month6.Text = months[5].ToString();
+            month7.Text = months[6].ToString();
+            month8.Text = months[7].ToString();
+            month9.Text = months[8].ToString();
+            month10.Text = months[9].ToString();
+            month11.Text = months[10].ToString();
+            month12.Text = months[11].ToString();
+
             pDepInfo.IsOpen = true;
-
-            // TODO вывод информации о депозите
-            double[] months =  core.DepositInfo(currentClient);
-
-
         }
 
         private void MenuItemDepInfo_OnClick(object sender, RoutedEventArgs e)

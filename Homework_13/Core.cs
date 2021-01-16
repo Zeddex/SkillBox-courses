@@ -125,31 +125,43 @@ namespace Homework_13
         public double[] DepositInfo(Client client)
         {
             int deposit = (int) client.DepositAmount;
-            double[] months = new double[13];
+            double[] months = new double[12];
             int rate = client.DepositRate;
 
+            // simple interest
             if (client.DepositType == DepositType.Simple)
             {
-                for (int i = 0; i < months.Length-1; i++)
-                {
-                    months[i] = ((double)deposit / 100 * rate) / 12;
-                    months[12] += months[i];
-                }
-            }
-
-            else
-            {
-                for (int i = 0; i < months.Length-1; i++)
+                for (int i = 0; i < months.Length; i++)
                 {
                     if (i == 0)
                     {
-                        months[i] = ((double)deposit / 100 * rate) / 12;
-                        months[12] += months[i];
+                        months[i] = (((double)deposit / 100 * rate) / 12) + deposit;
+                        Math.Round(months[i], 2);
+                        months[i] = Math.Round(months[i], 2);
                         continue;
                     }
 
-                    months[i] = ((double)deposit / 100 * rate) / 12 + (months[i - 1] / 100 * rate) / 12;
-                    months[12] += months[i];
+                    months[i] = (((double)deposit / 100 * rate) / 12) + months[i-1];
+                    Math.Round(months[i], 2);
+                    months[i] = Math.Round(months[i], 2);
+                }
+            }
+
+            // capitalized interest
+            else
+            {
+                for (int i = 0; i < months.Length; i++)
+                {
+                    if (i == 0)
+                    {
+                        months[i] = (((double)deposit / 100 * rate) / 12) + deposit;
+                        Math.Round(months[i], 2);
+                        months[i] = Math.Round(months[i], 2);
+                        continue;
+                    }
+
+                    months[i] = ((months[i-1] / 100 * rate) / 12) + months[i-1];
+                    months[i] = Math.Round(months[i], 2);
                 }
             }
 
