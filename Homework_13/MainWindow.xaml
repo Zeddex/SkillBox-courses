@@ -38,7 +38,7 @@
                 <MenuItem Header="_File">
                     <MenuItem Header="_Load data" IsEnabled="False"></MenuItem>
                     <MenuItem Header="_Save data" IsEnabled="False"></MenuItem>
-                    <MenuItem Header="_Debug mode" Click="MenuItem_OnClick_Debug"></MenuItem>
+                    <!--<MenuItem Header="_Debug mode" Click="MenuItem_OnClick_Debug"></MenuItem>-->
                     <Separator/>
                     <MenuItem Header="_Exit" Click="MenuItem_Click_Exit"></MenuItem>
                 </MenuItem>
