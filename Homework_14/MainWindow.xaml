@@ -5,7 +5,7 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:Homework_14"
         mc:Ignorable="d"
-        Title="MyBank" Height="600" Width="900" MinHeight="200" MinWidth="300">
+        Title="MyBank" Height="600" Width="1000" MinHeight="200" MinWidth="300">
     <Window.Resources>
         <Style TargetType="{x:Type GridViewColumnHeader}">
             <Setter Property="HorizontalContentAlignment" Value="Left" />
@@ -30,6 +30,9 @@
         <Grid.RowDefinitions>
             <RowDefinition Height="Auto"/>
             <RowDefinition Height="20"/>
+            <RowDefinition Height="190"/>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="20"/>
             <RowDefinition Height="*"/>
         </Grid.RowDefinitions>
 
@@ -38,12 +41,11 @@
                 <MenuItem Header="_File">
                     <MenuItem Header="_Load data" IsEnabled="False"></MenuItem>
                     <MenuItem Header="_Save data" IsEnabled="False"></MenuItem>
-                    <MenuItem Header="_Debug mode" Click="MenuItem_OnClick_Debug"></MenuItem>
+                    <!--<MenuItem Header="_Debug mode" Click="MenuItem_OnClick_Debug"></MenuItem>-->
                     <Separator/>
                     <MenuItem Header="_Exit" Click="MenuItem_Click_Exit"></MenuItem>
                 </MenuItem>
                 <MenuItem Header="_View">
-                    <MenuItem Header="_Log" Click="MenuItem_Click_Log"></MenuItem>
                     <MenuItem Header="_Clear data" IsEnabled="False"></MenuItem>
                     <MenuItem Header="_Generate new" IsEnabled="False"></MenuItem>
                 </MenuItem>
@@ -57,7 +59,7 @@
             <TextBlock FontWeight="Bold" Margin="5 0" Text="Bank departments:"/>
         </StackPanel>
 
-        <ListBox Grid.Row="2" x:Name="bankList" SelectionChanged="BankList_OnSelectionChanged">
+        <ListBox Grid.Row="2" Grid.RowSpan="5" x:Name="bankList" SelectionChanged="BankList_OnSelectionChanged">
             <ListBox.ItemTemplate>
                 <DataTemplate>
                     <TextBlock Text="{Binding Department}"/>
@@ -65,13 +67,13 @@
             </ListBox.ItemTemplate>
         </ListBox>
 
-        <GridSplitter Grid.Row="1" Grid.Column="1" Grid.RowSpan="2" 
+        <GridSplitter Grid.Row="1" Grid.Column="1" Grid.RowSpan="5" 
                       ShowsPreview="False" 
                       Width="3" 
                       HorizontalAlignment="Center" 
                       VerticalAlignment="Stretch" />
 
-        <ListView Grid.Row="1" Grid.RowSpan="2" Grid.Column="2" x:Name="clientList" 
+        <ListView Grid.Row="1" Grid.RowSpan="5" Grid.Column="2" x:Name="clientList" 
                   SelectionChanged="ClientInfo_OnSelectionChanged" 
                   PreviewMouseRightButtonUp="ClientList_OnPreviewMouseRightButtonUp">
             <ListView.View>
@@ -90,7 +92,7 @@
             </ListView.View>
         </ListView>
 
-        <GridSplitter Grid.Row="1" Grid.RowSpan="2" Grid.Column="3" 
+        <GridSplitter Grid.Row="1" Grid.RowSpan="5" Grid.Column="3" 
                       ShowsPreview="False" 
                       Width="3" 
                       HorizontalAlignment="Center" 
@@ -145,6 +147,18 @@
                 </DataTemplate>
             </ListBox.ItemTemplate>
         </ListBox>
+
+        <GridSplitter Grid.Row="3" Grid.Column="4"
+                      ShowsPreview="False" 
+                      Height="3"
+                      HorizontalAlignment="Stretch" 
+                      VerticalAlignment="Center" />
+        
+        <StackPanel Grid.Row="4" Grid.Column="4">
+            <TextBlock FontWeight="Bold" Margin="5 0" Text="Transactions list:"/>
+        </StackPanel>
+
+        <ListBox Grid.Row="5" Grid.Column="4" x:Name="transList" />
 
         <Popup x:Name="pTransfer" StaysOpen="False" Placement="Mouse"
                PopupAnimation="Scroll" AllowsTransparency="True">
