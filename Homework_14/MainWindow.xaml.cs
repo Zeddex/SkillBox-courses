@@ -18,7 +18,9 @@ namespace Homework_14
 {
     #region HW14
 
-
+    // Доработать приложение 13 модуля.
+    // Добавить механизмы оповещений, используя делегаты и события.
+    // Реализовать журнал действий, который будет хранить записи всех транзакций по счетам / вкладам / кредитам.
 
     #endregion
 
@@ -30,11 +32,24 @@ namespace Homework_14
         private GridViewColumnHeader listViewSortCol = null;
         private SortAdorner listViewSortAdorner = null;
         private Core core = new Core();
+        private Log log = new Log();
 
         public MainWindow()
         {
             InitializeComponent();
+
+            core.Transaction += Core_Transaction;
             bankList.ItemsSource = core.CreateBank();
+        }
+
+        private void Core_Transaction(string message)
+        {
+            MessageBox.Show(message, "Transaction", MessageBoxButton.OK, MessageBoxImage.Information);
+        }
+
+        private void MenuItem_Click_Log(object sender, RoutedEventArgs e)
+        {
+            MessageBox.Show("Log will be here", "Transactions log", MessageBoxButton.OK, MessageBoxImage.Information);
         }
 
         private void MenuItem_OnClick_Debug(object sender, RoutedEventArgs e) { }

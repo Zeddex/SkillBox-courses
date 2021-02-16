@@ -43,6 +43,7 @@
                     <MenuItem Header="_Exit" Click="MenuItem_Click_Exit"></MenuItem>
                 </MenuItem>
                 <MenuItem Header="_View">
+                    <MenuItem Header="_Log" Click="MenuItem_Click_Log"></MenuItem>
                     <MenuItem Header="_Clear data" IsEnabled="False"></MenuItem>
                     <MenuItem Header="_Generate new" IsEnabled="False"></MenuItem>
                 </MenuItem>

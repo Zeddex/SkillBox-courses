@@ -8,6 +8,8 @@ namespace Homework_14
 {
     internal class Core
     {
+        public event Action<string> Transaction;
+
         public ObservableCollection<BankDep> bank;
         Random rnd = new Random();
 
@@ -87,6 +89,7 @@ namespace Homework_14
         {
             sender.Money -= amount;
             recipient.Money += amount;
+            Transaction?.Invoke($"Transferred ${amount} from {sender.Name} to {recipient.Name}");
         }
 
         /// <summary>
@@ -100,6 +103,7 @@ namespace Homework_14
             client.DepositType = DepositType.Simple;
             client.IsDeposit = Deposit.Yes;
             client.DepositAmount += amount;
+            Transaction?.Invoke($"Simple deposit ${amount} was made by {client.Name}");
         }
 
         /// <summary>
@@ -113,6 +117,7 @@ namespace Homework_14
             client.DepositType = DepositType.Capitalization;
             client.IsDeposit = Deposit.Yes;
             client.DepositAmount += amount;
+            Transaction?.Invoke($"Capitalized deposit ${amount} was made by {client.Name}");
         }
 
         /// <summary>
@@ -124,6 +129,7 @@ namespace Homework_14
         {
             client.Money += amount;
             client.IsLoan = Loan.Yes;
+            Transaction?.Invoke($"{client.Name} got a ${amount} loan");
         }
 
         /// <summary>
