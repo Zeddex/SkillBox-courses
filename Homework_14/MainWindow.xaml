@@ -98,9 +98,7 @@
                       HorizontalAlignment="Center" 
                       VerticalAlignment="Stretch" />
 
-        <StackPanel Grid.Row="1" Grid.Column="4">
-            <TextBlock FontWeight="Bold" Margin="5 0" Text="Information:"/>
-        </StackPanel>
+        <TextBlock Grid.Row="1" Grid.Column="4" FontWeight="Bold" Margin="5 0" Text="Information:"/>
 
         <ListBox Grid.Row="2" Grid.Column="4" x:Name="clientInfo">
             <ListBox.ItemTemplate>
@@ -153,10 +151,8 @@
                       Height="3"
                       HorizontalAlignment="Stretch" 
                       VerticalAlignment="Center" />
-        
-        <StackPanel Grid.Row="4" Grid.Column="4">
-            <TextBlock FontWeight="Bold" Margin="5 0" Text="Transactions list:"/>
-        </StackPanel>
+
+        <TextBlock Grid.Row="4" Grid.Column="4" FontWeight="Bold" Margin="5 0" Text="Transactions list:"/>
 
         <ListBox Grid.Row="5" Grid.Column="4" x:Name="transList" />
 
