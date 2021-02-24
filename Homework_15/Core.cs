@@ -134,6 +134,26 @@ namespace Homework_15
             Transaction?.Invoke($"{client.Name} got a ${amount} loan");
         }
 
+        public bool checkFundsPositive(bool result)
+        {
+            if (!result)
+            {
+                throw new InsufficientFundsException("Insufficient Funds!");
+            }
+            else
+                return true;
+        }
+
+        public bool checkWrongAmount(bool result)
+        {
+            if (!result)
+            {
+                throw new WrongAmountException("Wrong Amount!");
+            }
+            else
+                return true;
+        }
+
         /// <summary>
         /// Calculate deposit monthly interest
         /// </summary>

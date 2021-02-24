@@ -108,19 +108,25 @@ namespace Homework_15
         private void MenuItemSimpDep_OnClick(object sender, RoutedEventArgs e)
         {
             Client currentClient = clientList.SelectedItem as Client;
+            uint amountSimpDeposit;
 
-            bool result = UInt32.TryParse(amountSimpDepTextBox.Text, out uint amountSimpDeposit);
-            if (!result)
+            try
             {
-                MessageBox.Show("Wrong amount", "Error", MessageBoxButton.OK, MessageBoxImage.Error);
-                return;
-            }
+                bool result = UInt32.TryParse(amountSimpDepTextBox.Text, out amountSimpDeposit);
+                core.checkWrongAmount(result);
 
-            // check the client have enough money to make deposit
-            bool checkFunds = core.CheckSuffAmount(currentClient, UInt32.Parse(amountSimpDepTextBox.Text));
-            if (!checkFunds)
+                // check the client have enough money to make deposit
+                bool checkFunds = core.CheckSuffAmount(currentClient, UInt32.Parse(amountSimpDepTextBox.Text));
+                core.checkFundsPositive(checkFunds);
+            }
+            catch (InsufficientFundsException)
             {
                 MessageBox.Show("Insufficient funds", "Insufficient funds", MessageBoxButton.OK, MessageBoxImage.Exclamation);
+                return;
+            }
+            catch(WrongAmountException)
+            {
+                MessageBox.Show("Wrong amount", "Error", MessageBoxButton.OK, MessageBoxImage.Error);
                 return;
             }
 
@@ -152,19 +158,25 @@ namespace Homework_15
         private void MenuItemCapDep_OnClick(object sender, RoutedEventArgs e)
         {
             Client currentClient = clientList.SelectedItem as Client;
+            uint amountCapDeposit;
 
-            bool result = UInt32.TryParse(amountCapDepTextBox.Text, out uint amountCapDeposit);
-            if (!result)
+            try
             {
-                MessageBox.Show("Wrong amount", "Error", MessageBoxButton.OK, MessageBoxImage.Error);
-                return;
-            }
+                bool result = UInt32.TryParse(amountCapDepTextBox.Text, out amountCapDeposit);
+                core.checkWrongAmount(result);
 
-            // check the client have enough money to make deposit
-            bool checkFunds = core.CheckSuffAmount(currentClient, UInt32.Parse(amountCapDepTextBox.Text));
-            if (!checkFunds)
+                // check the client have enough money to make deposit
+                bool checkFunds = core.CheckSuffAmount(currentClient, UInt32.Parse(amountCapDepTextBox.Text));
+                core.checkFundsPositive(checkFunds);
+            }
+            catch (InsufficientFundsException)
             {
                 MessageBox.Show("Insufficient funds", "Insufficient funds", MessageBoxButton.OK, MessageBoxImage.Exclamation);
+                return;
+            }
+            catch (WrongAmountException)
+            {
+                MessageBox.Show("Wrong amount", "Error", MessageBoxButton.OK, MessageBoxImage.Error);
                 return;
             }
 
@@ -195,14 +207,19 @@ namespace Homework_15
         /// <param name="e"></param>
         private void MenuItemGetLoan_OnClick(object sender, RoutedEventArgs e)
         {
-            bool result = UInt32.TryParse(amountLoanTextBox.Text, out uint amountLoan);
-            if (!result)
+            Client currentClient = clientList.SelectedItem as Client;
+            uint amountLoan;
+
+            try
+            {
+                bool result = UInt32.TryParse(amountLoanTextBox.Text, out amountLoan);
+                core.checkWrongAmount(result);
+            }
+            catch (WrongAmountException)
             {
                 MessageBox.Show("Wrong amount", "Error", MessageBoxButton.OK, MessageBoxImage.Error);
                 return;
             }
-
-            Client currentClient = clientList.SelectedItem as Client;
 
             // get loan
             core.GetLoan(currentClient, amountLoan);
@@ -242,18 +259,25 @@ namespace Homework_15
                 return;
             }
 
-            bool result = UInt32.TryParse(amountTransferTextBox.Text, out uint amountTransfer);
-            if (!result)
-            {
-                MessageBox.Show("Wrong amount", "Error", MessageBoxButton.OK, MessageBoxImage.Error);
-                return;
-            }
+            uint amountTransfer;
 
-            // check the sender have enough money to make transfer
-            bool checkFunds = core.CheckSuffAmount(currentClient, UInt32.Parse(amountTransferTextBox.Text));
-            if (!checkFunds)
+            try
+            {
+                bool result = UInt32.TryParse(amountTransferTextBox.Text, out amountTransfer);
+                core.checkWrongAmount(result);
+
+                // check the sender have enough money to make transfer
+                bool checkFunds = core.CheckSuffAmount(currentClient, UInt32.Parse(amountTransferTextBox.Text));
+                core.checkFundsPositive(checkFunds);
+            }
+            catch (InsufficientFundsException)
             {
                 MessageBox.Show("Insufficient funds", "Insufficient funds", MessageBoxButton.OK, MessageBoxImage.Exclamation);
+                return;
+            }
+            catch (WrongAmountException)
+            {
+                MessageBox.Show("Wrong amount", "Error", MessageBoxButton.OK, MessageBoxImage.Error);
                 return;
             }
 
