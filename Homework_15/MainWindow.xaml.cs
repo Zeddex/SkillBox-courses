@@ -119,14 +119,14 @@ namespace Homework_15
                 bool checkFunds = core.CheckSuffAmount(currentClient, UInt32.Parse(amountSimpDepTextBox.Text));
                 core.checkFundsPositive(checkFunds);
             }
-            catch (InsufficientFundsException)
+            catch (InsufficientFundsException ex)
             {
-                MessageBox.Show("Insufficient funds", "Insufficient funds", MessageBoxButton.OK, MessageBoxImage.Exclamation);
+                MessageBox.Show(ex.Message, "Insufficient funds", MessageBoxButton.OK, MessageBoxImage.Exclamation);
                 return;
             }
-            catch(WrongAmountException)
+            catch(WrongAmountException ex)
             {
-                MessageBox.Show("Wrong amount", "Error", MessageBoxButton.OK, MessageBoxImage.Error);
+                MessageBox.Show(ex.Message, "Error", MessageBoxButton.OK, MessageBoxImage.Error);
                 return;
             }
 
@@ -169,14 +169,14 @@ namespace Homework_15
                 bool checkFunds = core.CheckSuffAmount(currentClient, UInt32.Parse(amountCapDepTextBox.Text));
                 core.checkFundsPositive(checkFunds);
             }
-            catch (InsufficientFundsException)
+            catch (InsufficientFundsException ex)
             {
-                MessageBox.Show("Insufficient funds", "Insufficient funds", MessageBoxButton.OK, MessageBoxImage.Exclamation);
+                MessageBox.Show(ex.Message, "Insufficient funds", MessageBoxButton.OK, MessageBoxImage.Exclamation);
                 return;
             }
-            catch (WrongAmountException)
+            catch (WrongAmountException ex)
             {
-                MessageBox.Show("Wrong amount", "Error", MessageBoxButton.OK, MessageBoxImage.Error);
+                MessageBox.Show(ex.Message, "Error", MessageBoxButton.OK, MessageBoxImage.Error);
                 return;
             }
 
@@ -215,9 +215,9 @@ namespace Homework_15
                 bool result = UInt32.TryParse(amountLoanTextBox.Text, out amountLoan);
                 core.checkWrongAmount(result);
             }
-            catch (WrongAmountException)
+            catch (WrongAmountException ex)
             {
-                MessageBox.Show("Wrong amount", "Error", MessageBoxButton.OK, MessageBoxImage.Error);
+                MessageBox.Show(ex.Message, "Error", MessageBoxButton.OK, MessageBoxImage.Error);
                 return;
             }
 
@@ -270,14 +270,14 @@ namespace Homework_15
                 bool checkFunds = core.CheckSuffAmount(currentClient, UInt32.Parse(amountTransferTextBox.Text));
                 core.checkFundsPositive(checkFunds);
             }
-            catch (InsufficientFundsException)
+            catch (InsufficientFundsException ex)
             {
-                MessageBox.Show("Insufficient funds", "Insufficient funds", MessageBoxButton.OK, MessageBoxImage.Exclamation);
+                MessageBox.Show(ex.Message, "Insufficient funds", MessageBoxButton.OK, MessageBoxImage.Exclamation);
                 return;
             }
-            catch (WrongAmountException)
+            catch (WrongAmountException ex)
             {
-                MessageBox.Show("Wrong amount", "Error", MessageBoxButton.OK, MessageBoxImage.Error);
+                MessageBox.Show(ex.Message, "Error", MessageBoxButton.OK, MessageBoxImage.Error);
                 return;
             }
 
