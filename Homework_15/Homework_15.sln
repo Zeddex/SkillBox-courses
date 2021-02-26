@@ -3,7 +3,9 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 16
 VisualStudioVersion = 16.0.31005.135
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Homework_15", "Homework_15.csproj", "{0924E090-C8E0-4149-9E2C-1BCAEB447B46}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Homework_15", "Homework_15.csproj", "{0924E090-C8E0-4149-9E2C-1BCAEB447B46}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ClientLibrary", "ClientLibrary\ClientLibrary.csproj", "{2CB1AB48-4E6E-4C13-9FA7-2B2C291D76A9}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -15,6 +17,10 @@ Global
 		{0924E090-C8E0-4149-9E2C-1BCAEB447B46}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{0924E090-C8E0-4149-9E2C-1BCAEB447B46}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{0924E090-C8E0-4149-9E2C-1BCAEB447B46}.Release|Any CPU.Build.0 = Release|Any CPU
+		{2CB1AB48-4E6E-4C13-9FA7-2B2C291D76A9}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{2CB1AB48-4E6E-4C13-9FA7-2B2C291D76A9}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{2CB1AB48-4E6E-4C13-9FA7-2B2C291D76A9}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{2CB1AB48-4E6E-4C13-9FA7-2B2C291D76A9}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

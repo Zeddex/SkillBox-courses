@@ -89,8 +89,8 @@ namespace Homework_15
         /// <param name="amount"></param>
         public void TransferFunds(Client sender, Client recipient, uint amount)
         {
-            sender.Money -= amount;
-            recipient.Money += amount;
+            sender.DeductMoney(amount);
+            recipient.AddMoney(amount);
             Transaction?.Invoke($"Transferred ${amount} from {sender.Name} to {recipient.Name}");
         }
 
@@ -101,10 +101,9 @@ namespace Homework_15
         /// <param name="amount"></param>
         public void MakeSimpleDeposit(Client client, uint amount)
         {
-            client.Money -= amount;
+            client.MakeDeposit(amount);
             client.DepositType = DepositType.Simple;
             client.IsDeposit = Deposit.Yes;
-            client.DepositAmount += amount;
             Transaction?.Invoke($"Simple deposit ${amount} was made by {client.Name}");
         }
 
@@ -115,10 +114,9 @@ namespace Homework_15
         /// <param name="amount"></param>
         public void MakeCapitalizedDeposit(Client client, uint amount)
         {
-            client.Money -= amount;
+            client.MakeDeposit(amount);
             client.DepositType = DepositType.Capitalization;
             client.IsDeposit = Deposit.Yes;
-            client.DepositAmount += amount;
             Transaction?.Invoke($"Capitalized deposit ${amount} was made by {client.Name}");
         }
 
@@ -129,7 +127,7 @@ namespace Homework_15
         /// <param name="amount"></param>
         public void GetLoan(Client client, uint amount)
         {
-            client.Money += amount;
+            client.AddMoney(amount);
             client.IsLoan = Loan.Yes;
             Transaction?.Invoke($"{client.Name} got a ${amount} loan");
         }

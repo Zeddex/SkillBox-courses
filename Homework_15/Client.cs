@@ -1,6 +1,4 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Text;
 
 namespace Homework_15
 {
@@ -39,7 +37,6 @@ namespace Homework_15
             }
 
             Money = (uint)randCash;
-
         }
     }
 }
