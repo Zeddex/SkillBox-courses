@@ -1,4 +1,4 @@
-﻿namespace Homework_15
+﻿namespace ClientLibrary
 {
     public enum BankDepartment
     {

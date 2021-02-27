@@ -1,6 +1,6 @@
 ﻿using System;
 
-namespace Homework_15
+namespace ClientLibrary
 {
     public class Individual : Client
     {

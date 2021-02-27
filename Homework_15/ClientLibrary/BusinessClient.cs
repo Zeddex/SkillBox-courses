@@ -1,8 +1,8 @@
 ﻿using System;
 
-namespace Homework_15
+namespace ClientLibrary
 {
-    internal class Business : Client
+    public class Business : Client
     {
         public override int LoanRate { get; set; } = 10;
         public override int DepositRate { get; set; } = 10;

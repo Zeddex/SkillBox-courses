@@ -1,9 +1,7 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.Collections.ObjectModel;
-using System.Text;
 
-namespace Homework_15
+namespace ClientLibrary
 {
     public abstract class BankDep
     {
@@ -11,7 +9,7 @@ namespace Homework_15
         public abstract string Department { get; set; }
     }
 
-    internal class IndividBank : BankDep
+    public class IndividBank : BankDep
     {
         public override string Department { get; set; } = "Individual";
 
@@ -21,7 +19,7 @@ namespace Homework_15
         }
     }
 
-    internal class BusinessBank : BankDep
+    public class BusinessBank : BankDep
     {
         public override string Department { get; set; } = "Business";
 
@@ -31,7 +29,7 @@ namespace Homework_15
         }
     }
 
-    internal class VipBank : BankDep
+    public class VipBank : BankDep
     {
         public override string Department { get; set; } = "VIP";
 

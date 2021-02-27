@@ -6,4 +6,19 @@
     <UseWPF>true</UseWPF>
   </PropertyGroup>
 
+  <ItemGroup>
+    <Compile Remove="ClientLibrary\**" />
+    <Compile Remove="Extensions\**" />
+    <EmbeddedResource Remove="ClientLibrary\**" />
+    <EmbeddedResource Remove="Extensions\**" />
+    <None Remove="ClientLibrary\**" />
+    <None Remove="Extensions\**" />
+    <Page Remove="ClientLibrary\**" />
+    <Page Remove="Extensions\**" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="ClientLibrary\ClientLibrary.csproj" />
+  </ItemGroup>
+
 </Project>
