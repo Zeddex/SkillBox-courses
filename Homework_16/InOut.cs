@@ -10,6 +10,10 @@ namespace Homework_16
 {
     public static class InOut
     {
+        /// <summary>
+        /// Save json data to file
+        /// </summary>
+        /// <param name="bank"></param>
         public static async void SaveDataAsync(ObservableCollection<BankDep> bank)
         {
             await Task.Run(() => SaveData(bank));
