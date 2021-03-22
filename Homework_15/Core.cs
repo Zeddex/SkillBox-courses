@@ -18,6 +18,10 @@ namespace Homework_15
         /// <returns></returns>
         public ObservableCollection<BankDep> CreateBank()
         {
+            int individClientsAmount = rnd.Next(10, 30);
+            int businessClientsAmount = rnd.Next(10, 30);
+            int vipClientsAmount = rnd.Next(10, 30);
+
             bank = new ObservableCollection<BankDep>
             {
 
@@ -27,7 +31,7 @@ namespace Homework_15
                 new VipBank()
             };
 
-            AddClientsToBank(rnd.Next(10, 30), rnd.Next(10, 30), rnd.Next(10, 30));
+            AddClientsToBank(individClientsAmount, businessClientsAmount, vipClientsAmount);
 
             return bank;
         }
