@@ -26,12 +26,13 @@ namespace Homework_16_2
         // 
         #endregion
 
-        public static int result;
+        public static int result = 0;
+        public static object locker = new object();
 
         static void Main(string[] args)
         {
             int startNumber = 1_000_000_000;
-            int endNumber = 1_100_000_000;
+            int endNumber = 2_000_000_000;
 
             Console.WriteLine("Cores information:");
 
@@ -50,6 +51,8 @@ namespace Homework_16_2
             int perCore = (endNumber - startNumber) / workingCores;
             Console.WriteLine($"Working cores = {workingCores}\n");
 
+            Console.WriteLine("Counting...");
+
             var tasks = new Task[workingCores];
 
             // 1 thread mode
@@ -59,7 +62,7 @@ namespace Homework_16_2
 
             Console.WriteLine($"Numbers from {startNumber} to {endNumber}");
             Console.WriteLine($"Amount of multiple numbers: {result}\n");
-            Console.WriteLine($"Execution time in 1 thread mode: {span.TotalSeconds} s\n");        // 1bil - 118s, 100mln - 12s
+            Console.WriteLine($"Execution time in 1 thread mode: {span.TotalSeconds} s\n");        // 1b - 130s, 100mln - 13s
 
             // multi thread mode
             Console.WriteLine("Multi thread mode:");
@@ -77,8 +80,6 @@ namespace Homework_16_2
                 tasks[i] = Task.Run(() => Calculate(fromNumb, toNumb));
 
                 startNumber += perCore;
-
-                //tasks[i].Wait();
             }
             //});
             //outerTask.Wait();
@@ -93,7 +94,7 @@ namespace Homework_16_2
             TimeSpan span2 = DateTime.Now.Subtract(startTime);
 
             Console.WriteLine($"\nAmount of multiple numbers: {result}\n");
-            Console.WriteLine($"Execution time in multi thread mode: {span2.TotalSeconds} s");    // 1bil - 21s, 100mln - 2s
+            Console.WriteLine($"Execution time in multi thread mode: {span2.TotalSeconds} s");    // 1b - 69s, 100mln - 7s
 
             Console.ReadLine();
         }
@@ -117,7 +118,12 @@ namespace Homework_16_2
                 //Console.WriteLine($"Number {i}, sum of all digits {sum}, last digit {lastDigit}");
 
                 if (lastDigit == 0 || lastDigit == 1 || sum % lastDigit == 0)
-                    result++;
+                {
+                    lock (locker)
+                    {
+                        result++;
+                    }
+                }
             }
 
         }
