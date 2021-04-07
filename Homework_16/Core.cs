@@ -1,6 +1,7 @@
 ﻿using System;
-using System.Collections.Generic;
+using System.Threading.Tasks;
 using System.Collections.ObjectModel;
+using System.Windows;
 
 namespace Homework_16
 {
@@ -10,6 +11,7 @@ namespace Homework_16
 
         public ObservableCollection<BankDep> bank;
         readonly Random rnd = new Random();
+        public bool isLoaded;
 
         /// <summary>
         /// Create bank structure with 3 departments
@@ -18,9 +20,9 @@ namespace Homework_16
         public ObservableCollection<BankDep> CreateBank()
         {
             // amount of clients in the bank
-            int individClients = 50000;
-            int businessClients = 500000;
-            int vipClients = 500000;        
+            int individClients = 10_000_000;
+            int businessClients = 10_000_000;
+            int vipClients = 10_000_000;        
 
             bank = new ObservableCollection<BankDep>
             {
@@ -31,7 +33,7 @@ namespace Homework_16
                 new VipBank()
             };
 
-            AddClientsToBank(individClients, businessClients, vipClients);
+            AddClientsToBankAsync(individClients, businessClients, vipClients);
 
             return bank;
         }
@@ -61,6 +63,13 @@ namespace Homework_16
             {
                 CreateClientsCollection<Vip>((int)BankDepartment.VipBank);
             }
+        }
+
+        async void AddClientsToBankAsync(int individ, int business, int vip)
+        {
+            await Task.Run(() => AddClientsToBank(individ, business, vip));
+            isLoaded = true;
+            MessageBox.Show("Loading data complete!", "Loading complete", MessageBoxButton.OK, MessageBoxImage.Information);
         }
 
         /// <summary>

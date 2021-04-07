@@ -32,7 +32,7 @@ namespace Homework_16_2
         static void Main(string[] args)
         {
             int startNumber = 1_000_000_000;
-            int endNumber = 2_000_000_000;
+            int endNumber = 1_100_000_000;
 
             Console.WriteLine("Cores information:");
 

@@ -331,7 +331,7 @@ namespace Homework_16
         /// <param name="e"></param>
         private void BankList_OnSelectionChanged(object sender, SelectionChangedEventArgs e)
         {
-            if (bankList.SelectedItems != null)
+            if (bankList.SelectedItems != null && core.isLoaded == true)
             {
                 var clients = (e.OriginalSource as ListBox).SelectedItem as BankDep;
                 clientList.ItemsSource = clients.Clients;
