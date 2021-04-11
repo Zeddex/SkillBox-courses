@@ -14,8 +14,7 @@ using System.Windows.Media;
 namespace Homework_16
 {
     #region HW16
-
-
+    // Add async methods
     #endregion
 
     /// <summary>
@@ -331,7 +330,7 @@ namespace Homework_16
         /// <param name="e"></param>
         private void BankList_OnSelectionChanged(object sender, SelectionChangedEventArgs e)
         {
-            if (bankList.SelectedItems != null && core.isLoaded == true)
+            if (bankList.SelectedItems != null && core.isLoaded)
             {
                 var clients = (e.OriginalSource as ListBox).SelectedItem as BankDep;
                 clientList.ItemsSource = clients.Clients;

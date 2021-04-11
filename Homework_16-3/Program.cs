@@ -12,17 +12,17 @@ namespace Homework_16_3
 
         public static Random rnd = new();
 
-        public static int x1 = 3000;
-        public static int y1 = 2000;
-        public static int x2 = 2000;
-        public static int y2 = 3000;
-        public static int[,] matrix1 = new int[y1, x1];
-        public static int[,] matrix2 = new int[y2, x2];
-        public static int[,] matrix3 = new int[y1, x2];
-        public static int cycle = 0;
-
         static void Main(string[] args)
         {
+            int x1 = 3000;
+            int y1 = 2000;
+            int x2 = 2000;
+            int y2 = 3000;
+            int[,] matrix1 = new int[y1, x1];
+            int[,] matrix2 = new int[y2, x2];
+            int[,] matrix3 = new int[y1, x2];
+            int cycle = 0;
+
             int iteration = y1 < y2 ? y1 : y2;
 
             // 1st matrix
@@ -69,18 +69,18 @@ namespace Homework_16_3
             Console.WriteLine($"Execution time in multi thread mode: {span2.TotalSeconds} s");     // 41s
 
             Console.ReadLine();
-        }
 
-        public static void CalcMatrix(int x)
-        {
-            for (int k = 0; k < x1 && k < x2; k++)
+            void CalcMatrix(int x)
             {
-                for (int j = 0; j < x1; j++)
+                for (int k = 0; k < x1 && k < x2; k++)
                 {
-                    matrix3[cycle, k] += matrix1[k, j] * matrix2[j, cycle];
+                    for (int j = 0; j < x1; j++)
+                    {
+                        matrix3[cycle, k] += matrix1[k, j] * matrix2[j, cycle];
+                    }
                 }
+                cycle++;
             }
-            cycle++;
         }
     }
 }
