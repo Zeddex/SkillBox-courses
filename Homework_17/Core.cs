@@ -8,7 +8,8 @@ namespace Homework_17
         public event Action<string> Transaction;
 
         public ObservableCollection<BankDep> bank;
-        readonly Random rnd = new Random();
+        readonly Random rnd = new();
+        public bool isLoaded;
 
         /// <summary>
         /// Create bank structure with 3 departments
@@ -17,9 +18,9 @@ namespace Homework_17
         public ObservableCollection<BankDep> CreateBank()
         {
             // amount of clients in the bank
-            int individClients = 1000;
-            int businessClients = 1000;
-            int vipClients = 1000;
+            int individClients = 10_000_000;
+            int businessClients = 10_000_000;
+            int vipClients = 10_000_000;
 
             bank = new ObservableCollection<BankDep>
             {

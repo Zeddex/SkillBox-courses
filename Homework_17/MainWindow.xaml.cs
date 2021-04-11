@@ -13,6 +13,10 @@ using System.Windows.Media;
 
 namespace Homework_17
 {
+    #region HW17
+    // Use ADO.NET
+    #endregion
+
     /// <summary>
     /// Interaction logic for MainWindow.xaml
     /// </summary>
@@ -326,7 +330,7 @@ namespace Homework_17
         /// <param name="e"></param>
         private void BankList_OnSelectionChanged(object sender, SelectionChangedEventArgs e)
         {
-            if (bankList.SelectedItems != null)
+            if (bankList.SelectedItems != null && core.isLoaded)
             {
                 var clients = (e.OriginalSource as ListBox).SelectedItem as BankDep;
                 clientList.ItemsSource = clients.Clients;
