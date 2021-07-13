@@ -5,9 +5,8 @@ using System.IO;
 using System.Windows;
 using Microsoft.Win32;
 using System.Threading.Tasks;
-using System.Data;
 
-namespace Homework_17
+namespace Homework_18
 {
     public static class InOut
     {
@@ -15,7 +14,7 @@ namespace Homework_17
         /// Save json data to file
         /// </summary>
         /// <param name="bank"></param>
-        public static async void SaveDataAsync(DataTable bank)
+        public static async void SaveDataAsync(ObservableCollection<BankDep> bank)
         {
             await Task.Run(() => SaveData(bank));
         }
@@ -23,7 +22,7 @@ namespace Homework_17
         /// <summary>
         /// Serialization method, save data to file
         /// </summary>
-        static void SaveData(DataTable bank)
+        static void SaveData(ObservableCollection<BankDep> bank)
         {
             string json = JsonConvert.SerializeObject(bank);
             SaveFileDialog save = new SaveFileDialog();

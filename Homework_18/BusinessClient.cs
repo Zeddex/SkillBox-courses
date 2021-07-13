@@ -1,6 +1,6 @@
 ﻿using System;
 
-namespace Homework_17
+namespace Homework_18
 {
     public class Business : Client
     {

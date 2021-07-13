@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Collections.ObjectModel;
 
-namespace Homework_17
+namespace Homework_18
 {
     public abstract class BankDep
     {
