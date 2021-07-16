@@ -21,17 +21,15 @@ namespace Homework_17
 
             SqlCommand cmd = new();
 
-            using (cmd.Connection = new SqlConnection(connectString))
+            try
             {
-                try
-                {
-                    cmd.Connection.Open();
-                }
-                catch (SqlException ex)
-                {
-                    MessageBox.Show(ex.Message, "Error", MessageBoxButton.OK, MessageBoxImage.Error);
-                }
+                cmd.Connection = new SqlConnection(connectString);
             }
+            catch (Exception e)
+            {
+                MessageBox.Show(e.Message, "DB error", MessageBoxButton.OK, MessageBoxImage.Error);
+            }
+
             return cmd;
         }
     }

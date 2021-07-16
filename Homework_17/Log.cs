@@ -11,9 +11,14 @@ namespace Homework_17
         /// Add message to log list
         /// </summary>
         /// <param name="msg"></param>
-        public void AddToLog(string msg)
+        public void AddToListLog(string msg)
         {
             logFile.Add(msg);
+        }
+
+        public void AddToDbLog(int clientId, string message)
+        {
+            SqlQueries.AddTransaction(clientId, message);
         }
     }
 }
