@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.ComponentModel;
+using System.IO;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -10,11 +11,13 @@ using System.Windows.Data;
 using System.Windows.Documents;
 using System.Windows.Input;
 using System.Windows.Media;
+using Microsoft.EntityFrameworkCore;
+using Microsoft.Extensions.Configuration;
 
 namespace Homework_18
 {
-    #region HW16
-    // Add async methods
+    #region HW18
+    // Use Entity Framework
     #endregion
 
     /// <summary>
@@ -32,7 +35,7 @@ namespace Homework_18
             InitializeComponent();
 
             core.Transaction += Core_Transaction;
-            bankList.ItemsSource = core.CreateBank();
+            //BankList.ItemsSource = core.CreateBank();
             transList.ItemsSource = log.logFile;
         }
 
@@ -43,10 +46,10 @@ namespace Homework_18
         /// <param name="e"></param>
         private void BankList_OnSelectionChanged(object sender, SelectionChangedEventArgs e)
         {
-            if (bankList.SelectedItems != null && core.isLoaded)
+            if (BankList.SelectedItems != null && core.isLoaded)
             {
-                var clients = (e.OriginalSource as ListBox).SelectedItem as BankDep;
-                clientList.ItemsSource = clients.Clients;
+                //var clients = (e.OriginalSource as ListBox).SelectedItem as BankDep;
+                //ClientList.ItemsSource = clients.Clients;
             }
         }
 
@@ -57,7 +60,7 @@ namespace Homework_18
         /// <param name="e"></param>
         private void ClientInfo_OnSelectionChanged(object sender, SelectionChangedEventArgs e)
         {
-            if (clientList.SelectedItems != null)
+            if (ClientList.SelectedItems != null)
             {
                 var client = (e.OriginalSource as ListBox).SelectedItems;
                 clientInfo.ItemsSource = client;
@@ -78,7 +81,7 @@ namespace Homework_18
 
         private void MenuItem_Click_About(object sender, RoutedEventArgs e)
         {
-            MessageBox.Show("MyBank v.0.5", this.Title, MessageBoxButton.OK, MessageBoxImage.Information);
+            MessageBox.Show("MyBank v.0.9.9.9", this.Title, MessageBoxButton.OK, MessageBoxImage.Information);
         }
 
         /// <summary>
@@ -103,12 +106,12 @@ namespace Homework_18
         void RefreshList()
         {
             // refresh clients list
-            var bankDep = bankList.SelectedItem as BankDep;
-            clientList.ItemsSource = (bankDep.Clients).Where(x => x != null);
+            //var bankDep = BankList.SelectedItem as BankDep;
+            //ClientList.ItemsSource = (bankDep.Clients).Where(x => x != null);
 
             // refresh clients info list
-            clientInfo.ItemsSource = clientList.SelectedItems;
-            CollectionViewSource.GetDefaultView(clientList.SelectedItems).Refresh();
+            clientInfo.ItemsSource = ClientList.SelectedItems;
+            CollectionViewSource.GetDefaultView(ClientList.SelectedItems).Refresh();
         }
 
         /// <summary>
@@ -128,7 +131,7 @@ namespace Homework_18
         /// <param name="e"></param>
         private void MenuItemSimpDep_OnClick(object sender, RoutedEventArgs e)
         {
-            Client currentClient = clientList.SelectedItem as Client;
+            //Client currentClient = ClientList.SelectedItem as Client;
             uint amountSimpDeposit;
 
             try
@@ -137,8 +140,8 @@ namespace Homework_18
                 core.checkWrongAmount(result);
 
                 // check the client have enough money to make deposit
-                bool checkFunds = core.CheckSuffAmount(currentClient, UInt32.Parse(amountSimpDepTextBox.Text));
-                core.checkFundsPositive(checkFunds);
+                //bool checkFunds = core.CheckSuffAmount(currentClient, UInt32.Parse(amountSimpDepTextBox.Text));
+                //core.checkFundsPositive(checkFunds);
             }
             catch (InsufficientFundsException ex)
             {
@@ -152,7 +155,7 @@ namespace Homework_18
             }
 
             // make simple deposit
-            core.MakeSimpleDeposit(currentClient, amountSimpDeposit);
+            //core.MakeSimpleDeposit(currentClient, amountSimpDeposit);
 
             pSimpDep.IsOpen = false;
 
@@ -178,7 +181,7 @@ namespace Homework_18
         /// <param name="e"></param>
         private void MenuItemCapDep_OnClick(object sender, RoutedEventArgs e)
         {
-            Client currentClient = clientList.SelectedItem as Client;
+            //Client currentClient = ClientList.SelectedItem as Client;
             uint amountCapDeposit;
 
             try
@@ -187,8 +190,8 @@ namespace Homework_18
                 core.checkWrongAmount(result);
 
                 // check the client have enough money to make deposit
-                bool checkFunds = core.CheckSuffAmount(currentClient, UInt32.Parse(amountCapDepTextBox.Text));
-                core.checkFundsPositive(checkFunds);
+                //bool checkFunds = core.CheckSuffAmount(currentClient, UInt32.Parse(amountCapDepTextBox.Text));
+                //core.checkFundsPositive(checkFunds);
             }
             catch (InsufficientFundsException ex)
             {
@@ -202,7 +205,7 @@ namespace Homework_18
             }
 
             // make capitalized deposit
-            core.MakeCapitalizedDeposit(currentClient, amountCapDeposit);
+            //core.MakeCapitalizedDeposit(currentClient, amountCapDeposit);
 
             pCapDep.IsOpen = false;
 
@@ -228,7 +231,7 @@ namespace Homework_18
         /// <param name="e"></param>
         private void MenuItemGetLoan_OnClick(object sender, RoutedEventArgs e)
         {
-            Client currentClient = clientList.SelectedItem as Client;
+            //Client currentClient = ClientList.SelectedItem as Client;
             uint amountLoan;
 
             try
@@ -243,7 +246,7 @@ namespace Homework_18
             }
 
             // get loan
-            core.GetLoan(currentClient, amountLoan);
+            //core.GetLoan(currentClient, amountLoan);
 
             pLoan.IsOpen = false;
 
@@ -261,7 +264,7 @@ namespace Homework_18
         private void MenuItemTransfer_OnClick(object sender, RoutedEventArgs e)
         {
             pTransfer.IsOpen = true;
-            transferTo.ItemsSource = clientList.ItemsSource;
+            transferTo.ItemsSource = ClientList.ItemsSource;
         }
 
         /// <summary>
@@ -271,14 +274,14 @@ namespace Homework_18
         /// <param name="e"></param>
         private void MenuItemMakeTransfer_OnClick(object sender, RoutedEventArgs e)
         {
-            Client currentClient = clientList.SelectedItem as Client;
-            Client recipient = transferTo.SelectedItem as Client;
+            //Client currentClient = ClientList.SelectedItem as Client;
+            //Client recipient = transferTo.SelectedItem as Client;
 
-            if (currentClient == transferTo.SelectedItem)
-            {
-                MessageBox.Show("You cannot make a transfer to yourself", "Error", MessageBoxButton.OK, MessageBoxImage.Error);
-                return;
-            }
+            //if (currentClient == transferTo.SelectedItem)
+            //{
+            //    MessageBox.Show("You cannot make a transfer to yourself", "Error", MessageBoxButton.OK, MessageBoxImage.Error);
+            //    return;
+            //}
 
             uint amountTransfer;
 
@@ -288,8 +291,8 @@ namespace Homework_18
                 core.checkWrongAmount(result);
 
                 // check the sender have enough money to make transfer
-                bool checkFunds = core.CheckSuffAmount(currentClient, UInt32.Parse(amountTransferTextBox.Text));
-                core.checkFundsPositive(checkFunds);
+                //bool checkFunds = core.CheckSuffAmount(currentClient, UInt32.Parse(amountTransferTextBox.Text));
+                //core.checkFundsPositive(checkFunds);
             }
             catch (InsufficientFundsException ex)
             {
@@ -303,7 +306,7 @@ namespace Homework_18
             }
 
             // transfer funds
-            core.TransferFunds(currentClient, recipient, amountTransfer);
+            //core.TransferFunds(currentClient, recipient, amountTransfer);
 
             pTransfer.IsOpen = false;
 
@@ -319,29 +322,29 @@ namespace Homework_18
         /// <param name="e"></param>
         private void ButtonDepInfo_OnClick(object sender, RoutedEventArgs e)
         {
-            Client currentClient = clientList.SelectedItem as Client;
+            //Client currentClient = ClientList.SelectedItem as Client;
 
-            if (currentClient.IsDeposit == Deposit.No)
-            {
-                MessageBox.Show("No information available", "Deposit information", MessageBoxButton.OK,
-                    MessageBoxImage.Exclamation);
-                return;
-            }
+            //if (currentClient.IsDeposit == Deposit.No)
+            //{
+            //    MessageBox.Show("No information available", "Deposit information", MessageBoxButton.OK,
+            //        MessageBoxImage.Exclamation);
+            //    return;
+            //}
 
-            double[] months = core.DepositInfo(currentClient);
+            //double[] months = core.DepositInfo(currentClient);
 
-            month1.Text = months[0].ToString();
-            month2.Text = months[1].ToString();
-            month3.Text = months[2].ToString();
-            month4.Text = months[3].ToString();
-            month5.Text = months[4].ToString();
-            month6.Text = months[5].ToString();
-            month7.Text = months[6].ToString();
-            month8.Text = months[7].ToString();
-            month9.Text = months[8].ToString();
-            month10.Text = months[9].ToString();
-            month11.Text = months[10].ToString();
-            month12.Text = months[11].ToString();
+            //month1.Text = months[0].ToString();
+            //month2.Text = months[1].ToString();
+            //month3.Text = months[2].ToString();
+            //month4.Text = months[3].ToString();
+            //month5.Text = months[4].ToString();
+            //month6.Text = months[5].ToString();
+            //month7.Text = months[6].ToString();
+            //month8.Text = months[7].ToString();
+            //month9.Text = months[8].ToString();
+            //month10.Text = months[9].ToString();
+            //month11.Text = months[10].ToString();
+            //month12.Text = months[11].ToString();
 
             pDepInfo.IsOpen = true;
         }
@@ -351,11 +354,6 @@ namespace Homework_18
             pDepInfo.IsOpen = false;
         }
 
-        private void MenuItem_Click_Save(object sender, RoutedEventArgs e)
-        {
-            core.SaveData();
-        }
-
         private void UsersColumnHeader_OnClick(object sender, RoutedEventArgs e)
         {
             GridViewColumnHeader column = (sender as GridViewColumnHeader);
@@ -363,7 +361,7 @@ namespace Homework_18
             if (listViewSortCol != null)
             {
                 AdornerLayer.GetAdornerLayer(listViewSortCol).Remove(listViewSortAdorner);
-                clientList.Items.SortDescriptions.Clear();
+                ClientList.Items.SortDescriptions.Clear();
             }
 
             ListSortDirection newDir = ListSortDirection.Ascending;
@@ -373,7 +371,7 @@ namespace Homework_18
             listViewSortCol = column;
             listViewSortAdorner = new SortAdorner(listViewSortCol, newDir);
             AdornerLayer.GetAdornerLayer(listViewSortCol).Add(listViewSortAdorner);
-            clientList.Items.SortDescriptions.Add(new SortDescription(sortBy, newDir));
+            ClientList.Items.SortDescriptions.Add(new SortDescription(sortBy, newDir));
         }
     }
 
