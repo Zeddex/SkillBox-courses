@@ -134,7 +134,7 @@ namespace Homework_18
             try
             {
                 bool result = UInt32.TryParse(amountSimpDepTextBox.Text, out amountSimpDeposit);
-                core.checkWrongAmount(result);
+                core.CheckWrongAmount(result);
 
                 // check the client have enough money to make deposit
                 //bool checkFunds = core.CheckSuffAmount(currentClient, UInt32.Parse(amountSimpDepTextBox.Text));
@@ -184,7 +184,7 @@ namespace Homework_18
             try
             {
                 bool result = UInt32.TryParse(amountCapDepTextBox.Text, out amountCapDeposit);
-                core.checkWrongAmount(result);
+                core.CheckWrongAmount(result);
 
                 // check the client have enough money to make deposit
                 //bool checkFunds = core.CheckSuffAmount(currentClient, UInt32.Parse(amountCapDepTextBox.Text));
@@ -234,7 +234,7 @@ namespace Homework_18
             try
             {
                 bool result = UInt32.TryParse(amountLoanTextBox.Text, out amountLoan);
-                core.checkWrongAmount(result);
+                core.CheckWrongAmount(result);
             }
             catch (WrongAmountException ex)
             {
@@ -285,7 +285,7 @@ namespace Homework_18
             try
             {
                 bool result = UInt32.TryParse(amountTransferTextBox.Text, out amountTransfer);
-                core.checkWrongAmount(result);
+                core.CheckWrongAmount(result);
 
                 // check the sender have enough money to make transfer
                 //bool checkFunds = core.CheckSuffAmount(currentClient, UInt32.Parse(amountTransferTextBox.Text));

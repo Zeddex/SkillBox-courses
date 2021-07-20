@@ -109,7 +109,7 @@ namespace Homework_18
             return true;
         }
 
-        public bool checkWrongAmount(bool result)
+        public bool CheckWrongAmount(bool result)
         {
             if (!result)
             {
