@@ -46,11 +46,8 @@ namespace Homework_18
         /// <param name="e"></param>
         private void BankList_OnSelectionChanged(object sender, SelectionChangedEventArgs e)
         {
-            if (BankList.SelectedItems != null && core.isLoaded)
-            {
-                //var clients = (e.OriginalSource as ListBox).SelectedItem as BankDep;
-                //ClientList.ItemsSource = clients.Clients;
-            }
+            //var clients = (e.OriginalSource as ListBox).SelectedItem as BankDep;
+            //ClientList.ItemsSource = clients.Clients;
         }
 
         /// <summary>

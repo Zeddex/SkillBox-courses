@@ -11,10 +11,6 @@ namespace Homework_18
     {
         public event Action<string> Transaction;
 
-        readonly Random rnd = new Random();
-        public bool isLoaded;
-
-
         /// <summary>
         /// Add clients to bank departments
         /// </summary>
@@ -41,23 +37,6 @@ namespace Homework_18
             //    CreateClientsCollection<Vip>((int)BankDepartment.VipBank);
             //}
         }
-
-        async void AddClientsToBankAsync(int individ, int business, int vip)
-        {
-            await Task.Run(() => AddClientsToBank(individ, business, vip));
-            isLoaded = true;
-            MessageBox.Show("Loading data complete!", "Loading complete", MessageBoxButton.OK, MessageBoxImage.Information);
-        }
-
-        /// <summary>
-        /// Add clients to bank departments
-        /// </summary>
-        /// <typeparam name="T"></typeparam>
-        /// <param name="bankDep"></param>
-        //void CreateClientsCollection<T>(int bankDep) where T : Client, new()
-        //{
-        //    bank[bankDep].Clients.Add(new T());
-        //}
 
         /// <summary>
         /// Check the sender have enough money to make transfer
@@ -127,8 +106,7 @@ namespace Homework_18
             {
                 throw new InsufficientFundsException("Insufficient Funds!");
             }
-            else
-                return true;
+            return true;
         }
 
         public bool checkWrongAmount(bool result)
