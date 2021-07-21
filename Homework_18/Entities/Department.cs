@@ -12,7 +12,16 @@ namespace Homework_18.Entities
         [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
         public int Id { get; set; }
 
-        public DepartmentName Name { get; set; }
+        [Column("DepartmentName")]
+        public string DepartmentNameString
+        {
+            get => DepartmentName.ToString();
+            set => DepartmentName = value.ParseEnum<DepartmentName>();
+        }
+
+        [NotMapped]
+        [Column(TypeName = "nvarchar(50)")]
+        public DepartmentName DepartmentName { get; set; }
 
         public int LoanRate { get; set; }
 

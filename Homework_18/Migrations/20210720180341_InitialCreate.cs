@@ -12,7 +12,8 @@ namespace Homework_18.Migrations
                 {
                     Id = table.Column<int>(type: "int", nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
-                    Name = table.Column<int>(type: "int", nullable: false),
+                    DepartmentName = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    DepartmentName1 = table.Column<string>(type: "nvarchar(50)", nullable: false),
                     LoanRate = table.Column<int>(type: "int", nullable: false),
                     DepositRate = table.Column<int>(type: "int", nullable: false)
                 },
@@ -49,7 +50,8 @@ namespace Homework_18.Migrations
                     Funds = table.Column<decimal>(type: "decimal(18,2)", nullable: false),
                     Loan = table.Column<decimal>(type: "decimal(18,2)", nullable: false),
                     Deposit = table.Column<decimal>(type: "decimal(18,2)", nullable: false),
-                    Type = table.Column<int>(type: "int", nullable: false)
+                    DepositType = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    DepositType1 = table.Column<string>(type: "nvarchar(50)", nullable: false)
                 },
                 constraints: table =>
                 {
@@ -84,18 +86,18 @@ namespace Homework_18.Migrations
 
             migrationBuilder.InsertData(
                 table: "Departments",
-                columns: new[] { "Id", "DepositRate", "LoanRate", "Name" },
-                values: new object[] { 1, 5, 15, 0 });
+                columns: new[] { "Id", "DepartmentName1", "DepartmentName", "DepositRate", "LoanRate" },
+                values: new object[] { 1, "Individual", "Individual", 5, 15 });
 
             migrationBuilder.InsertData(
                 table: "Departments",
-                columns: new[] { "Id", "DepositRate", "LoanRate", "Name" },
-                values: new object[] { 2, 10, 10, 1 });
+                columns: new[] { "Id", "DepartmentName1", "DepartmentName", "DepositRate", "LoanRate" },
+                values: new object[] { 2, "Business", "Business", 10, 10 });
 
             migrationBuilder.InsertData(
                 table: "Departments",
-                columns: new[] { "Id", "DepositRate", "LoanRate", "Name" },
-                values: new object[] { 3, 15, 5, 2 });
+                columns: new[] { "Id", "DepartmentName1", "DepartmentName", "DepositRate", "LoanRate" },
+                values: new object[] { 3, "Vip", "Vip", 15, 5 });
 
             migrationBuilder.InsertData(
                 table: "Clients",
@@ -136,39 +138,39 @@ namespace Homework_18.Migrations
 
             migrationBuilder.InsertData(
                 table: "Money",
-                columns: new[] { "ClientId", "Deposit", "Funds", "Loan", "Type" },
+                columns: new[] { "ClientId", "Deposit", "DepositType1", "DepositType", "Funds", "Loan" },
                 values: new object[,]
                 {
-                    { 1, 0m, 13922m, 0m, 0 },
-                    { 28, 0m, 11960m, 0m, 0 },
-                    { 27, 0m, 7256m, 0m, 0 },
-                    { 26, 0m, 4652m, 0m, 0 },
-                    { 25, 0m, 1806m, 0m, 0 },
-                    { 24, 0m, 29278m, 0m, 0 },
-                    { 23, 0m, 41542m, 0m, 0 },
-                    { 22, 0m, 21236m, 0m, 0 },
-                    { 21, 0m, 36542m, 0m, 0 },
-                    { 20, 0m, 45049m, 0m, 0 },
-                    { 19, 0m, 9670m, 0m, 0 },
-                    { 18, 0m, 18124m, 0m, 0 },
-                    { 17, 0m, 12695m, 0m, 0 },
-                    { 16, 0m, 15563m, 0m, 0 },
-                    { 15, 0m, 37097m, 0m, 0 },
-                    { 14, 0m, 5459m, 0m, 0 },
-                    { 13, 0m, 21018m, 0m, 0 },
-                    { 12, 0m, 1213m, 0m, 0 },
-                    { 11, 0m, 26993m, 0m, 0 },
-                    { 10, 0m, 10740m, 0m, 0 },
-                    { 9, 0m, 10516m, 0m, 0 },
-                    { 8, 0m, 41162m, 0m, 0 },
-                    { 7, 0m, 17358m, 0m, 0 },
-                    { 6, 0m, 25378m, 0m, 0 },
-                    { 5, 0m, 4595m, 0m, 0 },
-                    { 4, 0m, 40967m, 0m, 0 },
-                    { 3, 0m, 20543m, 0m, 0 },
-                    { 2, 0m, 8452m, 0m, 0 },
-                    { 29, 0m, 31206m, 0m, 0 },
-                    { 30, 0m, 32768m, 0m, 0 }
+                    { 1, 0m, "No", "No", 13922m, 0m },
+                    { 28, 0m, "No", "No", 11960m, 0m },
+                    { 27, 0m, "No", "No", 7256m, 0m },
+                    { 26, 0m, "No", "No", 4652m, 0m },
+                    { 25, 0m, "No", "No", 1806m, 0m },
+                    { 24, 0m, "No", "No", 29278m, 0m },
+                    { 23, 0m, "No", "No", 41542m, 0m },
+                    { 22, 0m, "No", "No", 21236m, 0m },
+                    { 21, 0m, "No", "No", 36542m, 0m },
+                    { 20, 0m, "No", "No", 45049m, 0m },
+                    { 19, 0m, "No", "No", 9670m, 0m },
+                    { 18, 0m, "No", "No", 18124m, 0m },
+                    { 17, 0m, "No", "No", 12695m, 0m },
+                    { 16, 0m, "No", "No", 15563m, 0m },
+                    { 15, 0m, "No", "No", 37097m, 0m },
+                    { 14, 0m, "No", "No", 5459m, 0m },
+                    { 13, 0m, "No", "No", 21018m, 0m },
+                    { 12, 0m, "No", "No", 1213m, 0m },
+                    { 11, 0m, "No", "No", 26993m, 0m },
+                    { 10, 0m, "No", "No", 10740m, 0m },
+                    { 9, 0m, "No", "No", 10516m, 0m },
+                    { 8, 0m, "No", "No", 41162m, 0m },
+                    { 7, 0m, "No", "No", 17358m, 0m },
+                    { 6, 0m, "No", "No", 25378m, 0m },
+                    { 5, 0m, "No", "No", 4595m, 0m },
+                    { 4, 0m, "No", "No", 40967m, 0m },
+                    { 3, 0m, "No", "No", 20543m, 0m },
+                    { 2, 0m, "No", "No", 8452m, 0m },
+                    { 29, 0m, "No", "No", 31206m, 0m },
+                    { 30, 0m, "No", "No", 32768m, 0m }
                 });
 
             migrationBuilder.CreateIndex(

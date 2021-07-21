@@ -12,6 +12,11 @@ namespace Homework_18
         public DbSet<Transaction> Transactions { get; set; }
         public DbSet<Money> Money { get; set; }
 
+        public AppContext()
+        {
+            Database.EnsureCreated();
+        }
+
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         {
             optionsBuilder.UseSqlServer("Server=(localdb)\\mssqllocaldb;Database=bank;Trusted_Connection=True;");
@@ -53,43 +58,53 @@ namespace Homework_18
             );
 
             modelBuilder.Entity<Department>().HasData(
-                new Department { Id = 1, Name = DepartmentName.Individual, LoanRate = 15, DepositRate = 5 },
-                new Department { Id = 2, Name = DepartmentName.Business, LoanRate = 10, DepositRate = 10 },
-                new Department { Id = 3, Name = DepartmentName.Vip, LoanRate = 5, DepositRate = 15 }
+                new Department { Id = 1, DepartmentName = DepartmentName.Individual, LoanRate = 15, DepositRate = 5 },
+                new Department { Id = 2, DepartmentName = DepartmentName.Business, LoanRate = 10, DepositRate = 10 },
+                new Department { Id = 3, DepartmentName = DepartmentName.Vip, LoanRate = 5, DepositRate = 15 }
             );
 
             modelBuilder.Entity<Money>().HasData(
-                new Money { ClientId = 1, Funds = 13922, Loan = 0, Deposit = 0, Type = DepositType.No },
-                new Money { ClientId = 2, Funds = 8452, Loan = 0, Deposit = 0, Type = DepositType.No },
-                new Money { ClientId = 3, Funds = 20543, Loan = 0, Deposit = 0, Type = DepositType.No },
-                new Money { ClientId = 4, Funds = 40967, Loan = 0, Deposit = 0, Type = DepositType.No },
-                new Money { ClientId = 5, Funds = 4595, Loan = 0, Deposit = 0, Type = DepositType.No },
-                new Money { ClientId = 6, Funds = 25378, Loan = 0, Deposit = 0, Type = DepositType.No },
-                new Money { ClientId = 7, Funds = 17358, Loan = 0, Deposit = 0, Type = DepositType.No },
-                new Money { ClientId = 8, Funds = 41162, Loan = 0, Deposit = 0, Type = DepositType.No },
-                new Money { ClientId = 9, Funds = 10516, Loan = 0, Deposit = 0, Type = DepositType.No },
-                new Money { ClientId = 10, Funds = 10740, Loan = 0, Deposit = 0, Type = DepositType.No },
-                new Money { ClientId = 11, Funds = 26993, Loan = 0, Deposit = 0, Type = DepositType.No },
-                new Money { ClientId = 12, Funds = 1213, Loan = 0, Deposit = 0, Type = DepositType.No },
-                new Money { ClientId = 13, Funds = 21018, Loan = 0, Deposit = 0, Type = DepositType.No },
-                new Money { ClientId = 14, Funds = 5459, Loan = 0, Deposit = 0, Type = DepositType.No },
-                new Money { ClientId = 15, Funds = 37097, Loan = 0, Deposit = 0, Type = DepositType.No },
-                new Money { ClientId = 16, Funds = 15563, Loan = 0, Deposit = 0, Type = DepositType.No },
-                new Money { ClientId = 17, Funds = 12695, Loan = 0, Deposit = 0, Type = DepositType.No },
-                new Money { ClientId = 18, Funds = 18124, Loan = 0, Deposit = 0, Type = DepositType.No },
-                new Money { ClientId = 19, Funds = 9670, Loan = 0, Deposit = 0, Type = DepositType.No },
-                new Money { ClientId = 20, Funds = 45049, Loan = 0, Deposit = 0, Type = DepositType.No },
-                new Money { ClientId = 21, Funds = 36542, Loan = 0, Deposit = 0, Type = DepositType.No },
-                new Money { ClientId = 22, Funds = 21236, Loan = 0, Deposit = 0, Type = DepositType.No },
-                new Money { ClientId = 23, Funds = 41542, Loan = 0, Deposit = 0, Type = DepositType.No },
-                new Money { ClientId = 24, Funds = 29278, Loan = 0, Deposit = 0, Type = DepositType.No },
-                new Money { ClientId = 25, Funds = 1806, Loan = 0, Deposit = 0, Type = DepositType.No },
-                new Money { ClientId = 26, Funds = 4652, Loan = 0, Deposit = 0, Type = DepositType.No },
-                new Money { ClientId = 27, Funds = 7256, Loan = 0, Deposit = 0, Type = DepositType.No },
-                new Money { ClientId = 28, Funds = 11960, Loan = 0, Deposit = 0, Type = DepositType.No },
-                new Money { ClientId = 29, Funds = 31206, Loan = 0, Deposit = 0, Type = DepositType.No },
-                new Money { ClientId = 30, Funds = 32768, Loan = 0, Deposit = 0, Type = DepositType.No }
+                new Money { ClientId = 1, Funds = 13922, Loan = 0, Deposit = 0, DepositType = DepositType.No },
+                new Money { ClientId = 2, Funds = 8452, Loan = 0, Deposit = 0, DepositType = DepositType.No },
+                new Money { ClientId = 3, Funds = 20543, Loan = 0, Deposit = 0, DepositType = DepositType.No },
+                new Money { ClientId = 4, Funds = 40967, Loan = 0, Deposit = 0, DepositType = DepositType.No },
+                new Money { ClientId = 5, Funds = 4595, Loan = 0, Deposit = 0, DepositType = DepositType.No },
+                new Money { ClientId = 6, Funds = 25378, Loan = 0, Deposit = 0, DepositType = DepositType.No },
+                new Money { ClientId = 7, Funds = 17358, Loan = 0, Deposit = 0, DepositType = DepositType.No },
+                new Money { ClientId = 8, Funds = 41162, Loan = 0, Deposit = 0, DepositType = DepositType.No },
+                new Money { ClientId = 9, Funds = 10516, Loan = 0, Deposit = 0, DepositType = DepositType.No },
+                new Money { ClientId = 10, Funds = 10740, Loan = 0, Deposit = 0, DepositType = DepositType.No },
+                new Money { ClientId = 11, Funds = 26993, Loan = 0, Deposit = 0, DepositType = DepositType.No },
+                new Money { ClientId = 12, Funds = 1213, Loan = 0, Deposit = 0, DepositType = DepositType.No },
+                new Money { ClientId = 13, Funds = 21018, Loan = 0, Deposit = 0, DepositType = DepositType.No },
+                new Money { ClientId = 14, Funds = 5459, Loan = 0, Deposit = 0, DepositType = DepositType.No },
+                new Money { ClientId = 15, Funds = 37097, Loan = 0, Deposit = 0, DepositType = DepositType.No },
+                new Money { ClientId = 16, Funds = 15563, Loan = 0, Deposit = 0, DepositType = DepositType.No },
+                new Money { ClientId = 17, Funds = 12695, Loan = 0, Deposit = 0, DepositType = DepositType.No },
+                new Money { ClientId = 18, Funds = 18124, Loan = 0, Deposit = 0, DepositType = DepositType.No },
+                new Money { ClientId = 19, Funds = 9670, Loan = 0, Deposit = 0, DepositType = DepositType.No },
+                new Money { ClientId = 20, Funds = 45049, Loan = 0, Deposit = 0, DepositType = DepositType.No },
+                new Money { ClientId = 21, Funds = 36542, Loan = 0, Deposit = 0, DepositType = DepositType.No },
+                new Money { ClientId = 22, Funds = 21236, Loan = 0, Deposit = 0, DepositType = DepositType.No },
+                new Money { ClientId = 23, Funds = 41542, Loan = 0, Deposit = 0, DepositType = DepositType.No },
+                new Money { ClientId = 24, Funds = 29278, Loan = 0, Deposit = 0, DepositType = DepositType.No },
+                new Money { ClientId = 25, Funds = 1806, Loan = 0, Deposit = 0, DepositType = DepositType.No },
+                new Money { ClientId = 26, Funds = 4652, Loan = 0, Deposit = 0, DepositType = DepositType.No },
+                new Money { ClientId = 27, Funds = 7256, Loan = 0, Deposit = 0, DepositType = DepositType.No },
+                new Money { ClientId = 28, Funds = 11960, Loan = 0, Deposit = 0, DepositType = DepositType.No },
+                new Money { ClientId = 29, Funds = 31206, Loan = 0, Deposit = 0, DepositType = DepositType.No },
+                new Money { ClientId = 30, Funds = 32768, Loan = 0, Deposit = 0, DepositType = DepositType.No }
             );
+
+            modelBuilder
+                .Entity<Department>()
+                .Property(e => e.DepartmentName)
+                .HasConversion<string>();
+
+            modelBuilder
+                .Entity<Money>()
+                .Property(e => e.DepositType)
+                .HasConversion<string>();
         }
     }
 }

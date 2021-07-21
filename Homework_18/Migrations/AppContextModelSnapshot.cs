@@ -229,13 +229,19 @@ namespace Homework_18.Migrations
                         .HasColumnType("int")
                         .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
+                    b.Property<string>("DepartmentName")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(50)")
+                        .HasColumnName("DepartmentName1");
+
+                    b.Property<string>("DepartmentNameString")
+                        .HasColumnType("nvarchar(max)")
+                        .HasColumnName("DepartmentName");
+
                     b.Property<int>("DepositRate")
                         .HasColumnType("int");
 
                     b.Property<int>("LoanRate")
-                        .HasColumnType("int");
-
-                    b.Property<int>("Name")
                         .HasColumnType("int");
 
                     b.HasKey("Id");
@@ -246,23 +252,26 @@ namespace Homework_18.Migrations
                         new
                         {
                             Id = 1,
+                            DepartmentName = "Individual",
+                            DepartmentNameString = "Individual",
                             DepositRate = 5,
-                            LoanRate = 15,
-                            Name = 0
+                            LoanRate = 15
                         },
                         new
                         {
                             Id = 2,
+                            DepartmentName = "Business",
+                            DepartmentNameString = "Business",
                             DepositRate = 10,
-                            LoanRate = 10,
-                            Name = 1
+                            LoanRate = 10
                         },
                         new
                         {
                             Id = 3,
+                            DepartmentName = "Vip",
+                            DepartmentNameString = "Vip",
                             DepositRate = 15,
-                            LoanRate = 5,
-                            Name = 2
+                            LoanRate = 5
                         });
                 });
 
@@ -274,14 +283,20 @@ namespace Homework_18.Migrations
                     b.Property<decimal>("Deposit")
                         .HasColumnType("decimal(18,2)");
 
+                    b.Property<string>("DepositType")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(50)")
+                        .HasColumnName("DepositType1");
+
+                    b.Property<string>("DepositTypeString")
+                        .HasColumnType("nvarchar(max)")
+                        .HasColumnName("DepositType");
+
                     b.Property<decimal>("Funds")
                         .HasColumnType("decimal(18,2)");
 
                     b.Property<decimal>("Loan")
                         .HasColumnType("decimal(18,2)");
-
-                    b.Property<int>("Type")
-                        .HasColumnType("int");
 
                     b.HasKey("ClientId");
 
@@ -292,241 +307,271 @@ namespace Homework_18.Migrations
                         {
                             ClientId = 1,
                             Deposit = 0m,
+                            DepositType = "No",
+                            DepositTypeString = "No",
                             Funds = 13922m,
-                            Loan = 0m,
-                            Type = 0
+                            Loan = 0m
                         },
                         new
                         {
                             ClientId = 2,
                             Deposit = 0m,
+                            DepositType = "No",
+                            DepositTypeString = "No",
                             Funds = 8452m,
-                            Loan = 0m,
-                            Type = 0
+                            Loan = 0m
                         },
                         new
                         {
                             ClientId = 3,
                             Deposit = 0m,
+                            DepositType = "No",
+                            DepositTypeString = "No",
                             Funds = 20543m,
-                            Loan = 0m,
-                            Type = 0
+                            Loan = 0m
                         },
                         new
                         {
                             ClientId = 4,
                             Deposit = 0m,
+                            DepositType = "No",
+                            DepositTypeString = "No",
                             Funds = 40967m,
-                            Loan = 0m,
-                            Type = 0
+                            Loan = 0m
                         },
                         new
                         {
                             ClientId = 5,
                             Deposit = 0m,
+                            DepositType = "No",
+                            DepositTypeString = "No",
                             Funds = 4595m,
-                            Loan = 0m,
-                            Type = 0
+                            Loan = 0m
                         },
                         new
                         {
                             ClientId = 6,
                             Deposit = 0m,
+                            DepositType = "No",
+                            DepositTypeString = "No",
                             Funds = 25378m,
-                            Loan = 0m,
-                            Type = 0
+                            Loan = 0m
                         },
                         new
                         {
                             ClientId = 7,
                             Deposit = 0m,
+                            DepositType = "No",
+                            DepositTypeString = "No",
                             Funds = 17358m,
-                            Loan = 0m,
-                            Type = 0
+                            Loan = 0m
                         },
                         new
                         {
                             ClientId = 8,
                             Deposit = 0m,
+                            DepositType = "No",
+                            DepositTypeString = "No",
                             Funds = 41162m,
-                            Loan = 0m,
-                            Type = 0
+                            Loan = 0m
                         },
                         new
                         {
                             ClientId = 9,
                             Deposit = 0m,
+                            DepositType = "No",
+                            DepositTypeString = "No",
                             Funds = 10516m,
-                            Loan = 0m,
-                            Type = 0
+                            Loan = 0m
                         },
                         new
                         {
                             ClientId = 10,
                             Deposit = 0m,
+                            DepositType = "No",
+                            DepositTypeString = "No",
                             Funds = 10740m,
-                            Loan = 0m,
-                            Type = 0
+                            Loan = 0m
                         },
                         new
                         {
                             ClientId = 11,
                             Deposit = 0m,
+                            DepositType = "No",
+                            DepositTypeString = "No",
                             Funds = 26993m,
-                            Loan = 0m,
-                            Type = 0
+                            Loan = 0m
                         },
                         new
                         {
                             ClientId = 12,
                             Deposit = 0m,
+                            DepositType = "No",
+                            DepositTypeString = "No",
                             Funds = 1213m,
-                            Loan = 0m,
-                            Type = 0
+                            Loan = 0m
                         },
                         new
                         {
                             ClientId = 13,
                             Deposit = 0m,
+                            DepositType = "No",
+                            DepositTypeString = "No",
                             Funds = 21018m,
-                            Loan = 0m,
-                            Type = 0
+                            Loan = 0m
                         },
                         new
                         {
                             ClientId = 14,
                             Deposit = 0m,
+                            DepositType = "No",
+                            DepositTypeString = "No",
                             Funds = 5459m,
-                            Loan = 0m,
-                            Type = 0
+                            Loan = 0m
                         },
                         new
                         {
                             ClientId = 15,
                             Deposit = 0m,
+                            DepositType = "No",
+                            DepositTypeString = "No",
                             Funds = 37097m,
-                            Loan = 0m,
-                            Type = 0
+                            Loan = 0m
                         },
                         new
                         {
                             ClientId = 16,
                             Deposit = 0m,
+                            DepositType = "No",
+                            DepositTypeString = "No",
                             Funds = 15563m,
-                            Loan = 0m,
-                            Type = 0
+                            Loan = 0m
                         },
                         new
                         {
                             ClientId = 17,
                             Deposit = 0m,
+                            DepositType = "No",
+                            DepositTypeString = "No",
                             Funds = 12695m,
-                            Loan = 0m,
-                            Type = 0
+                            Loan = 0m
                         },
                         new
                         {
                             ClientId = 18,
                             Deposit = 0m,
+                            DepositType = "No",
+                            DepositTypeString = "No",
                             Funds = 18124m,
-                            Loan = 0m,
-                            Type = 0
+                            Loan = 0m
                         },
                         new
                         {
                             ClientId = 19,
                             Deposit = 0m,
+                            DepositType = "No",
+                            DepositTypeString = "No",
                             Funds = 9670m,
-                            Loan = 0m,
-                            Type = 0
+                            Loan = 0m
                         },
                         new
                         {
                             ClientId = 20,
                             Deposit = 0m,
+                            DepositType = "No",
+                            DepositTypeString = "No",
                             Funds = 45049m,
-                            Loan = 0m,
-                            Type = 0
+                            Loan = 0m
                         },
                         new
                         {
                             ClientId = 21,
                             Deposit = 0m,
+                            DepositType = "No",
+                            DepositTypeString = "No",
                             Funds = 36542m,
-                            Loan = 0m,
-                            Type = 0
+                            Loan = 0m
                         },
                         new
                         {
                             ClientId = 22,
                             Deposit = 0m,
+                            DepositType = "No",
+                            DepositTypeString = "No",
                             Funds = 21236m,
-                            Loan = 0m,
-                            Type = 0
+                            Loan = 0m
                         },
                         new
                         {
                             ClientId = 23,
                             Deposit = 0m,
+                            DepositType = "No",
+                            DepositTypeString = "No",
                             Funds = 41542m,
-                            Loan = 0m,
-                            Type = 0
+                            Loan = 0m
                         },
                         new
                         {
                             ClientId = 24,
                             Deposit = 0m,
+                            DepositType = "No",
+                            DepositTypeString = "No",
                             Funds = 29278m,
-                            Loan = 0m,
-                            Type = 0
+                            Loan = 0m
                         },
                         new
                         {
                             ClientId = 25,
                             Deposit = 0m,
+                            DepositType = "No",
+                            DepositTypeString = "No",
                             Funds = 1806m,
-                            Loan = 0m,
-                            Type = 0
+                            Loan = 0m
                         },
                         new
                         {
                             ClientId = 26,
                             Deposit = 0m,
+                            DepositType = "No",
+                            DepositTypeString = "No",
                             Funds = 4652m,
-                            Loan = 0m,
-                            Type = 0
+                            Loan = 0m
                         },
                         new
                         {
                             ClientId = 27,
                             Deposit = 0m,
+                            DepositType = "No",
+                            DepositTypeString = "No",
                             Funds = 7256m,
-                            Loan = 0m,
-                            Type = 0
+                            Loan = 0m
                         },
                         new
                         {
                             ClientId = 28,
                             Deposit = 0m,
+                            DepositType = "No",
+                            DepositTypeString = "No",
                             Funds = 11960m,
-                            Loan = 0m,
-                            Type = 0
+                            Loan = 0m
                         },
                         new
                         {
                             ClientId = 29,
                             Deposit = 0m,
+                            DepositType = "No",
+                            DepositTypeString = "No",
                             Funds = 31206m,
-                            Loan = 0m,
-                            Type = 0
+                            Loan = 0m
                         },
                         new
                         {
                             ClientId = 30,
                             Deposit = 0m,
+                            DepositType = "No",
+                            DepositTypeString = "No",
                             Funds = 32768m,
-                            Loan = 0m,
-                            Type = 0
+                            Loan = 0m
                         });
                 });
 

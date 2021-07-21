@@ -41,7 +41,7 @@
                 <MenuItem Header="_File">
                     <MenuItem Header="_Load data" IsEnabled="False"></MenuItem>
                     <MenuItem Header="_Save data" IsEnabled="False"></MenuItem>
-                    <MenuItem Header="_Debug mode" Click="MenuItem_OnClick_Debug" IsEnabled="True"></MenuItem>
+                    <MenuItem Header="_Debug mode" Click="MenuItem_OnClick_Debug" IsEnabled="False"></MenuItem>
                     <Separator/>
                     <MenuItem Header="_Exit" Click="MenuItem_Click_Exit"></MenuItem>
                 </MenuItem>
@@ -62,7 +62,7 @@
         <ListBox Grid.Row="2" Grid.RowSpan="5" x:Name="BankList" SelectionChanged="BankList_OnSelectionChanged">
             <ListBox.ItemTemplate>
                 <DataTemplate>
-                    <TextBlock Text="{Binding Department}"/>
+                    <TextBlock Text="{Binding }"/>
                 </DataTemplate>
             </ListBox.ItemTemplate>
         </ListBox>
@@ -78,12 +78,12 @@
                   PreviewMouseRightButtonUp="ClientList_OnPreviewMouseRightButtonUp">
             <ListView.View>
                 <GridView>
-                    <GridViewColumn Width="200" DisplayMemberBinding="{Binding Name}">
+                    <GridViewColumn Width="200" DisplayMemberBinding="{Binding Key}">
                         <GridViewColumn.Header>
                             <GridViewColumnHeader Tag="Name" Click="UsersColumnHeader_OnClick">Client Name</GridViewColumnHeader>
                         </GridViewColumn.Header>
                     </GridViewColumn>
-                    <GridViewColumn Width="140" DisplayMemberBinding="{Binding Money}">
+                    <GridViewColumn Width="140" DisplayMemberBinding="{Binding Value}">
                         <GridViewColumn.Header>
                             <GridViewColumnHeader Tag="Money" Click="UsersColumnHeader_OnClick">Available funds</GridViewColumnHeader>
                         </GridViewColumn.Header>
@@ -100,42 +100,34 @@
 
         <TextBlock Grid.Row="1" Grid.Column="4" FontWeight="Bold" Margin="5 0" Text="Information:"/>
 
-        <ListBox Grid.Row="2" Grid.Column="4" x:Name="clientInfo">
+        <ListBox Grid.Row="2" Grid.Column="4">
             <StackPanel Orientation="Horizontal">
                 <TextBlock Text="Client's name: "/>
-                <TextBlock Text="{Binding Name}"/>
+                <TextBlock x:Name="ClientNameInfo" Text="{Binding}"/>
             </StackPanel>
             <StackPanel Orientation="Horizontal">
                 <TextBlock Text="Funds available: "/>
-                <TextBlock Text="{Binding Money}"/>
-            </StackPanel>
-            <StackPanel Orientation="Horizontal">
-                <TextBlock Text="Client Status: "/>
-                <TextBlock Text="{Binding Status}"/>
-            </StackPanel>
-            <StackPanel Orientation="Horizontal">
-                <TextBlock Text="Good credit score: "/>
-                <TextBlock Text="{Binding CreditScore}"/>
-            </StackPanel>
-            <StackPanel Orientation="Horizontal">
-                <TextBlock Text="Active loan: "/>
-                <TextBlock Text="{Binding IsLoan}"/>
+                <TextBlock x:Name="FundsInfo" Text="{Binding}"/>
             </StackPanel>
             <StackPanel Orientation="Horizontal">
                 <TextBlock Text="Loan rate (%): "/>
-                <TextBlock Text="{Binding LoanRate}"/>
+                <TextBlock x:Name="LoanRateInfo" Text="{Binding }"/>
             </StackPanel>
             <StackPanel Orientation="Horizontal">
-                <TextBlock Text="Active deposit: "/>
-                <TextBlock Text="{Binding IsDeposit}"/>
+                <TextBlock Text="Loan: "/>
+                <TextBlock x:Name="LoanInfo" Text="{Binding }"/>
             </StackPanel>
             <StackPanel Orientation="Horizontal">
                 <TextBlock Text="Deposit rate (%): "/>
-                <TextBlock Text="{Binding DepositRate}"/>
+                <TextBlock x:Name="DepRateInfo" Text="{Binding }"/>
+            </StackPanel>
+            <StackPanel Orientation="Horizontal">
+                <TextBlock Text="Deposit: "/>
+                <TextBlock x:Name="DepositInfo" Text="{Binding }"/>
             </StackPanel>
             <StackPanel Orientation="Horizontal">
                 <TextBlock Text="Deposit interest: "/>
-                <TextBlock Text="{Binding DepositType}"/>
+                <TextBlock x:Name="DepTypeInfo" Text="{Binding }"/>
             </StackPanel>
             <Button Click="ButtonDepInfo_OnClick" HorizontalAlignment="Left" MaxWidth="120">Deposit information</Button>
         </ListBox>
@@ -159,7 +151,7 @@
                         <ComboBox.ItemTemplate>
                             <DataTemplate>
                                 <StackPanel>
-                                    <TextBlock Text="{Binding Name}" />
+                                    <TextBlock Text="{Binding Key}" />
                                 </StackPanel>
                             </DataTemplate>
                         </ComboBox.ItemTemplate>

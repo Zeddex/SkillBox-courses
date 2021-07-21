@@ -6,7 +6,8 @@ namespace Homework_18
 {
     public class Log
     {
-        public ObservableCollection<string> logFile = new ObservableCollection<string>();
+        public ObservableCollection<string> logFile = new();
+        private readonly BankProvider provider = new();
 
         /// <summary>
         /// Add message to log list
@@ -15,6 +16,11 @@ namespace Homework_18
         public void AddToLog(string msg)
         {
             logFile.Add(msg);
+        }
+
+        public void AddToDbLog(int clientId, string message)
+        {
+            provider.AddTransaction(clientId, message);
         }
     }
 }
