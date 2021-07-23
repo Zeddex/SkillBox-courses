@@ -24,7 +24,7 @@ namespace Homework_18
             return clientFunds >= amount;
         }
 
-        public bool checkFundsPositive(bool result)
+        public bool CheckFundsPositive(bool result)
         {
             return !result ? throw new InsufficientFundsException("Insufficient Funds!") : true;
         }
@@ -109,7 +109,6 @@ namespace Homework_18
             }
             return name;
         }
-
 
         public void GetClientInfo(int clientId, out decimal clientFunds, out decimal clientLoan, out decimal clientDeposit, out string clientDepositType)
         {

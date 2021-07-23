@@ -12,5 +12,10 @@ namespace Homework_18
         {
             return (T)Enum.Parse(typeof(T), value, true);
         }
+
+        public static string ClientNameParse(string name)
+        {
+            return name.TrimStart('[').Split(',')[0];
+        }
     }
 }

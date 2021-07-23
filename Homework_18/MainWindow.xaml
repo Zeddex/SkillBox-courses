@@ -201,54 +201,13 @@
             <GroupBox Header="Deposit Info" Width="150" Margin="10" Padding="10">
                 <StackPanel Width="110">
                     <TextBlock>Monthly income ($):</TextBlock>
-                    <StackPanel Orientation="Horizontal">
-                        <TextBlock>1st month:</TextBlock>
-                        <TextBlock x:Name="month1"/>
-                    </StackPanel>
-                    <StackPanel Orientation="Horizontal">
-                        <TextBlock>2nd month:</TextBlock>
-                        <TextBlock x:Name="month2" />
-                    </StackPanel>
-                    <StackPanel Orientation="Horizontal">
-                        <TextBlock>3rd month:</TextBlock>
-                        <TextBlock x:Name="month3" />
-                    </StackPanel>
-                    <StackPanel Orientation="Horizontal">
-                        <TextBlock>4th month:</TextBlock>
-                        <TextBlock x:Name="month4" />
-                    </StackPanel>
-                    <StackPanel Orientation="Horizontal">
-                        <TextBlock>5th month:</TextBlock>
-                        <TextBlock x:Name="month5" />
-                    </StackPanel>
-                    <StackPanel Orientation="Horizontal">
-                        <TextBlock>6th month:</TextBlock>
-                        <TextBlock x:Name="month6" />
-                    </StackPanel>
-                    <StackPanel Orientation="Horizontal">
-                        <TextBlock>7th month:</TextBlock>
-                        <TextBlock x:Name="month7" />
-                    </StackPanel>
-                    <StackPanel Orientation="Horizontal">
-                        <TextBlock>8th month:</TextBlock>
-                        <TextBlock x:Name="month8" />
-                    </StackPanel>
-                    <StackPanel Orientation="Horizontal">
-                        <TextBlock>9th month:</TextBlock>
-                        <TextBlock x:Name="month9" />
-                    </StackPanel>
-                    <StackPanel Orientation="Horizontal">
-                        <TextBlock>10th month:</TextBlock>
-                        <TextBlock x:Name="month10" />
-                    </StackPanel>
-                    <StackPanel Orientation="Horizontal">
-                        <TextBlock>11th month:</TextBlock>
-                        <TextBlock x:Name="month11" />
-                    </StackPanel>
-                    <StackPanel Orientation="Horizontal">
-                        <TextBlock>12th month:</TextBlock>
-                        <TextBlock x:Name="month12" />
-                    </StackPanel>
+                    <ListBox Grid.Row="2" Grid.RowSpan="5" x:Name="MonthList" SelectionChanged="BankList_OnSelectionChanged">
+                        <ListBox.ItemTemplate>
+                            <DataTemplate>
+                                <TextBlock Text="{Binding }"/>
+                            </DataTemplate>
+                        </ListBox.ItemTemplate>
+                    </ListBox>
                     <Button Margin="0,10" Click="MenuItemDepInfo_OnClick">OK</Button>
                 </StackPanel>
             </GroupBox>
