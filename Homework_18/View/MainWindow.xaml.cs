@@ -1,20 +1,13 @@
-﻿using System;
-using System.Collections.Generic;
-using System.ComponentModel;
-using System.IO;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿using System.ComponentModel;
 using System.Windows;
 using System.Windows.Controls;
-using System.Windows.Data;
 using System.Windows.Documents;
 using System.Windows.Input;
 using System.Windows.Media;
-using Microsoft.EntityFrameworkCore;
-using Microsoft.Extensions.Configuration;
+using Homework_18.Infrastructure;
+using Homework_18.Models;
 
-namespace Homework_18
+namespace Homework_18.View
 {
     #region HW18
     // Use Entity Framework
@@ -39,7 +32,10 @@ namespace Homework_18
             transList.ItemsSource = log.logFile;
 
             // show list of departments
-            BankList.ItemsSource = provider.ShowDepartments();
+            //BankList.ItemsSource = provider.ShowDepartments();
+
+            // show list of departments v2
+            //BankList.ItemsSource = provider.GetDepartments();
         }
 
         /// <summary>
@@ -49,13 +45,13 @@ namespace Homework_18
         /// <param name="e"></param>
         private void BankList_OnSelectionChanged(object sender, SelectionChangedEventArgs e)
         {
-            string depName = BankList.SelectedItem.ToString();
+            //string depName = BankList.SelectedItem.ToString();
 
             // get department ID
-            core.departmentData.id = provider.GetDepartmentId(depName);
+            //core.departmentData.id = provider.GetDepartmentId(depName);
 
             // show clients in department
-            ClientList.ItemsSource = provider.ShowClients(core.departmentData.id);
+            //ClientList.ItemsSource = provider.ShowClients(core.departmentData.id);
         }
 
         /// <summary>
@@ -65,30 +61,18 @@ namespace Homework_18
         /// <param name="e"></param>
         private void ClientInfo_OnSelectionChanged(object sender, SelectionChangedEventArgs e)
         {
-            if (ClientList.SelectedItems.Count != 0)
-            {
-                core.clientData.name = StringExtensions.ClientNameParse(ClientList.SelectedItem.ToString());
+            //if (ClientList.SelectedItems.Count != 0)
+            //{
+            //    core.clientData.name = StringExtensions.ClientNameParse(ClientList.SelectedItem.ToString());
 
-                ShowClientsInfo();
-            }
+            //    ShowClientsInfo();
+            //}
         }
 
         private void Core_Transaction(int clientId, string message)
         {
             log.AddToLog(message);
             log.AddToDbLog(clientId, message);
-        }
-
-        private void MenuItem_OnClick_Debug(object sender, RoutedEventArgs e) { }
-
-        private void MenuItem_Click_Exit(object sender, RoutedEventArgs e)
-        {
-            Close();
-        }
-
-        private void MenuItem_Click_About(object sender, RoutedEventArgs e)
-        {
-            _ = MessageBox.Show("MyBank v.0.9", this.Title, MessageBoxButton.OK, MessageBoxImage.Information);
         }
 
         /// <summary>
@@ -222,7 +206,7 @@ namespace Homework_18
         /// <param name="e"></param>
         private void MenuItemGetLoan_OnClick(object sender, RoutedEventArgs e)
         {
-            core.clientData.name = StringExtensions.ClientNameParse(ClientList.SelectedItem.ToString());
+            //core.clientData.name = StringExtensions.ClientNameParse(ClientList.SelectedItem.ToString());
 
             // parse loan amount
             decimal amountLoan;
@@ -256,7 +240,7 @@ namespace Homework_18
         private void MenuItemTransfer_OnClick(object sender, RoutedEventArgs e)
         {
             pTransfer.IsOpen = true;
-            transferTo.ItemsSource = ClientList.ItemsSource;
+            //transferTo.ItemsSource = ClientList.ItemsSource;
         }
 
         /// <summary>
@@ -310,7 +294,7 @@ namespace Homework_18
         private void ShowClientsInfo()
         {
             core.clientData.id = provider.GetClientId(core.clientData.name);
-            ClientNameInfo.Text = core.clientData.name;
+            //ClientNameInfo.Text = core.clientData.name;
 
             provider.GetClientInfo(core.clientData.id, out core.clientData.funds, out core.clientData.loan, out core.clientData.deposit,
                 out core.clientData.depositType);
@@ -329,13 +313,13 @@ namespace Homework_18
         {
             core.RefreshClientsInfo();
 
-            ClientNameInfo.Text = core.clientData.name;
+            //ClientNameInfo.Text = core.clientData.name;
 
             FundsInfo.Text = core.clientData.funds.ToString();
             LoanInfo.Text = core.clientData.loan.ToString();
             DepositInfo.Text = core.clientData.deposit.ToString();
 
-            ClientList.ItemsSource = provider.ShowClients(core.departmentData.id);
+            //ClientList.ItemsSource = provider.ShowClients(core.departmentData.id);
         }
 
 
@@ -346,24 +330,24 @@ namespace Homework_18
         /// <param name="e"></param>
         private void ButtonDepInfo_OnClick(object sender, RoutedEventArgs e)
         {
-            if (ClientList.SelectedItems.Count != 0)
-            {
-                if (!provider.HasDeposit(core.clientData.id))
-                {
-                    _ = MessageBox.Show("No information available", "Deposit information", MessageBoxButton.OK,
-                        MessageBoxImage.Exclamation);
-                    return;
-                }
+            //if (ClientList.SelectedItems.Count != 0)
+            //{
+            //    if (!provider.HasDeposit(core.clientData.id))
+            //    {
+            //        _ = MessageBox.Show("No information available", "Deposit information", MessageBoxButton.OK,
+            //            MessageBoxImage.Exclamation);
+            //        return;
+            //    }
 
-                MonthList.ItemsSource = core.MonthList();
+            //    MonthList.ItemsSource = core.MonthList();
 
-                pDepInfo.IsOpen = true;
-            }
-            else
-            {
-                _ = MessageBox.Show("Please select a client", "Clients information", MessageBoxButton.OK,
-                    MessageBoxImage.Exclamation);
-            }
+            //    pDepInfo.IsOpen = true;
+            //}
+            //else
+            //{
+            //    _ = MessageBox.Show("Please select a client", "Clients information", MessageBoxButton.OK,
+            //        MessageBoxImage.Exclamation);
+            //}
         }
 
         private void MenuItemDepInfo_OnClick(object sender, RoutedEventArgs e)
@@ -378,17 +362,19 @@ namespace Homework_18
             if (listViewSortCol != null)
             {
                 AdornerLayer.GetAdornerLayer(listViewSortCol).Remove(listViewSortAdorner);
-                ClientList.Items.SortDescriptions.Clear();
+                //ClientList.Items.SortDescriptions.Clear();
             }
 
             ListSortDirection newDir = ListSortDirection.Ascending;
             if (listViewSortCol == column && listViewSortAdorner.Direction == newDir)
+            {
                 newDir = ListSortDirection.Descending;
+            }
 
             listViewSortCol = column;
             listViewSortAdorner = new SortAdorner(listViewSortCol, newDir);
             AdornerLayer.GetAdornerLayer(listViewSortCol).Add(listViewSortAdorner);
-            ClientList.Items.SortDescriptions.Add(new SortDescription(sortBy, newDir));
+            //ClientList.Items.SortDescriptions.Add(new SortDescription(sortBy, newDir));
         }
     }
 
@@ -413,7 +399,9 @@ namespace Homework_18
             base.OnRender(drawingContext);
 
             if (AdornedElement.RenderSize.Width < 20)
+            {
                 return;
+            }
 
             TranslateTransform transform = new TranslateTransform
             (
@@ -424,7 +412,10 @@ namespace Homework_18
 
             Geometry geometry = ascGeometry;
             if (this.Direction == ListSortDirection.Descending)
+            {
                 geometry = descGeometry;
+            }
+
             drawingContext.DrawGeometry(Brushes.Black, null, geometry);
 
             drawingContext.Pop();

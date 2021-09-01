@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 using Homework_18.Enums;
+using Homework_18.Infrastructure;
 
 namespace Homework_18.Entities
 {

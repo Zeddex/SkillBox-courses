@@ -1,10 +1,6 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
-namespace Homework_18
+namespace Homework_18.Infrastructure
 {
     public static class StringExtensions
     {

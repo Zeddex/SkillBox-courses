@@ -1,11 +1,14 @@
-﻿<Window x:Class="Homework_18.MainWindow"
+﻿<Window x:Class="Homework_18.View.MainWindow"
         xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
-        xmlns:local="clr-namespace:Homework_18"
+        xmlns:vm="clr-namespace:Homework_18.ViewModels"
         mc:Ignorable="d"
         Title="MyBank" Height="600" Width="1000" MinHeight="200" MinWidth="300">
+    <Window.DataContext>
+        <vm:MainWindowViewModel/>
+    </Window.DataContext>
     <Window.Resources>
         <Style TargetType="{x:Type GridViewColumnHeader}">
             <Setter Property="HorizontalContentAlignment" Value="Left" />
@@ -41,16 +44,16 @@
                 <MenuItem Header="_File">
                     <MenuItem Header="_Load data" IsEnabled="False"></MenuItem>
                     <MenuItem Header="_Save data" IsEnabled="False"></MenuItem>
-                    <MenuItem Header="_Debug mode" Click="MenuItem_OnClick_Debug" IsEnabled="False"></MenuItem>
+                    <MenuItem Header="_Debug mode" Command="{Binding PauseProgramCommand}" IsEnabled="True"></MenuItem>
                     <Separator/>
-                    <MenuItem Header="_Exit" Click="MenuItem_Click_Exit"></MenuItem>
+                    <MenuItem Header="_Exit" Command="{Binding CloseApplicationCommand}"></MenuItem>
                 </MenuItem>
                 <MenuItem Header="_View">
                     <MenuItem Header="_Clear data" IsEnabled="False"></MenuItem>
                     <MenuItem Header="_Generate new" IsEnabled="False"></MenuItem>
                 </MenuItem>
                 <MenuItem Header="_Help">
-                    <MenuItem Header="_About" Click="MenuItem_Click_About"></MenuItem>
+                    <MenuItem Header="_About" Command="{Binding AboutProgramCommand}"></MenuItem>
                 </MenuItem>
             </Menu>
         </DockPanel>
@@ -59,10 +62,11 @@
             <TextBlock FontWeight="Bold" Margin="5 0" Text="Bank departments:"/>
         </StackPanel>
 
-        <ListBox Grid.Row="2" Grid.RowSpan="5" x:Name="BankList" SelectionChanged="BankList_OnSelectionChanged">
+        <ListBox Grid.Row="2" Grid.RowSpan="5" ItemsSource="{Binding Departments}" 
+                 SelectedItem="{Binding SelectedDepartment}">
             <ListBox.ItemTemplate>
                 <DataTemplate>
-                    <TextBlock Text="{Binding }"/>
+                    <TextBlock Text="{Binding DepartmentNameString}"/>
                 </DataTemplate>
             </ListBox.ItemTemplate>
         </ListBox>
@@ -73,8 +77,25 @@
                       HorizontalAlignment="Center" 
                       VerticalAlignment="Stretch" />
 
-        <ListView Grid.Row="1" Grid.RowSpan="5" Grid.Column="2" x:Name="ClientList" 
+        <!--<ListView Grid.Row="1" Grid.RowSpan="5" Grid.Column="2" x:Name="ClientList" 
                   SelectionChanged="ClientInfo_OnSelectionChanged" 
+                  PreviewMouseRightButtonUp="ClientList_OnPreviewMouseRightButtonUp">
+            <ListView.View>
+                <GridView>
+                    <GridViewColumn Width="200" DisplayMemberBinding="{Binding Key}">
+                        <GridViewColumn.Header>
+                            <GridViewColumnHeader Tag="Name" Click="UsersColumnHeader_OnClick">Client Name</GridViewColumnHeader>
+                        </GridViewColumn.Header>
+                    </GridViewColumn>
+                    <GridViewColumn Width="140" DisplayMemberBinding="{Binding Value}">
+                        <GridViewColumn.Header>
+                            <GridViewColumnHeader Tag="Money" Click="UsersColumnHeader_OnClick">Available funds</GridViewColumnHeader>
+                        </GridViewColumn.Header>
+                    </GridViewColumn>
+                </GridView>
+            </ListView.View>
+        </ListView>-->
+        <ListView Grid.Row="1" Grid.RowSpan="5" Grid.Column="2" ItemsSource="{Binding ClientsList}" 
                   PreviewMouseRightButtonUp="ClientList_OnPreviewMouseRightButtonUp">
             <ListView.View>
                 <GridView>
@@ -92,6 +113,7 @@
             </ListView.View>
         </ListView>
 
+
         <GridSplitter Grid.Row="1" Grid.RowSpan="5" Grid.Column="3" 
                       ShowsPreview="False" 
                       Width="3" 
@@ -101,9 +123,9 @@
         <TextBlock Grid.Row="1" Grid.Column="4" FontWeight="Bold" Margin="5 0" Text="Information:"/>
 
         <ListBox Grid.Row="2" Grid.Column="4">
-            <StackPanel Orientation="Horizontal">
+            <StackPanel Orientation="Horizontal" DataContext="{Binding SelectedClient}">
                 <TextBlock Text="Client's name: "/>
-                <TextBlock x:Name="ClientNameInfo" Text="{Binding}"/>
+                <TextBlock Text="{Binding Name, UpdateSourceTrigger=PropertyChanged}"/>
             </StackPanel>
             <StackPanel Orientation="Horizontal">
                 <TextBlock Text="Funds available: "/>
@@ -129,7 +151,8 @@
                 <TextBlock Text="Deposit interest: "/>
                 <TextBlock x:Name="DepTypeInfo" Text="{Binding }"/>
             </StackPanel>
-            <Button Click="ButtonDepInfo_OnClick" HorizontalAlignment="Left" MaxWidth="120">Deposit information</Button>
+            <!--<Button Click="ButtonDepInfo_OnClick" HorizontalAlignment="Left" MaxWidth="120">Deposit information</Button>-->
+            <Button HorizontalAlignment="Left" MaxWidth="120" Command="{Binding TestCommand}">Deposit information</Button>
         </ListBox>
 
         <GridSplitter Grid.Row="3" Grid.Column="4"

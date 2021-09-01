@@ -1,8 +1,7 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Collections.ObjectModel;
+﻿using System.Collections.ObjectModel;
+using Homework_18.Models;
 
-namespace Homework_18
+namespace Homework_18.Infrastructure
 {
     public class Log
     {

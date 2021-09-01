@@ -1,15 +1,14 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Collections.ObjectModel;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using Homework_18.Enums;
 using Homework_18.Entities;
-using Microsoft.EntityFrameworkCore;
+using Homework_18.Enums;
+using Homework_18.Infrastructure;
 
-namespace Homework_18
+namespace Homework_18.Models
 {
-    class BankProvider
+    internal class BankProvider
     {
         public event Action<int, string> Transaction;
 
@@ -34,9 +33,9 @@ namespace Homework_18
             return !result ? throw new WrongAmountException("Wrong Amount!") : true;
         }
 
-        public List<string> ShowDepartments()
+        public ObservableCollection<string> ShowDepartments()
         {
-            List<string> depList = new();
+            ObservableCollection<string> depList = new();
 
             using (AppContext context = new())
             {
@@ -49,6 +48,45 @@ namespace Homework_18
             }
             return depList;
         }
+
+        public ObservableCollection<Department> DepartmentsList()
+        {
+            ObservableCollection<Department> dep = new();
+
+            using (AppContext context = new())
+            {
+                List<Department> depList = context.Departments.ToList();
+                foreach (var item in depList)
+                {
+                    dep.Add(item);
+                }
+            }
+            return dep;
+        }
+
+        /// <summary>
+        /// Fill collection with departments
+        /// </summary>
+        /// <returns></returns>
+        //public ObservableCollection<BankDept> GetDepartments()
+        //{
+        //    ObservableCollection<BankDept> depList = new();
+
+        //    using (AppContext context = new())
+        //    {
+        //        var departments = context.Departments.Select(d => d);
+
+        //        foreach (var dep in departments)
+        //        {
+        //            depList.Add(new(dep.DepartmentNameString));
+        //        }
+        //    }
+
+        //    // TODO add clients
+        //    AddClientsToBankList(depList);
+
+        //    return depList;
+        //}
 
         public int GetDepartmentId(string depName)
         {
@@ -69,14 +107,14 @@ namespace Homework_18
             using (AppContext context = new())
             {
                 var clients = from client in context.Clients
-                    join department in context.Departments on client.DepartmentRefId equals department.Id
-                    join money in context.Money on client.Id equals money.ClientId
-                    where department.Id == depId
-                    select new
-                    {
-                        Name = client.Name,
-                        Funds = money.Funds
-                    };
+                              join department in context.Departments on client.DepartmentRefId equals department.Id
+                              join money in context.Money on client.Id equals money.ClientId
+                              where department.Id == depId
+                              select new
+                              {
+                                  Name = client.Name,
+                                  Funds = money.Funds
+                              };
 
                 foreach (var client in clients)
                 {
@@ -85,6 +123,24 @@ namespace Homework_18
             }
             return clientsList;
         }
+
+        //// TODO add clients to bank list
+        //public ObservableCollection<BankDept> AddClientsToBankList(ObservableCollection<BankDept> bankList)
+        //{
+        //    using (AppContext context = new())
+        //    {
+        //        var clientsIndividual = context.Departments.Select(d => d);
+        //        var clientsBusiness = context.Departments.Select(d => d);
+        //        var clientsVip = context.Departments.Select(d => d);
+
+        //        foreach (var client in clientsIndividual)
+        //        {
+
+        //        }
+        //    }
+
+        //    return bankList;
+        //}
 
         public int GetClientId(string name)
         {

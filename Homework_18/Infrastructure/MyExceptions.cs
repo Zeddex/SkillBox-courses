@@ -1,6 +1,6 @@
 ﻿using System;
 
-namespace Homework_18
+namespace Homework_18.Infrastructure
 {
     public class InsufficientFundsException : ApplicationException
     {
