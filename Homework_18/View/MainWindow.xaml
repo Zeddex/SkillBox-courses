@@ -14,7 +14,7 @@
             <Setter Property="HorizontalContentAlignment" Value="Left" />
         </Style>
         <ContextMenu x:Key="CmButton">
-            <MenuItem Header="Make a transfer" Click="MenuItemTransfer_OnClick" />
+            <MenuItem Header="Make a transfer" Command="{Binding PopupTransfer}" />
             <MenuItem Header="Make a deposit">
                 <MenuItem Header="Simple interest" Click="MenuItemSimpleDeposit_OnClick" />
                 <MenuItem Header="Capitalized interest" Click="MenuItemCapitalizedDeposit_OnClick" />
@@ -22,6 +22,7 @@
             <MenuItem Header="Get a loan" Click="MenuItemLoan_OnClick" />
         </ContextMenu>
     </Window.Resources>
+
     <Grid>
         <Grid.ColumnDefinitions>
             <ColumnDefinition Width="40*" />
@@ -77,42 +78,23 @@
                       HorizontalAlignment="Center" 
                       VerticalAlignment="Stretch" />
 
-        <!--<ListView Grid.Row="1" Grid.RowSpan="5" Grid.Column="2" x:Name="ClientList" 
-                  SelectionChanged="ClientInfo_OnSelectionChanged" 
-                  PreviewMouseRightButtonUp="ClientList_OnPreviewMouseRightButtonUp">
-            <ListView.View>
-                <GridView>
-                    <GridViewColumn Width="200" DisplayMemberBinding="{Binding Key}">
-                        <GridViewColumn.Header>
-                            <GridViewColumnHeader Tag="Name" Click="UsersColumnHeader_OnClick">Client Name</GridViewColumnHeader>
-                        </GridViewColumn.Header>
-                    </GridViewColumn>
-                    <GridViewColumn Width="140" DisplayMemberBinding="{Binding Value}">
-                        <GridViewColumn.Header>
-                            <GridViewColumnHeader Tag="Money" Click="UsersColumnHeader_OnClick">Available funds</GridViewColumnHeader>
-                        </GridViewColumn.Header>
-                    </GridViewColumn>
-                </GridView>
-            </ListView.View>
-        </ListView>-->
         <ListView Grid.Row="1" Grid.RowSpan="5" Grid.Column="2" ItemsSource="{Binding ClientsList}" 
-                  PreviewMouseRightButtonUp="ClientList_OnPreviewMouseRightButtonUp">
-            <ListView.View>
+                  PreviewMouseRightButtonUp="ClientList_OnPreviewMouseRightButtonUp" SelectedItem="{Binding SelectedClient}">
+        <ListView.View>
                 <GridView>
-                    <GridViewColumn Width="200" DisplayMemberBinding="{Binding Key}">
+                    <GridViewColumn Width="200" DisplayMemberBinding="{Binding Key, UpdateSourceTrigger=PropertyChanged}">
                         <GridViewColumn.Header>
-                            <GridViewColumnHeader Tag="Name" Click="UsersColumnHeader_OnClick">Client Name</GridViewColumnHeader>
+                            <GridViewColumnHeader Tag="Name">Client Name</GridViewColumnHeader>
                         </GridViewColumn.Header>
                     </GridViewColumn>
-                    <GridViewColumn Width="140" DisplayMemberBinding="{Binding Value}">
+                    <GridViewColumn Width="140" DisplayMemberBinding="{Binding Value, UpdateSourceTrigger=PropertyChanged}">
                         <GridViewColumn.Header>
-                            <GridViewColumnHeader Tag="Money" Click="UsersColumnHeader_OnClick">Available funds</GridViewColumnHeader>
+                            <GridViewColumnHeader Tag="Money">Available funds</GridViewColumnHeader>
                         </GridViewColumn.Header>
                     </GridViewColumn>
                 </GridView>
             </ListView.View>
         </ListView>
-
 
         <GridSplitter Grid.Row="1" Grid.RowSpan="5" Grid.Column="3" 
                       ShowsPreview="False" 
@@ -123,36 +105,35 @@
         <TextBlock Grid.Row="1" Grid.Column="4" FontWeight="Bold" Margin="5 0" Text="Information:"/>
 
         <ListBox Grid.Row="2" Grid.Column="4">
-            <StackPanel Orientation="Horizontal" DataContext="{Binding SelectedClient}">
+            <StackPanel Orientation="Horizontal">
                 <TextBlock Text="Client's name: "/>
-                <TextBlock Text="{Binding Name, UpdateSourceTrigger=PropertyChanged}"/>
+                <TextBlock Text="{Binding ClientsName}"/>
             </StackPanel>
             <StackPanel Orientation="Horizontal">
                 <TextBlock Text="Funds available: "/>
-                <TextBlock x:Name="FundsInfo" Text="{Binding}"/>
+                <TextBlock x:Name="FundsInfo" Text="{Binding FundsInfo}"/>
             </StackPanel>
             <StackPanel Orientation="Horizontal">
                 <TextBlock Text="Loan rate (%): "/>
-                <TextBlock x:Name="LoanRateInfo" Text="{Binding }"/>
+                <TextBlock x:Name="LoanRateInfo" Text="{Binding LoanRateInfo}"/>
             </StackPanel>
             <StackPanel Orientation="Horizontal">
                 <TextBlock Text="Loan: "/>
-                <TextBlock x:Name="LoanInfo" Text="{Binding }"/>
+                <TextBlock x:Name="LoanInfo" Text="{Binding LoanInfo}"/>
             </StackPanel>
             <StackPanel Orientation="Horizontal">
                 <TextBlock Text="Deposit rate (%): "/>
-                <TextBlock x:Name="DepRateInfo" Text="{Binding }"/>
+                <TextBlock x:Name="DepRateInfo" Text="{Binding DepRateInfo}"/>
             </StackPanel>
             <StackPanel Orientation="Horizontal">
                 <TextBlock Text="Deposit: "/>
-                <TextBlock x:Name="DepositInfo" Text="{Binding }"/>
+                <TextBlock x:Name="DepositInfo" Text="{Binding DepositInfo}"/>
             </StackPanel>
             <StackPanel Orientation="Horizontal">
                 <TextBlock Text="Deposit interest: "/>
-                <TextBlock x:Name="DepTypeInfo" Text="{Binding }"/>
+                <TextBlock x:Name="DepTypeInfo" Text="{Binding DepTypeInfo}"/>
             </StackPanel>
-            <!--<Button Click="ButtonDepInfo_OnClick" HorizontalAlignment="Left" MaxWidth="120">Deposit information</Button>-->
-            <Button HorizontalAlignment="Left" MaxWidth="120" Command="{Binding TestCommand}">Deposit information</Button>
+            <Button HorizontalAlignment="Left" MaxWidth="120" Command="{Binding DepositInfoCommand}">Deposit information</Button>
         </ListBox>
 
         <GridSplitter Grid.Row="3" Grid.Column="4"
@@ -163,24 +144,24 @@
 
         <TextBlock Grid.Row="4" Grid.Column="4" FontWeight="Bold" Margin="5 0" Text="Transactions list:"/>
 
-        <ListBox Grid.Row="5" Grid.Column="4" x:Name="transList" />
+        <ListBox Grid.Row="5" Grid.Column="4" ItemsSource="{Binding Transactions}" />
 
-        <Popup x:Name="pTransfer" StaysOpen="False" Placement="Mouse"
+        <Popup IsOpen="{Binding PopupTransfer}" StaysOpen="False" Placement="Mouse"
                PopupAnimation="Scroll" AllowsTransparency="True">
             <GroupBox Header="Make Transfer" Width="200" Margin="10" Padding="10">
                 <StackPanel Width="150">
                     <TextBlock>Transfer to:</TextBlock>
-                    <ComboBox x:Name="transferTo">
+                    <ComboBox ItemsSource="{Binding TransferTo}">
                         <ComboBox.ItemTemplate>
                             <DataTemplate>
                                 <StackPanel>
-                                    <TextBlock Text="{Binding Key}" />
+                                    <TextBlock Text="{Binding }" />
                                 </StackPanel>
                             </DataTemplate>
                         </ComboBox.ItemTemplate>
                     </ComboBox>
                     <TextBlock>Amount:</TextBlock>
-                    <TextBox x:Name="amountTransferTextBox" />
+                    <TextBox Text="{Binding AmountTransfer}" />
                     <Button Margin="0,10" Click="MenuItemMakeTransfer_OnClick">Transfer</Button>
                 </StackPanel>
             </GroupBox>
@@ -224,7 +205,8 @@
             <GroupBox Header="Deposit Info" Width="150" Margin="10" Padding="10">
                 <StackPanel Width="110">
                     <TextBlock>Monthly income ($):</TextBlock>
-                    <ListBox Grid.Row="2" Grid.RowSpan="5" x:Name="MonthList" SelectionChanged="BankList_OnSelectionChanged">
+                    <ListBox Grid.Row="2" Grid.RowSpan="5" SelectedItem="{Binding MonthsDepositList}">
+                    <!--<ListBox Grid.Row="2" Grid.RowSpan="5" x:Name="MonthList" SelectionChanged="BankList_OnSelectionChanged">-->
                         <ListBox.ItemTemplate>
                             <DataTemplate>
                                 <TextBlock Text="{Binding }"/>

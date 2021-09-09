@@ -18,61 +18,23 @@ namespace Homework_18.View
     /// </summary>
     public partial class MainWindow : Window
     {
-        private GridViewColumnHeader listViewSortCol;
-        private SortAdorner listViewSortAdorner;
-        private readonly Log log = new();
-        private readonly BankProvider provider = new();
-        private readonly Core core = new();
+        private readonly Log _log = new();
+        private readonly BankProvider _provider = new();
+        private readonly Core _core = new();
 
         public MainWindow()
         {
             InitializeComponent();
 
-            provider.Transaction += Core_Transaction;
-            transList.ItemsSource = log.logFile;
+            _provider.Transaction += Core_Transaction;
+            //transList.ItemsSource = log.logFile;
 
-            // show list of departments
-            //BankList.ItemsSource = provider.ShowDepartments();
-
-            // show list of departments v2
-            //BankList.ItemsSource = provider.GetDepartments();
-        }
-
-        /// <summary>
-        /// Show clients in current bank department
-        /// </summary>
-        /// <param name="sender"></param>
-        /// <param name="e"></param>
-        private void BankList_OnSelectionChanged(object sender, SelectionChangedEventArgs e)
-        {
-            //string depName = BankList.SelectedItem.ToString();
-
-            // get department ID
-            //core.departmentData.id = provider.GetDepartmentId(depName);
-
-            // show clients in department
-            //ClientList.ItemsSource = provider.ShowClients(core.departmentData.id);
-        }
-
-        /// <summary>
-        /// Show current client info
-        /// </summary>
-        /// <param name="sender"></param>
-        /// <param name="e"></param>
-        private void ClientInfo_OnSelectionChanged(object sender, SelectionChangedEventArgs e)
-        {
-            //if (ClientList.SelectedItems.Count != 0)
-            //{
-            //    core.clientData.name = StringExtensions.ClientNameParse(ClientList.SelectedItem.ToString());
-
-            //    ShowClientsInfo();
-            //}
         }
 
         private void Core_Transaction(int clientId, string message)
         {
-            log.AddToLog(message);
-            log.AddToDbLog(clientId, message);
+            _log.AddToLog(message);
+            _log.AddToDbLog(clientId, message);
         }
 
         /// <summary>
@@ -113,11 +75,11 @@ namespace Homework_18.View
             try
             {
                 bool result = decimal.TryParse(amountSimpDepTextBox.Text, out amountSimpDeposit);
-                _ = provider.CheckWrongAmount(result);
+                _ = _provider.CheckWrongAmount(result);
 
                 // check the client have enough money to make deposit
-                bool checkFunds = provider.CheckSuffAmount(core.clientData.funds, amountSimpDeposit);
-                _ = provider.CheckFundsPositive(checkFunds);
+                bool checkFunds = _provider.CheckSuffAmount(_core.clientData.funds, amountSimpDeposit);
+                _ = _provider.CheckFundsPositive(checkFunds);
             }
             catch (InsufficientFundsException ex)
             {
@@ -131,9 +93,8 @@ namespace Homework_18.View
             }
 
             // make simple deposit
-            provider.MakeSimpleDeposit(core.clientData.id, amountSimpDeposit);
+            _provider.MakeSimpleDeposit(_core.clientData.id, amountSimpDeposit);
 
-            RefreshClientsList();
 
             pSimpDep.IsOpen = false;
 
@@ -162,11 +123,11 @@ namespace Homework_18.View
             try
             {
                 bool result = decimal.TryParse(amountCapDepTextBox.Text, out amountCapDeposit);
-                _ = provider.CheckWrongAmount(result);
+                _ = _provider.CheckWrongAmount(result);
 
                 // check the client have enough money to make deposit
-                bool checkFunds = provider.CheckSuffAmount(core.clientData.funds, amountCapDeposit);
-                _ = provider.CheckFundsPositive(checkFunds);
+                bool checkFunds = _provider.CheckSuffAmount(_core.clientData.funds, amountCapDeposit);
+                _ = _provider.CheckFundsPositive(checkFunds);
             }
             catch (InsufficientFundsException ex)
             {
@@ -180,9 +141,8 @@ namespace Homework_18.View
             }
 
             // make capitalized deposit
-            provider.MakeCapitalizedDeposit(core.clientData.id, amountCapDeposit);
+            _provider.MakeCapitalizedDeposit(_core.clientData.id, amountCapDeposit);
 
-            RefreshClientsList();
 
             pCapDep.IsOpen = false;
 
@@ -214,7 +174,7 @@ namespace Homework_18.View
             try
             {
                 bool result = decimal.TryParse(amountLoanTextBox.Text, out amountLoan);
-                _ = provider.CheckWrongAmount(result);
+                _ = _provider.CheckWrongAmount(result);
             }
             catch (WrongAmountException ex)
             {
@@ -223,9 +183,8 @@ namespace Homework_18.View
             }
 
             // get loan
-            provider.GetLoan(core.clientData.id, amountLoan);
+            _provider.GetLoan(_core.clientData.id, amountLoan);
 
-            RefreshClientsList();
 
             pLoan.IsOpen = false;
 
@@ -250,76 +209,45 @@ namespace Homework_18.View
         /// <param name="e"></param>
         private void MenuItemMakeTransfer_OnClick(object sender, RoutedEventArgs e)
         {
-            string recipient = StringExtensions.ClientNameParse(transferTo.SelectedItem.ToString());
-            int recipientId = provider.GetClientId(recipient);
+            //string recipient = StringExtensions.ClientNameParse(transferTo.SelectedItem.ToString());
+            //int recipientId = provider.GetClientId(recipient);
 
-            if (core.clientData.name == recipient)
-            {
-                _ = MessageBox.Show("You cannot make a transfer to yourself", "Error", MessageBoxButton.OK, MessageBoxImage.Error);
-                return;
-            }
+            //if (core.clientData.name == recipient)
+            //{
+            //    _ = MessageBox.Show("You cannot make a transfer to yourself", "Error", MessageBoxButton.OK, MessageBoxImage.Error);
+            //    return;
+            //}
 
-            decimal amountTransfer;
+            //decimal amountTransfer;
 
-            try
-            {
-                bool result = decimal.TryParse(amountTransferTextBox.Text, out amountTransfer);
-                _ = provider.CheckWrongAmount(result);
+            //try
+            //{
+            //    bool result = decimal.TryParse(amountTransferTextBox.Text, out amountTransfer);
+            //    _ = provider.CheckWrongAmount(result);
 
-                // check the sender have enough money to make transfer
-                bool checkFunds = provider.CheckSuffAmount(core.clientData.funds, amountTransfer);
-                _ = provider.CheckFundsPositive(checkFunds);
-            }
-            catch (InsufficientFundsException ex)
-            {
-                _ = MessageBox.Show(ex.Message, "Insufficient funds", MessageBoxButton.OK, MessageBoxImage.Exclamation);
-                return;
-            }
-            catch (WrongAmountException ex)
-            {
-                _ = MessageBox.Show(ex.Message, "Error", MessageBoxButton.OK, MessageBoxImage.Error);
-                return;
-            }
+            //    // check the sender have enough money to make transfer
+            //    bool checkFunds = provider.CheckSuffAmount(core.clientData.funds, amountTransfer);
+            //    _ = provider.CheckFundsPositive(checkFunds);
+            //}
+            //catch (InsufficientFundsException ex)
+            //{
+            //    _ = MessageBox.Show(ex.Message, "Insufficient funds", MessageBoxButton.OK, MessageBoxImage.Exclamation);
+            //    return;
+            //}
+            //catch (WrongAmountException ex)
+            //{
+            //    _ = MessageBox.Show(ex.Message, "Error", MessageBoxButton.OK, MessageBoxImage.Error);
+            //    return;
+            //}
 
-            // transfer funds
-            provider.TransferFunds(core.clientData.id, recipientId, amountTransfer);
+            //// transfer funds
+            //provider.TransferFunds(core.clientData.id, recipientId, amountTransfer);
 
-            RefreshClientsList();
+            //RefreshClientsList();
 
-            pTransfer.IsOpen = false;
+            //pTransfer.IsOpen = false;
 
-            _ = MessageBox.Show("Transfer completed", "Funds transfer", MessageBoxButton.OK, MessageBoxImage.Asterisk);
-        }
-
-        private void ShowClientsInfo()
-        {
-            core.clientData.id = provider.GetClientId(core.clientData.name);
-            //ClientNameInfo.Text = core.clientData.name;
-
-            provider.GetClientInfo(core.clientData.id, out core.clientData.funds, out core.clientData.loan, out core.clientData.deposit,
-                out core.clientData.depositType);
-
-            provider.GetDepartmentInfo(core.departmentData.id, out core.departmentData.loanRate, out core.departmentData.depositRate);
-
-            FundsInfo.Text = core.clientData.funds.ToString();
-            LoanInfo.Text = core.clientData.loan.ToString();
-            DepositInfo.Text = core.clientData.deposit.ToString();
-            DepTypeInfo.Text = core.clientData.depositType;
-            LoanRateInfo.Text = core.departmentData.loanRate.ToString();
-            DepRateInfo.Text = core.departmentData.depositRate.ToString();
-        }
-
-        private void RefreshClientsList()
-        {
-            core.RefreshClientsInfo();
-
-            //ClientNameInfo.Text = core.clientData.name;
-
-            FundsInfo.Text = core.clientData.funds.ToString();
-            LoanInfo.Text = core.clientData.loan.ToString();
-            DepositInfo.Text = core.clientData.deposit.ToString();
-
-            //ClientList.ItemsSource = provider.ShowClients(core.departmentData.id);
+            //_ = MessageBox.Show("Transfer completed", "Funds transfer", MessageBoxButton.OK, MessageBoxImage.Asterisk);
         }
 
 
@@ -353,72 +281,6 @@ namespace Homework_18.View
         private void MenuItemDepInfo_OnClick(object sender, RoutedEventArgs e)
         {
             pDepInfo.IsOpen = false;
-        }
-
-        private void UsersColumnHeader_OnClick(object sender, RoutedEventArgs e)
-        {
-            GridViewColumnHeader column = (sender as GridViewColumnHeader);
-            string sortBy = column.Tag.ToString();
-            if (listViewSortCol != null)
-            {
-                AdornerLayer.GetAdornerLayer(listViewSortCol).Remove(listViewSortAdorner);
-                //ClientList.Items.SortDescriptions.Clear();
-            }
-
-            ListSortDirection newDir = ListSortDirection.Ascending;
-            if (listViewSortCol == column && listViewSortAdorner.Direction == newDir)
-            {
-                newDir = ListSortDirection.Descending;
-            }
-
-            listViewSortCol = column;
-            listViewSortAdorner = new SortAdorner(listViewSortCol, newDir);
-            AdornerLayer.GetAdornerLayer(listViewSortCol).Add(listViewSortAdorner);
-            //ClientList.Items.SortDescriptions.Add(new SortDescription(sortBy, newDir));
-        }
-    }
-
-    public class SortAdorner : Adorner
-    {
-        private static readonly Geometry ascGeometry =
-            Geometry.Parse("M 0 4 L 3.5 0 L 7 4 Z");
-
-        private static readonly Geometry descGeometry =
-            Geometry.Parse("M 0 0 L 3.5 4 L 7 0 Z");
-
-        public ListSortDirection Direction { get; private set; }
-
-        public SortAdorner(UIElement element, ListSortDirection dir)
-            : base(element)
-        {
-            Direction = dir;
-        }
-
-        protected override void OnRender(DrawingContext drawingContext)
-        {
-            base.OnRender(drawingContext);
-
-            if (AdornedElement.RenderSize.Width < 20)
-            {
-                return;
-            }
-
-            TranslateTransform transform = new TranslateTransform
-            (
-                AdornedElement.RenderSize.Width - 15,
-                (AdornedElement.RenderSize.Height - 5) / 2
-            );
-            drawingContext.PushTransform(transform);
-
-            Geometry geometry = ascGeometry;
-            if (this.Direction == ListSortDirection.Descending)
-            {
-                geometry = descGeometry;
-            }
-
-            drawingContext.DrawGeometry(Brushes.Black, null, geometry);
-
-            drawingContext.Pop();
         }
     }
 }

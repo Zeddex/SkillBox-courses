@@ -82,7 +82,6 @@ namespace Homework_18.Models
         //        }
         //    }
 
-        //    // TODO add clients
         //    AddClientsToBankList(depList);
 
         //    return depList;
