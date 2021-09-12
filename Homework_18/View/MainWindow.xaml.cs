@@ -38,32 +38,6 @@ namespace Homework_18.View
         }
 
         /// <summary>
-        /// Right button menu
-        /// </summary>
-        /// <param name="sender"></param>
-        /// <param name="e"></param>
-        private void ClientList_OnPreviewMouseRightButtonUp(object sender, MouseButtonEventArgs e)
-        {
-            var item = (sender as ListView).SelectedItem;
-            if (item != null)
-            {
-                ContextMenu cm = FindResource("CmButton") as ContextMenu;
-                cm.PlacementTarget = sender as Button;
-                cm.IsOpen = true;
-            }
-        }
-
-        /// <summary>
-        /// Simple deposit popup menu enable
-        /// </summary>
-        /// <param name="sender"></param>
-        /// <param name="e"></param>
-        private void MenuItemSimpleDeposit_OnClick(object sender, RoutedEventArgs e)
-        {
-            pSimpDep.IsOpen = true;
-        }
-
-        /// <summary>
         /// Make simple deposit
         /// </summary>
         /// <param name="sender"></param>
@@ -96,19 +70,9 @@ namespace Homework_18.View
             _provider.MakeSimpleDeposit(_core.clientData.id, amountSimpDeposit);
 
 
-            pSimpDep.IsOpen = false;
+            //pSimpDep.IsOpen = false;
 
             _ = MessageBox.Show("Success", "Simple deposit", MessageBoxButton.OK, MessageBoxImage.Asterisk);
-        }
-
-        /// <summary>
-        /// Capitalized deposit popup menu enable
-        /// </summary>
-        /// <param name="sender"></param>
-        /// <param name="e"></param>
-        private void MenuItemCapitalizedDeposit_OnClick(object sender, RoutedEventArgs e)
-        {
-            pCapDep.IsOpen = true;
         }
 
         /// <summary>
@@ -144,19 +108,9 @@ namespace Homework_18.View
             _provider.MakeCapitalizedDeposit(_core.clientData.id, amountCapDeposit);
 
 
-            pCapDep.IsOpen = false;
+            //pCapDep.IsOpen = false;
 
             _ = MessageBox.Show("Success", "Capitalized deposit", MessageBoxButton.OK, MessageBoxImage.Asterisk);
-        }
-
-        /// <summary>
-        /// Loan popup menu enable
-        /// </summary>
-        /// <param name="sender"></param>
-        /// <param name="e"></param>
-        private void MenuItemLoan_OnClick(object sender, RoutedEventArgs e)
-        {
-            pLoan.IsOpen = true;
         }
 
         /// <summary>
@@ -186,7 +140,7 @@ namespace Homework_18.View
             _provider.GetLoan(_core.clientData.id, amountLoan);
 
 
-            pLoan.IsOpen = false;
+            //pLoan.IsOpen = false;
 
             _ = MessageBox.Show("Success", "Get loan", MessageBoxButton.OK, MessageBoxImage.Asterisk);
         }
@@ -198,7 +152,7 @@ namespace Homework_18.View
         /// <param name="e"></param>
         private void MenuItemTransfer_OnClick(object sender, RoutedEventArgs e)
         {
-            pTransfer.IsOpen = true;
+            //pTransfer.IsOpen = true;
             //transferTo.ItemsSource = ClientList.ItemsSource;
         }
 
@@ -276,11 +230,6 @@ namespace Homework_18.View
             //    _ = MessageBox.Show("Please select a client", "Clients information", MessageBoxButton.OK,
             //        MessageBoxImage.Exclamation);
             //}
-        }
-
-        private void MenuItemDepInfo_OnClick(object sender, RoutedEventArgs e)
-        {
-            pDepInfo.IsOpen = false;
         }
     }
 }

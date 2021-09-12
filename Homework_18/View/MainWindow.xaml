@@ -9,20 +9,6 @@
     <Window.DataContext>
         <vm:MainWindowViewModel/>
     </Window.DataContext>
-    <Window.Resources>
-        <Style TargetType="{x:Type GridViewColumnHeader}">
-            <Setter Property="HorizontalContentAlignment" Value="Left" />
-        </Style>
-        <ContextMenu x:Key="CmButton">
-            <MenuItem Header="Make a transfer" Command="{Binding PopupTransfer}" />
-            <MenuItem Header="Make a deposit">
-                <MenuItem Header="Simple interest" Click="MenuItemSimpleDeposit_OnClick" />
-                <MenuItem Header="Capitalized interest" Click="MenuItemCapitalizedDeposit_OnClick" />
-            </MenuItem>
-            <MenuItem Header="Get a loan" Click="MenuItemLoan_OnClick" />
-        </ContextMenu>
-    </Window.Resources>
-
     <Grid>
         <Grid.ColumnDefinitions>
             <ColumnDefinition Width="40*" />
@@ -79,8 +65,18 @@
                       VerticalAlignment="Stretch" />
 
         <ListView Grid.Row="1" Grid.RowSpan="5" Grid.Column="2" ItemsSource="{Binding ClientsList}" 
-                  PreviewMouseRightButtonUp="ClientList_OnPreviewMouseRightButtonUp" SelectedItem="{Binding SelectedClient}">
-        <ListView.View>
+                   SelectedItem="{Binding SelectedClient}">
+            <ListView.ContextMenu>
+                <ContextMenu>
+                    <MenuItem Header="Make a transfer" Command="{Binding PopupTransferMenuCommand}" />
+                    <MenuItem Header="Make a deposit" >
+                        <MenuItem Header="Simple interest" Command="{Binding PopupSimpDepMenuCommand}" />
+                        <MenuItem Header="Capitalized interest" Command="{Binding PopupCapDepMenuCommand}" />
+                    </MenuItem>
+                    <MenuItem Header="Get a loan" Command="{Binding PopupLoanMenuCommand}" />
+                </ContextMenu>
+            </ListView.ContextMenu>
+            <ListView.View>
                 <GridView>
                     <GridViewColumn Width="200" DisplayMemberBinding="{Binding Key, UpdateSourceTrigger=PropertyChanged}">
                         <GridViewColumn.Header>
@@ -167,7 +163,7 @@
             </GroupBox>
         </Popup>
 
-        <Popup x:Name="pLoan" StaysOpen="False" Placement="Mouse"
+        <Popup IsOpen="{Binding PopupLoan}" StaysOpen="False" Placement="Mouse"
                PopupAnimation="Scroll" AllowsTransparency="True">
             <GroupBox Header="Get Loan" Width="150" Margin="10" Padding="10">
                 <StackPanel Width="110">
@@ -178,7 +174,7 @@
             </GroupBox>
         </Popup>
 
-        <Popup x:Name="pSimpDep" StaysOpen="False" Placement="Mouse"
+        <Popup IsOpen="{Binding PopupSimpDep}" StaysOpen="False" Placement="Mouse"
                PopupAnimation="Scroll" AllowsTransparency="True">
             <GroupBox Header="Simple deposit" Width="150" Margin="10" Padding="10">
                 <StackPanel Width="110">
@@ -189,7 +185,7 @@
             </GroupBox>
         </Popup>
 
-        <Popup x:Name="pCapDep" StaysOpen="False" Placement="Mouse"
+        <Popup IsOpen="{Binding PopupCapDep}" StaysOpen="False" Placement="Mouse"
                PopupAnimation="Scroll" AllowsTransparency="True">
             <GroupBox Header="Capitalized deposit" Width="150" Margin="10" Padding="10">
                 <StackPanel Width="110">
@@ -200,7 +196,7 @@
             </GroupBox>
         </Popup>
 
-        <Popup x:Name="pDepInfo" StaysOpen="False" Placement="Mouse"
+        <Popup IsOpen="{Binding PopupDepInfo}" StaysOpen="False" Placement="Mouse"
                PopupAnimation="Scroll" AllowsTransparency="True">
             <GroupBox Header="Deposit Info" Width="150" Margin="10" Padding="10">
                 <StackPanel Width="110">
@@ -213,7 +209,7 @@
                             </DataTemplate>
                         </ListBox.ItemTemplate>
                     </ListBox>
-                    <Button Margin="0,10" Click="MenuItemDepInfo_OnClick">OK</Button>
+                    <Button Margin="0,10" Command="{Binding CloseDepInfoCommand}">OK</Button>
                 </StackPanel>
             </GroupBox>
         </Popup>

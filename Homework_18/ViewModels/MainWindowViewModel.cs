@@ -72,16 +72,6 @@ namespace Homework_18.ViewModels
             }
         }
 
-        private bool _popupContextMenu;
-        public bool PopupContextMenu
-        {
-            get => _popupContextMenu;
-            set
-            {
-                Set(ref _popupContextMenu, value);
-            }
-        }
-
         private bool _popupTransfer;
         public bool PopupTransfer
         {
@@ -140,8 +130,15 @@ namespace Homework_18.ViewModels
 
         #region Commands
 
+        private ICommand _testCommand;
+        public ICommand TestCommand => _testCommand ?? new RelayCommand
+            (() => MessageBox.Show("Test", Application.Current.MainWindow.Title, MessageBoxButton.OK, MessageBoxImage.Information));
+
         private ICommand _depositInfoCommand;
         public ICommand DepositInfoCommand => _depositInfoCommand ?? new RelayCommand(ShowDepositInfo, null);
+
+        private ICommand _closeDepInfoCommand;
+        public ICommand CloseDepInfoCommand => _closeDepInfoCommand ?? new RelayCommand(() => PopupDepInfo = false, null);
 
         /// <summary>
         /// Close application
@@ -169,6 +166,18 @@ namespace Homework_18.ViewModels
                 { });
             }
         }
+
+        private ICommand _popupTransferMenuCommand;
+        public ICommand PopupTransferMenuCommand => _popupTransferMenuCommand ?? new RelayCommand(() => PopupTransfer = true, null);
+
+        private ICommand _popupSimpDepMenuCommand;
+        public ICommand PopupSimpDepMenuCommand => _popupSimpDepMenuCommand ?? new RelayCommand(() => PopupSimpDep = true, null);
+
+        private ICommand _popupCapDepMenuCommand;
+        public ICommand PopupCapDepMenuCommand => _popupCapDepMenuCommand ?? new RelayCommand(() => PopupCapDep = true, null);
+
+        private ICommand _popupLoanMenuCommand;
+        public ICommand PopupLoanMenuCommand => _popupLoanMenuCommand ?? new RelayCommand(() => PopupLoan = true, null);
 
         #endregion
 
@@ -221,7 +230,8 @@ namespace Homework_18.ViewModels
                 }
 
                 MonthList();
-                MessageBox.Show("Info is here", "Deposit information", MessageBoxButton.OK, MessageBoxImage.Exclamation);
+                //MessageBox.Show("Info is here", "Deposit information", MessageBoxButton.OK, MessageBoxImage.Exclamation);
+                PopupDepInfo = true;
 
                 void MonthList()
                 {
@@ -232,7 +242,6 @@ namespace Homework_18.ViewModels
                 }
             }
         }
-
 
         #endregion
     }
