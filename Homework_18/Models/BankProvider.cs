@@ -12,10 +12,6 @@ namespace Homework_18.Models
     {
         public event Action<int, string> Transaction;
 
-        public (int id, string name, decimal funds, string department,
-            decimal loan, decimal deposit, string depositType) clientData;
-        public (int id, string name, int loanRate, int depositRate) departmentData;
-
         /// <summary>
         /// Check the sender have enough money to make transfer
         /// </summary>
@@ -68,29 +64,6 @@ namespace Homework_18.Models
             return dep;
         }
 
-        /// <summary>
-        /// Fill collection with departments
-        /// </summary>
-        /// <returns></returns>
-        //public ObservableCollection<BankDept> GetDepartments()
-        //{
-        //    ObservableCollection<BankDept> depList = new();
-
-        //    using (AppContext context = new())
-        //    {
-        //        var departments = context.Departments.Select(d => d);
-
-        //        foreach (var dep in departments)
-        //        {
-        //            depList.Add(new(dep.DepartmentNameString));
-        //        }
-        //    }
-
-        //    AddClientsToBankList(depList);
-
-        //    return depList;
-        //}
-
         public int GetDepartmentId(string depName)
         {
             int depId;
@@ -126,24 +99,6 @@ namespace Homework_18.Models
             }
             return clientsList;
         }
-
-        //// TODO add clients to bank list
-        //public ObservableCollection<BankDept> AddClientsToBankList(ObservableCollection<BankDept> bankList)
-        //{
-        //    using (AppContext context = new())
-        //    {
-        //        var clientsIndividual = context.Departments.Select(d => d);
-        //        var clientsBusiness = context.Departments.Select(d => d);
-        //        var clientsVip = context.Departments.Select(d => d);
-
-        //        foreach (var client in clientsIndividual)
-        //        {
-
-        //        }
-        //    }
-
-        //    return bankList;
-        //}
 
         public int GetClientId(string name)
         {

@@ -1,26 +1,33 @@
-﻿using System;
+﻿using Homework_18.Entities;
+using Homework_18.Infrastructure;
+using Homework_18.Models;
 using System.Collections.Generic;
-using Homework_18.Entities;
 using System.Collections.ObjectModel;
 using System.Linq;
 using System.Windows;
 using System.Windows.Input;
-using Homework_18.Models;
-using Homework_18.Infrastructure;
 
 namespace Homework_18.ViewModels
 {
     internal class MainWindowViewModel : ViewModel
     {
         private readonly BankProvider _provider = new();
+        private static readonly Log _log = new();
 
         public MainWindowViewModel()
         {
             Departments = _provider.DepartmentsList();
+            _provider.Transaction += Core_Transaction;
+        }
+
+        private void Core_Transaction(int clientId, string message)
+        {
+            _log.AddToLog(message);
+            _log.AddToDbLog(clientId, message);
         }
 
         public ObservableCollection<Department> Departments { get; set; }
-        public ObservableCollection<Transaction> Transactions { get; set; }
+        public ObservableCollection<string> Transactions { get; set; } = _log.logFile;
         public Dictionary<string, decimal> ClientsList { get; set; }
         public string ClientsName { get; set; }
         public string Recipient { get; set; }
@@ -34,8 +41,6 @@ namespace Homework_18.ViewModels
         public string LoanAmount { get; set; }
         public string SimpleDepositAmount { get; set; }
         public string CapDepositAmount { get; set; }
-
-        /* ------------------------------------------------------------------*/
 
         private Department _selectedDepartment;
         public Department SelectedDepartment
@@ -90,8 +95,11 @@ namespace Homework_18.ViewModels
             get => _popupTransfer;
             set
             {
-                if (_popupTransfer == value) 
+                if (_popupTransfer == value)
+                {
                     return;
+                }
+
                 _popupTransfer = value;
                 OnPropertyChanged(nameof(PopupTransfer));
             }
@@ -137,14 +145,7 @@ namespace Homework_18.ViewModels
             }
         }
 
-
-        /* ------------------------------------------------------------------*/
-
         #region Commands
-
-        private ICommand _testCommand;
-        public ICommand TestCommand => _testCommand ?? new RelayCommand
-            (() => MessageBox.Show("Test", Application.Current.MainWindow.Title, MessageBoxButton.OK, MessageBoxImage.Information));
 
         private ICommand _depositInfoCommand;
         public ICommand DepositInfoCommand => _depositInfoCommand ?? new RelayCommand(ShowDepositInfo);
@@ -164,19 +165,6 @@ namespace Homework_18.ViewModels
         private ICommand _aboutProgramCommand;
         public ICommand AboutProgramCommand => _aboutProgramCommand ?? new RelayCommand
             (() => MessageBox.Show("MyBank v.0.9", Application.Current.MainWindow.Title, MessageBoxButton.OK, MessageBoxImage.Information));
-
-        /// <summary>
-        /// Debug mode
-        /// </summary>
-        private RelayCommand _pauseProgramCommand;
-        public RelayCommand PauseProgramCommand
-        {
-            get
-            {
-                return _pauseProgramCommand ??= new RelayCommand(() =>
-                { });
-            }
-        }
 
         private ICommand _popupTransferMenuCommand;
         public ICommand PopupTransferMenuCommand => _popupTransferMenuCommand ?? new RelayCommand(() => PopupTransfer = true);
@@ -202,9 +190,12 @@ namespace Homework_18.ViewModels
         private ICommand _capDepositCommand;
         public ICommand CapDepositCommand => _capDepositCommand ?? new RelayCommand(MakeCapDeposit);
 
+        /// <summary>
+        /// Debug mode
+        /// </summary>
+        private RelayCommand _pauseProgramCommand;
+        public RelayCommand PauseProgramCommand => _pauseProgramCommand ??= new RelayCommand(() => { });
         #endregion
-
-        /* ------------------------------------------------------------------*/
 
         #region Methods
 
@@ -298,7 +289,9 @@ namespace Homework_18.ViewModels
             }
 
             // transfer funds
-            //_provider.TransferFunds(clientId, recipientId, amountTransfer);
+            _provider.TransferFunds(clientId, recipientId, amountTransfer);
+
+            RefreshView();
 
             // close popup window
             PopupTransfer = false;
@@ -324,7 +317,9 @@ namespace Homework_18.ViewModels
             }
 
             // get loan
-            //_provider.GetLoan(clientId, amountLoan);
+            _provider.GetLoan(clientId, amountLoan);
+
+            RefreshView();
 
             // close popup window
             PopupLoan = false;
@@ -360,7 +355,9 @@ namespace Homework_18.ViewModels
             }
 
             // make simple deposit
-            //_provider.MakeSimpleDeposit(clientId, amountSimpDeposit);
+            _provider.MakeSimpleDeposit(clientId, amountSimpDeposit);
+
+            RefreshView();
 
             // close popup window
             PopupSimpDep = false;
@@ -396,12 +393,27 @@ namespace Homework_18.ViewModels
             }
 
             // make simple deposit
-            //_provider.MakeCapitalizedDeposit(clientId, amountCapDeposit);
+            _provider.MakeCapitalizedDeposit(clientId, amountCapDeposit);
+
+            RefreshView();
 
             // close popup window
             PopupCapDep = false;
 
             _ = MessageBox.Show("Success", "Capitalized deposit", MessageBoxButton.OK, MessageBoxImage.Asterisk);
+        }
+
+        private void RefreshView()
+        {
+            ShowClientsInfo(SelectedClient);
+            SelectClients(SelectedDepartment.DepartmentNameString);
+
+            OnPropertyChanged(nameof(ClientsList));
+            OnPropertyChanged(nameof(SelectedClient));
+            OnPropertyChanged(nameof(FundsInfo));
+            OnPropertyChanged(nameof(LoanInfo));
+            OnPropertyChanged(nameof(DepositInfo));
+            OnPropertyChanged(nameof(DepTypeInfo));
         }
 
         #endregion

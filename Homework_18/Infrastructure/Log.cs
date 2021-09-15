@@ -6,7 +6,7 @@ namespace Homework_18.Infrastructure
     public class Log
     {
         public ObservableCollection<string> logFile = new();
-        private readonly BankProvider provider = new();
+        private readonly BankProvider _provider = new();
 
         /// <summary>
         /// Add message to log list
@@ -19,7 +19,7 @@ namespace Homework_18.Infrastructure
 
         public void AddToDbLog(int clientId, string message)
         {
-            provider.AddTransaction(clientId, message);
+            _provider.AddTransaction(clientId, message);
         }
     }
 }

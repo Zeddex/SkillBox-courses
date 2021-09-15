@@ -31,7 +31,7 @@
                 <MenuItem Header="_File">
                     <MenuItem Header="_Load data" IsEnabled="False"></MenuItem>
                     <MenuItem Header="_Save data" IsEnabled="False"></MenuItem>
-                    <MenuItem Header="_Debug mode" Command="{Binding PauseProgramCommand}" IsEnabled="True"></MenuItem>
+                    <MenuItem Header="_Debug mode" Command="{Binding PauseProgramCommand}" IsEnabled="False"></MenuItem>
                     <Separator/>
                     <MenuItem Header="_Exit" Command="{Binding CloseApplicationCommand}"></MenuItem>
                 </MenuItem>
