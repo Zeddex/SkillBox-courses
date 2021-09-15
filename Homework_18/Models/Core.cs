@@ -14,19 +14,6 @@ namespace Homework_18.Models
         private readonly Log log = new();
         private readonly BankProvider _provider = new();
 
-        public (int id, string name, decimal funds, string department,
-            decimal loan, decimal deposit, string depositType) clientData;
-        public (int id, string name, int loanRate, int depositRate) departmentData;
-
-
-        //public List<decimal> MonthList()
-        //{
-        //    List<decimal> monthsList = _provider.DepositInfo(clientData.id, clientData.depositType,
-        //        departmentData.depositRate).ToList();
-
-        //    return monthsList;
-        //}
-
         private void Core_Transaction(int clientId, string message)
         {
             log.AddToLog(message);

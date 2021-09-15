@@ -1,16 +1,20 @@
-﻿using System;
+﻿using Homework_18.Entities;
+using Homework_18.Enums;
+using Homework_18.Infrastructure;
+using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Linq;
-using Homework_18.Entities;
-using Homework_18.Enums;
-using Homework_18.Infrastructure;
 
 namespace Homework_18.Models
 {
     internal class BankProvider
     {
         public event Action<int, string> Transaction;
+
+        public (int id, string name, decimal funds, string department,
+            decimal loan, decimal deposit, string depositType) clientData;
+        public (int id, string name, int loanRate, int depositRate) departmentData;
 
         /// <summary>
         /// Check the sender have enough money to make transfer
@@ -465,7 +469,9 @@ namespace Homework_18.Models
         /// <summary>
         /// Calculate deposit monthly interest
         /// </summary>
-        /// <param name="client"></param>
+        /// <param name="clientId"></param>
+        /// <param name="depType"></param>
+        /// <param name="depRate"></param>
         /// <returns></returns>
         public decimal[] DepositInfo(int clientId, string depType, int depRate)
         {
@@ -480,13 +486,13 @@ namespace Homework_18.Models
                 {
                     if (i == 0)
                     {
-                        months[i] = (((decimal)deposit / 100 * depRate) / 12) + deposit;
+                        months[i] = (deposit / 100 * depRate / 12) + deposit;
                         _ = Math.Round(months[i], 2);
                         months[i] = Math.Round(months[i], 2);
                         continue;
                     }
 
-                    months[i] = (((decimal)deposit / 100 * depRate) / 12) + months[i - 1];
+                    months[i] = (deposit / 100 * depRate / 12) + months[i - 1];
                     _ = Math.Round(months[i], 2);
                     months[i] = Math.Round(months[i], 2);
                 }
@@ -499,13 +505,13 @@ namespace Homework_18.Models
                 {
                     if (i == 0)
                     {
-                        months[i] = (((decimal)deposit / 100 * depRate) / 12) + deposit;
+                        months[i] = (deposit / 100 * depRate / 12) + deposit;
                         _ = Math.Round(months[i], 2);
                         months[i] = Math.Round(months[i], 2);
                         continue;
                     }
 
-                    months[i] = ((months[i - 1] / 100 * depRate) / 12) + months[i - 1];
+                    months[i] = (months[i - 1] / 100 * depRate / 12) + months[i - 1];
                     months[i] = Math.Round(months[i], 2);
                 }
             }

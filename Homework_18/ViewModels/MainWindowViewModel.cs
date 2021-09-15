@@ -22,16 +22,18 @@ namespace Homework_18.ViewModels
         public ObservableCollection<Department> Departments { get; set; }
         public ObservableCollection<Transaction> Transactions { get; set; }
         public Dictionary<string, decimal> ClientsList { get; set; }
-        public List<decimal> MonthsDepositList { get; set; }
         public string ClientsName { get; set; }
+        public string Recipient { get; set; }
         public string FundsInfo { get; set; }
         public string LoanInfo { get; set; }
         public string DepositInfo { get; set; }
         public string DepTypeInfo { get; set; }
         public string LoanRateInfo { get; set; }
         public string DepRateInfo { get; set; }
-        public string TransferTo { get; set; }
-        public decimal AmountTransfer { get; set; }
+        public string AmountTransfer { get; set; }
+        public string LoanAmount { get; set; }
+        public string SimpleDepositAmount { get; set; }
+        public string CapDepositAmount { get; set; }
 
         /* ------------------------------------------------------------------*/
 
@@ -46,6 +48,16 @@ namespace Homework_18.ViewModels
                 SelectClients(SelectedDepartment.DepartmentNameString);
 
                 OnPropertyChanged(nameof(ClientsList));
+            }
+        }
+
+        private List<decimal> _monthsDepositList;
+        public List<decimal> MonthsDepositList
+        {
+            get => _monthsDepositList;
+            set
+            {
+                Set(ref _monthsDepositList, value);
             }
         }
 
@@ -135,17 +147,16 @@ namespace Homework_18.ViewModels
             (() => MessageBox.Show("Test", Application.Current.MainWindow.Title, MessageBoxButton.OK, MessageBoxImage.Information));
 
         private ICommand _depositInfoCommand;
-        public ICommand DepositInfoCommand => _depositInfoCommand ?? new RelayCommand(ShowDepositInfo, null);
+        public ICommand DepositInfoCommand => _depositInfoCommand ?? new RelayCommand(ShowDepositInfo);
 
         private ICommand _closeDepInfoCommand;
-        public ICommand CloseDepInfoCommand => _closeDepInfoCommand ?? new RelayCommand(() => PopupDepInfo = false, null);
+        public ICommand CloseDepInfoCommand => _closeDepInfoCommand ?? new RelayCommand(() => PopupDepInfo = false);
 
         /// <summary>
         /// Close application
         /// </summary>
         private ICommand _closeApplicationCommand;
-        public ICommand CloseApplicationCommand => (_closeApplicationCommand ?? new RelayCommand
-            (() => Application.Current.Shutdown()));
+        public ICommand CloseApplicationCommand => _closeApplicationCommand ?? new RelayCommand(() => Application.Current.Shutdown());
 
         /// <summary>
         /// About program message
@@ -168,16 +179,28 @@ namespace Homework_18.ViewModels
         }
 
         private ICommand _popupTransferMenuCommand;
-        public ICommand PopupTransferMenuCommand => _popupTransferMenuCommand ?? new RelayCommand(() => PopupTransfer = true, null);
+        public ICommand PopupTransferMenuCommand => _popupTransferMenuCommand ?? new RelayCommand(() => PopupTransfer = true);
 
         private ICommand _popupSimpDepMenuCommand;
-        public ICommand PopupSimpDepMenuCommand => _popupSimpDepMenuCommand ?? new RelayCommand(() => PopupSimpDep = true, null);
+        public ICommand PopupSimpDepMenuCommand => _popupSimpDepMenuCommand ?? new RelayCommand(() => PopupSimpDep = true);
 
         private ICommand _popupCapDepMenuCommand;
-        public ICommand PopupCapDepMenuCommand => _popupCapDepMenuCommand ?? new RelayCommand(() => PopupCapDep = true, null);
+        public ICommand PopupCapDepMenuCommand => _popupCapDepMenuCommand ?? new RelayCommand(() => PopupCapDep = true);
 
         private ICommand _popupLoanMenuCommand;
-        public ICommand PopupLoanMenuCommand => _popupLoanMenuCommand ?? new RelayCommand(() => PopupLoan = true, null);
+        public ICommand PopupLoanMenuCommand => _popupLoanMenuCommand ?? new RelayCommand(() => PopupLoan = true);
+
+        private ICommand _transferCommand;
+        public ICommand TransferCommand => _transferCommand ?? new RelayCommand(MakeTransfer);
+
+        private ICommand _getLoanCommand;
+        public ICommand GetLoanCommand => _getLoanCommand ?? new RelayCommand(GetLoan);
+
+        private ICommand _simpleDepositCommand;
+        public ICommand SimpleDepositCommand => _simpleDepositCommand ?? new RelayCommand(MakeSimpleDeposit);
+
+        private ICommand _capDepositCommand;
+        public ICommand CapDepositCommand => _capDepositCommand ?? new RelayCommand(MakeCapDeposit);
 
         #endregion
 
@@ -230,17 +253,155 @@ namespace Homework_18.ViewModels
                 }
 
                 MonthList();
-                //MessageBox.Show("Info is here", "Deposit information", MessageBoxButton.OK, MessageBoxImage.Exclamation);
                 PopupDepInfo = true;
 
                 void MonthList()
                 {
                     int clientId = _provider.GetClientId(ClientsName);
-                    MonthsDepositList = _provider.DepositInfo(clientId, DepTypeInfo,
-                        int.Parse(DepRateInfo)).ToList();
-
+                    MonthsDepositList = _provider.DepositInfo(clientId, DepTypeInfo, int.Parse(DepRateInfo)).ToList();
                 }
             }
+        }
+
+        private void MakeTransfer()
+        {
+            string recipient = StringExtensions.ClientNameParse(Recipient);
+            int recipientId = _provider.GetClientId(recipient);
+            int clientId = _provider.GetClientId(ClientsName);
+            decimal amountTransfer;
+            decimal clientsFunds = decimal.Parse(FundsInfo);
+
+            if (recipient == ClientsName)
+            {
+                _ = MessageBox.Show("You cannot make a transfer to yourself", "Error", MessageBoxButton.OK, MessageBoxImage.Error);
+                return;
+            }
+
+            try
+            {
+                bool result = decimal.TryParse(AmountTransfer, out amountTransfer);
+                _ = _provider.CheckWrongAmount(result);
+
+                // check the sender have enough money to make transfer
+                bool checkFunds = _provider.CheckSuffAmount(clientsFunds, amountTransfer);
+                _ = _provider.CheckFundsPositive(checkFunds);
+            }
+            catch (InsufficientFundsException ex)
+            {
+                _ = MessageBox.Show(ex.Message, "Insufficient funds", MessageBoxButton.OK, MessageBoxImage.Exclamation);
+                return;
+            }
+            catch (WrongAmountException ex)
+            {
+                _ = MessageBox.Show(ex.Message, "Error", MessageBoxButton.OK, MessageBoxImage.Error);
+                return;
+            }
+
+            // transfer funds
+            //_provider.TransferFunds(clientId, recipientId, amountTransfer);
+
+            // close popup window
+            PopupTransfer = false;
+
+            _ = MessageBox.Show("Transfer completed", "Funds transfer", MessageBoxButton.OK, MessageBoxImage.Asterisk);
+        }
+
+        private void GetLoan()
+        {
+            string clientName = StringExtensions.ClientNameParse(SelectedClient);
+            int clientId = _provider.GetClientId(clientName);
+            decimal amountLoan;
+
+            try
+            {
+                bool result = decimal.TryParse(LoanAmount, out amountLoan);
+                _ = _provider.CheckWrongAmount(result);
+            }
+            catch (WrongAmountException ex)
+            {
+                _ = MessageBox.Show(ex.Message, "Error", MessageBoxButton.OK, MessageBoxImage.Error);
+                return;
+            }
+
+            // get loan
+            //_provider.GetLoan(clientId, amountLoan);
+
+            // close popup window
+            PopupLoan = false;
+
+            _ = MessageBox.Show("Success", "Get loan", MessageBoxButton.OK, MessageBoxImage.Asterisk);
+        }
+
+        private void MakeSimpleDeposit()
+        {
+            string clientName = StringExtensions.ClientNameParse(SelectedClient);
+            int clientId = _provider.GetClientId(clientName);
+            decimal amountSimpDeposit;
+            decimal clientsFunds = decimal.Parse(FundsInfo);
+
+            try
+            {
+                bool result = decimal.TryParse(SimpleDepositAmount, out amountSimpDeposit);
+                _ = _provider.CheckWrongAmount(result);
+
+                // check the client have enough money to make deposit
+                bool checkFunds = _provider.CheckSuffAmount(clientsFunds, amountSimpDeposit);
+                _ = _provider.CheckFundsPositive(checkFunds);
+            }
+            catch (InsufficientFundsException ex)
+            {
+                _ = MessageBox.Show(ex.Message, "Insufficient funds", MessageBoxButton.OK, MessageBoxImage.Exclamation);
+                return;
+            }
+            catch (WrongAmountException ex)
+            {
+                _ = MessageBox.Show(ex.Message, "Error", MessageBoxButton.OK, MessageBoxImage.Error);
+                return;
+            }
+
+            // make simple deposit
+            //_provider.MakeSimpleDeposit(clientId, amountSimpDeposit);
+
+            // close popup window
+            PopupSimpDep = false;
+
+            _ = MessageBox.Show("Success", "Simple deposit", MessageBoxButton.OK, MessageBoxImage.Asterisk);
+        }
+
+        private void MakeCapDeposit()
+        {
+            string clientName = StringExtensions.ClientNameParse(SelectedClient);
+            int clientId = _provider.GetClientId(clientName);
+            decimal amountCapDeposit;
+            decimal clientsFunds = decimal.Parse(FundsInfo);
+
+            try
+            {
+                bool result = decimal.TryParse(SimpleDepositAmount, out amountCapDeposit);
+                _ = _provider.CheckWrongAmount(result);
+
+                // check the client have enough money to make deposit
+                bool checkFunds = _provider.CheckSuffAmount(clientsFunds, amountCapDeposit);
+                _ = _provider.CheckFundsPositive(checkFunds);
+            }
+            catch (InsufficientFundsException ex)
+            {
+                _ = MessageBox.Show(ex.Message, "Insufficient funds", MessageBoxButton.OK, MessageBoxImage.Exclamation);
+                return;
+            }
+            catch (WrongAmountException ex)
+            {
+                _ = MessageBox.Show(ex.Message, "Error", MessageBoxButton.OK, MessageBoxImage.Error);
+                return;
+            }
+
+            // make simple deposit
+            //_provider.MakeCapitalizedDeposit(clientId, amountCapDeposit);
+
+            // close popup window
+            PopupCapDep = false;
+
+            _ = MessageBox.Show("Success", "Capitalized deposit", MessageBoxButton.OK, MessageBoxImage.Asterisk);
         }
 
         #endregion
