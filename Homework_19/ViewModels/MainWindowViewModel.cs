@@ -374,7 +374,7 @@ namespace Homework_19.ViewModels
 
             try
             {
-                bool result = decimal.TryParse(SimpleDepositAmount, out amountCapDeposit);
+                bool result = decimal.TryParse(CapDepositAmount, out amountCapDeposit);
                 _ = _provider.CheckWrongAmount(result);
 
                 // check the client have enough money to make deposit

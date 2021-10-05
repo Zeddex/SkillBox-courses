@@ -33,22 +33,6 @@ namespace Homework_19.Models
             return !result ? throw new WrongAmountException("Wrong Amount!") : true;
         }
 
-        public ObservableCollection<string> ShowDepartments()
-        {
-            ObservableCollection<string> depList = new();
-
-            using (AppContext context = new())
-            {
-                var departments = context.Departments.Select(d => d);
-
-                foreach (var dep in departments)
-                {
-                    depList.Add(dep.DepartmentNameString);
-                }
-            }
-            return depList;
-        }
-
         public ObservableCollection<Department> DepartmentsList()
         {
             ObservableCollection<Department> dep = new();
@@ -245,83 +229,6 @@ namespace Homework_19.Models
                 money = client.Deposit;
             }
             return money;
-        }
-
-        public bool HasDeposit(int clientId)
-        {
-            decimal depositAmount = GetDepositAmount(clientId);
-
-            return depositAmount > 0;
-        }
-
-        public bool HasLoan(int clientId)
-        {
-            decimal loanAmount = GetLoanAmount(clientId);
-
-            return loanAmount > 0;
-        }
-
-        public int GetLoanRate(int clientId)
-        {
-            int rate;
-
-            using (AppContext context = new())
-            {
-                var result = context.Clients.Join(context.Departments,
-                    c => c.DepartmentRefId,
-                    d => d.Id,
-                    (c, d) => new
-                    {
-                        ClientId = c.Id,
-                        Loan = d.LoanRate
-                    });
-                var loanRate = result.Single(c => c.ClientId == clientId);
-
-                rate = loanRate.Loan;
-            }
-            return rate;
-        }
-
-        public int GetDepositRate(int clientId)
-        {
-            int rate;
-
-            using (AppContext context = new())
-            {
-                var result = context.Clients.Join(context.Departments,
-                    c => c.DepartmentRefId,
-                    d => d.Id,
-                    (c, d) => new
-                    {
-                        ClientId = c.Id,
-                        Deposit = d.DepositRate
-                    });
-                var depRate = result.Single(c => c.ClientId == clientId);
-
-                rate = depRate.Deposit;
-            }
-            return rate;
-        }
-
-        public string GetDepositType(int clientId)
-        {
-            string type;
-
-            using (AppContext context = new())
-            {
-                var result = context.Clients.Join(context.Money,
-                    c => c.DepartmentRefId,
-                    m => m.ClientId,
-                    (c, m) => new
-                    {
-                        ClientId = c.Id,
-                        DepType = m.DepositTypeString
-                    });
-                var depType = result.Single(c => c.ClientId == clientId);
-
-                type = depType.DepType;
-            }
-            return type;
         }
 
         public decimal GetFundsAmount(int clientId)

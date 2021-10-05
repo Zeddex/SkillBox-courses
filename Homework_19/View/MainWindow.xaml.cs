@@ -3,7 +3,7 @@
 namespace Homework_19.View
 {
     #region HW19
-    // Add patterns
+    // Use Factory Method and Null Object patterns
     #endregion
 
     /// <summary>
