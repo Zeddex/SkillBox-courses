@@ -12,27 +12,6 @@ namespace Homework_19.Models
     {
         public event Action<int, string> Transaction;
 
-        /// <summary>
-        /// Check the sender have enough money to make transfer
-        /// </summary>
-        /// <param name="client"></param>
-        /// <param name="amount"></param>
-        /// <returns></returns>
-        public bool CheckSuffAmount(decimal clientFunds, decimal amount)
-        {
-            return clientFunds >= amount;
-        }
-
-        public bool CheckFundsPositive(bool result)
-        {
-            return !result ? throw new InsufficientFundsException("Insufficient Funds!") : true;
-        }
-
-        public bool CheckWrongAmount(bool result)
-        {
-            return !result ? throw new WrongAmountException("Wrong Amount!") : true;
-        }
-
         public ObservableCollection<Department> DepartmentsList()
         {
             ObservableCollection<Department> dep = new();
@@ -40,6 +19,7 @@ namespace Homework_19.Models
             using (AppContext context = new())
             {
                 List<Department> depList = context.Departments.ToList();
+
                 foreach (var item in depList)
                 {
                     dep.Add(item);
@@ -378,6 +358,27 @@ namespace Homework_19.Models
                 }
             }
             return months;
+        }
+
+        /// <summary>
+        /// Check the sender have enough money to make transfer
+        /// </summary>
+        /// <param name="client"></param>
+        /// <param name="amount"></param>
+        /// <returns></returns>
+        public bool CheckSuffAmount(decimal clientFunds, decimal amount)
+        {
+            return clientFunds >= amount;
+        }
+
+        public bool CheckFundsPositive(bool result)
+        {
+            return !result ? throw new InsufficientFundsException("Insufficient Funds!") : true;
+        }
+
+        public bool CheckWrongAmount(bool result)
+        {
+            return !result ? throw new WrongAmountException("Wrong Amount!") : true;
         }
     }
 }
