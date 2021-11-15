@@ -8,7 +8,7 @@ using System.Linq;
 
 namespace Homework_19.Models
 {
-    internal class BankProvider
+    public class BankProvider
     {
         public event Action<int, string> Transaction;
 
