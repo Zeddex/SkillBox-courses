@@ -11,4 +11,9 @@ namespace Homework_19.Infrastructure
     {
         public WrongAmountException(string message) : base(message) {}
     }
+
+    public class DbErrorConnection : ApplicationException
+    {
+        public DbErrorConnection(string message) : base(message) { }
+    }
 }

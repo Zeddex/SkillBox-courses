@@ -1,4 +1,5 @@
-﻿using Homework_19.Entities;
+﻿using System;
+using Homework_19.Entities;
 using Homework_19.Infrastructure;
 using Homework_19.Models;
 using System.Collections.Generic;
@@ -16,7 +17,15 @@ namespace Homework_19.ViewModels
 
         public MainWindowViewModel()
         {
-            Departments = _provider.DepartmentsList();
+            try
+            {
+                Departments = _provider.DepartmentsList();
+            }
+            catch (DbErrorConnection ex)
+            {
+                _ = MessageBox.Show(ex.Message, "DataBase Connection Error!", MessageBoxButton.OK, MessageBoxImage.Error);
+            }
+            
             _provider.Transaction += Core_Transaction;
         }
 

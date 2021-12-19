@@ -12,9 +12,20 @@ namespace Homework_19.Models
     {
         public event Action<int, string> Transaction;
 
+        public static bool CheckConnection()
+        {
+            AppContext context = new();
+            return(context.Database.CanConnect());
+        }
+
         public ObservableCollection<Department> DepartmentsList()
         {
             ObservableCollection<Department> dep = new();
+
+            if (!CheckConnection())
+            {
+                throw new DbErrorConnection("DataBase Connection Error!");
+            }
 
             using (AppContext context = new())
             {
@@ -25,6 +36,7 @@ namespace Homework_19.Models
                     dep.Add(item);
                 }
             }
+
             return dep;
         }
 

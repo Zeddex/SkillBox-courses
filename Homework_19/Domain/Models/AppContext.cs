@@ -1,10 +1,12 @@
-﻿using Homework_19.Entities;
+﻿using System;
+using Homework_19.Entities;
 using Homework_19.Enums;
+using Homework_19.Infrastructure;
 using Microsoft.EntityFrameworkCore;
 
 namespace Homework_19
 {
-    internal class AppContext : DbContext
+    public class AppContext : DbContext
     {
         public DbSet<Client> Clients { get; set; }
         public DbSet<Department> Departments { get; set; }
@@ -18,6 +20,7 @@ namespace Homework_19
 
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         {
+            //optionsBuilder.UseSqlServer("Server=(localdb)\\mssqllocaldb;Database=bank;Trusted_Connection=True;");
             optionsBuilder.UseSqlServer("Server=(localdb)\\mssqllocaldb;Database=bank;Trusted_Connection=True;");
         }
 
