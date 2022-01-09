@@ -1,7 +1,7 @@
 ﻿using System.Collections.ObjectModel;
-using Homework_19.Models;
+using Domain.Models;
 
-namespace Homework_19.Infrastructure
+namespace Domain.Infrastructure
 {
     public class Log
     {

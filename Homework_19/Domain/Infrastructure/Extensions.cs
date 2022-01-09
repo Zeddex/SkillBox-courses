@@ -1,6 +1,6 @@
 ﻿using System;
 
-namespace Homework_19.Infrastructure
+namespace Domain.Infrastructure
 {
     public static class StringExtensions
     {

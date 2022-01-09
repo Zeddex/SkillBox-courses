@@ -1,10 +1,9 @@
 ﻿using System;
-using Homework_19.Entities;
-using Homework_19.Enums;
-using Homework_19.Infrastructure;
+using Domain.Entities;
+using Domain.Enums;
 using Microsoft.EntityFrameworkCore;
 
-namespace Homework_19
+namespace Domain
 {
     public class AppContext : DbContext
     {

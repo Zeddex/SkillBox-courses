@@ -1,7 +1,7 @@
 ﻿using System;
-using Homework_19.Entities;
-using Homework_19.Infrastructure;
-using Homework_19.Models;
+using Domain.Entities;
+using Domain.Infrastructure;
+using Domain.Models;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Linq;
