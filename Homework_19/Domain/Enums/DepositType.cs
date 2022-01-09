@@ -1,4 +1,4 @@
-﻿namespace Homework_19.Enums
+﻿namespace Domain.Enums
 {
     public enum DepositType
     {

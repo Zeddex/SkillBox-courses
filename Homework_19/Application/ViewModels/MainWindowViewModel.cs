@@ -1,7 +1,7 @@
 ﻿using System;
-using Homework_19.Entities;
-using Homework_19.Infrastructure;
-using Homework_19.Models;
+using Domain.Entities;
+using Domain.Infrastructure;
+using Domain.Models;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Linq;
@@ -17,16 +17,16 @@ namespace Homework_19.ViewModels
 
         public MainWindowViewModel()
         {
-            try
+            if (_provider.CheckConnection())
             {
                 Departments = _provider.DepartmentsList();
+                _provider.Transaction += Core_Transaction;
             }
-            catch (DbErrorConnection ex)
+
+            else
             {
-                _ = MessageBox.Show(ex.Message, "DataBase Connection Error!", MessageBoxButton.OK, MessageBoxImage.Error);
+                MessageBox.Show("DataBase Connection Error!", "DataBase Connection Error!", MessageBoxButton.OK, MessageBoxImage.Error);
             }
-            
-            _provider.Transaction += Core_Transaction;
         }
 
         private void Core_Transaction(int clientId, string message)

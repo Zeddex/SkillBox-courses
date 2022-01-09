@@ -1,10 +1,10 @@
-﻿using Homework_19.Enums;
+﻿using Domain.Enums;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
-using Homework_19.Infrastructure;
+using Domain.Infrastructure;
 
-namespace Homework_19.Entities
+namespace Domain.Entities
 {
     public class Department
     {

@@ -1,31 +1,26 @@
-﻿using Homework_19.Entities;
-using Homework_19.Enums;
-using Homework_19.Infrastructure;
+﻿using Domain.Entities;
+using Domain.Enums;
+using Domain.Infrastructure;
 using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Linq;
 
-namespace Homework_19.Models
+namespace Domain.Models
 {
-    public class BankProvider
+    public class BankProvider : IDataAccess
     {
         public event Action<int, string> Transaction;
 
-        public static bool CheckConnection()
+        public bool CheckConnection()
         {
             AppContext context = new();
-            return(context.Database.CanConnect());
+            return (context.Database.CanConnect());
         }
 
         public ObservableCollection<Department> DepartmentsList()
         {
             ObservableCollection<Department> dep = new();
-
-            if (!CheckConnection())
-            {
-                throw new DbErrorConnection("DataBase Connection Error!");
-            }
 
             using (AppContext context = new())
             {

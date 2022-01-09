@@ -3,10 +3,9 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using MediatR;
 
 namespace Domain.Queries
 {
-    internal class GetClientIdByNameQuery
-    {
-    }
+    public record GetClientIdByNameQuery() : IRequest<int>;
 }

@@ -1,9 +1,9 @@
-﻿using Homework_19.Enums;
-using Homework_19.Infrastructure;
+﻿using Domain.Enums;
+using Domain.Infrastructure;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 
-namespace Homework_19.Entities
+namespace Domain.Entities
 {
     public class Money
     {
