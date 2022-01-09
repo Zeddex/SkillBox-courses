@@ -5,8 +5,11 @@ using Domain.Models;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Linq;
+using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Input;
+using Domain.Queries;
+using MediatR;
 
 namespace Homework_19.ViewModels
 {
@@ -14,12 +17,14 @@ namespace Homework_19.ViewModels
     {
         private readonly BankProvider _provider = new();
         private static readonly Log _log = new();
+        private readonly IMediator _mediator;
 
         public MainWindowViewModel()
         {
             if (_provider.CheckConnection())
             {
-                Departments = _provider.DepartmentsList();
+                //Departments = _provider.DepartmentsList();
+                Departments = _mediator.Send(new GetDepartsmentListQuery());
                 _provider.Transaction += Core_Transaction;
             }
 
@@ -35,7 +40,8 @@ namespace Homework_19.ViewModels
             _log.AddToDbLog(clientId, message);
         }
 
-        public ObservableCollection<Department> Departments { get; set; }
+        //public ObservableCollection<Department> Departments { get; set; }
+        public Task<ObservableCollection<Department>> Departments { get; set; }
         public ObservableCollection<string> Transactions { get; set; } = _log.logFile;
         public Dictionary<string, decimal> ClientsList { get; set; }
         public string ClientsName { get; set; }
