@@ -9,6 +9,7 @@ using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Input;
 using Domain.Queries;
+using Domain.Commands;
 using MediatR;
 
 namespace Homework_19.ViewModels
@@ -24,7 +25,7 @@ namespace Homework_19.ViewModels
             if (_provider.CheckConnection())
             {
                 //Departments = _provider.DepartmentsList();
-                Departments = _mediator.Send(new GetDepartsmentListQuery());
+                Departments = _mediator.Send(new GetDepartsmentListQuery()).Result;
                 _provider.Transaction += Core_Transaction;
             }
 
@@ -40,8 +41,7 @@ namespace Homework_19.ViewModels
             _log.AddToDbLog(clientId, message);
         }
 
-        //public ObservableCollection<Department> Departments { get; set; }
-        public Task<ObservableCollection<Department>> Departments { get; set; }
+        public ObservableCollection<Department> Departments { get; set; }
         public ObservableCollection<string> Transactions { get; set; } = _log.logFile;
         public Dictionary<string, decimal> ClientsList { get; set; }
         public string ClientsName { get; set; }
