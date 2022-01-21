@@ -10,7 +10,7 @@ namespace Domain.Models
 {
     public class BankProvider : IDataAccess
     {
-        public event Action<int, string> Transaction;
+        public event Action<int, string>? Transaction;
 
         public bool CheckConnection()
         {
