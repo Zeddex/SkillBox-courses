@@ -1,5 +1,5 @@
 ﻿using Domain.Enums;
-using Domain.Infrastructure;
+using Domain.Ext;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 

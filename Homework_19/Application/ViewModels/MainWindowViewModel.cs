@@ -1,15 +1,14 @@
 ﻿using System;
 using Domain.Entities;
-using Domain.Infrastructure;
-using Domain.Models;
+using Persistence.Models;
+using Domain.Ext;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Linq;
-using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Input;
-using Domain.Queries;
-using Domain.Commands;
+using Application.Queries;
+using Application.Commands;
 using MediatR;
 
 namespace Homework_19.ViewModels
@@ -172,14 +171,14 @@ namespace Homework_19.ViewModels
         /// Close application
         /// </summary>
         private ICommand _closeApplicationCommand;
-        public ICommand CloseApplicationCommand => _closeApplicationCommand ?? new RelayCommand(() => Application.Current.Shutdown());
+        public ICommand CloseApplicationCommand => _closeApplicationCommand ?? new RelayCommand(() => System.Windows.Application.Current.Shutdown());
 
         /// <summary>
         /// About program message
         /// </summary>
         private ICommand _aboutProgramCommand;
         public ICommand AboutProgramCommand => _aboutProgramCommand ?? new RelayCommand
-            (() => MessageBox.Show("MyBank v.1.0", Application.Current.MainWindow.Title, MessageBoxButton.OK, MessageBoxImage.Information));
+            (() => MessageBox.Show("MyBank v.1.0", System.Windows.Application.Current.MainWindow.Title, MessageBoxButton.OK, MessageBoxImage.Information));
 
         private ICommand _popupTransferMenuCommand;
         public ICommand PopupTransferMenuCommand => _popupTransferMenuCommand ?? new RelayCommand(() => PopupTransfer = true);

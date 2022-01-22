@@ -1,13 +1,14 @@
-﻿using System.Windows;
+﻿using System;
+using System.Windows;
+using Application;
 using Domain;
-using Domain.Models;
-using Homework_19.View;
 using MediatR;
 using Microsoft.Extensions.DependencyInjection;
+using Persistence.Models;
 
 namespace Homework_19
 {
-    public partial class App : Application
+    public partial class App : System.Windows.Application
     {
         private readonly ServiceProvider _serviceProvider;
 
