@@ -1,6 +1,5 @@
 ﻿using System;
 using Domain.Entities;
-using Persistence.Models;
 using Domain.Ext;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
@@ -10,6 +9,7 @@ using System.Windows.Input;
 using Application.Queries;
 using Application.Commands;
 using MediatR;
+using Persistence.Models;
 
 namespace Homework_19.ViewModels
 {

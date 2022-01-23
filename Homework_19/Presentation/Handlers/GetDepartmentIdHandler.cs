@@ -9,7 +9,8 @@ using MediatR;
 
 namespace Application.Handlers
 {
-    internal class GetDepartmentIdHandler
+    public class GetDepartmentByIdHandler
     {
+        
     }
 }
