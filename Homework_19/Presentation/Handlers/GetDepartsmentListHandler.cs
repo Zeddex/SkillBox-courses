@@ -10,16 +10,16 @@ namespace Application.Handlers
 {
     //public class GetDepartsmentListHandler : IRequestHandler<GetDepartsmentListQuery, ObservableCollection<Department>>
     //{
-        //private readonly IDataAccess _data;
+    //    private readonly IDataAccess _data;
 
-        //public GetDepartsmentListHandler(IDataAccess data)
-        //{
-        //    _data = data;
-        //}
+    //    public GetDepartsmentListHandler(IDataAccess data)
+    //    {
+    //        _data = data;
+    //    }
 
-        //public Task<ObservableCollection<Department>> Handle(GetDepartsmentListQuery request, CancellationToken cancellationToken)
-        //{
-        //    return Task.FromResult(_data.DepartmentsList());
-        //}
+    //    public Task<ObservableCollection<Department>> Handle(GetDepartsmentListQuery request, CancellationToken cancellationToken)
+    //    {
+    //        return Task.FromResult(_data.DepartmentsList());
+    //    }
     //}
 }
