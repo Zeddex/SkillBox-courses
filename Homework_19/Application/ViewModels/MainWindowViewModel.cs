@@ -16,7 +16,6 @@ namespace Homework_19.ViewModels
     internal class MainWindowViewModel : ViewModel
     {
         private readonly BankProvider _provider = new();
-        //private readonly IDataAccess _provider = new BankProvider();
         private static readonly Log _log = new();
         private readonly IMediator _mediator;
 
@@ -24,8 +23,8 @@ namespace Homework_19.ViewModels
         {
             if (_provider.CheckConnection())
             {
-                Departments = _provider.DepartmentsList();
-                //Departments = _mediator.Send(new GetDepartsmentListQuery()).Result;
+                //Departments = _provider.DepartmentsList();
+                Departments = _mediator.Send(new GetDepartsmentListQuery()).Result;
                 _provider.Transaction += Core_Transaction;
             }
 
