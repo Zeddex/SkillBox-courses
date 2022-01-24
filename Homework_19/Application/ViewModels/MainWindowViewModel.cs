@@ -16,6 +16,7 @@ namespace Homework_19.ViewModels
     internal class MainWindowViewModel : ViewModel
     {
         private readonly BankProvider _provider = new();
+        //private readonly IDataAccess _provider = new BankProvider();
         private static readonly Log _log = new();
         private readonly IMediator _mediator;
 
