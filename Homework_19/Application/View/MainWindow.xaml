@@ -1,14 +1,15 @@
-﻿<Window x:Class="Homework_19.View.MainWindow"
+﻿<Window x:Class="Presentation.View.MainWindow"
         xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
-        xmlns:vm="clr-namespace:Homework_19.ViewModels"
+        xmlns:vm="clr-namespace:Presentation.ViewModels"
         mc:Ignorable="d"
         Title="MyBank" Height="600" Width="1000" MinHeight="200" MinWidth="300">
-    <Window.DataContext>
+    <!--<Window.DataContext>
         <vm:MainWindowViewModel/>
-    </Window.DataContext>
+    </Window.DataContext>-->
+
     <Grid>
         <Grid.ColumnDefinitions>
             <ColumnDefinition Width="40*" />

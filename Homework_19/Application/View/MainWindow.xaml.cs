@@ -1,6 +1,7 @@
 ﻿using System.Windows;
+using MediatR;
 
-namespace Homework_19.View
+namespace Presentation.View
 {
     #region HW19
     // Use Factory Method and Null Object patterns

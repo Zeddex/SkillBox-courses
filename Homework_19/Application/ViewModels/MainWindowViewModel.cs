@@ -11,20 +11,22 @@ using Application.Commands;
 using MediatR;
 using Persistence.Models;
 
-namespace Homework_19.ViewModels
+namespace Presentation.ViewModels
 {
-    internal class MainWindowViewModel : ViewModel
+    public class MainWindowViewModel : ViewModel
     {
         private readonly BankProvider _provider = new();
         private static readonly Log _log = new();
         private readonly IMediator _mediator;
 
-        public MainWindowViewModel()
+        public MainWindowViewModel(IMediator mediator)
         {
+            _mediator = mediator;
+
             if (_provider.CheckConnection())
             {
                 //Departments = _provider.DepartmentsList();
-                Departments = _mediator.Send(new GetDepartsmentListQuery()).Result;
+                Departments = _mediator.Send(new GetDepartmentsListQuery()).Result;
                 _provider.Transaction += Core_Transaction;
             }
 
@@ -208,6 +210,7 @@ namespace Homework_19.ViewModels
         /// Debug mode
         /// </summary>
         private RelayCommand _pauseProgramCommand;
+
         public RelayCommand PauseProgramCommand => _pauseProgramCommand ??= new RelayCommand(() => { });
         #endregion
 

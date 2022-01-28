@@ -8,16 +8,16 @@ using Persistence.Models;
 
 namespace Application.Handlers
 {
-    public class GetDepartsmentListHandler : IRequestHandler<GetDepartsmentListQuery, ObservableCollection<Department>>
+    public class GetDepartmentsListHandler : IRequestHandler<GetDepartmentsListQuery, ObservableCollection<Department>>
     {
         private readonly IDataAccess _data;
 
-        public GetDepartsmentListHandler(IDataAccess data)
+        public GetDepartmentsListHandler(IDataAccess data)
         {
             _data = data;
         }
 
-        public Task<ObservableCollection<Department>> Handle(GetDepartsmentListQuery request, CancellationToken cancellationToken)
+        public Task<ObservableCollection<Department>> Handle(GetDepartmentsListQuery request, CancellationToken cancellationToken)
         {
             return Task.FromResult(_data.DepartmentsList());
         }
