@@ -1,5 +1,7 @@
-﻿using MediatR;
+﻿using System.Collections.Generic;
+using MediatR;
 using System.Collections.ObjectModel;
+using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
 using Application.Queries;
@@ -8,7 +10,7 @@ using Persistence.Models;
 
 namespace Application.Handlers
 {
-    public class GetDepartmentsListHandler : IRequestHandler<GetDepartmentsListQuery, ObservableCollection<Department>>
+    public class GetDepartmentsListHandler : IRequestHandler<GetDepartmentsListQuery, List<Department>>
     {
         private readonly IDataAccess _data;
 
@@ -17,9 +19,9 @@ namespace Application.Handlers
             _data = data;
         }
 
-        public Task<ObservableCollection<Department>> Handle(GetDepartmentsListQuery request, CancellationToken cancellationToken)
+        public async Task<List<Department>> Handle(GetDepartmentsListQuery request, CancellationToken cancellationToken)
         {
-            return Task.FromResult(_data.DepartmentsList());
+            return await Task.FromResult(_data.DepartmentsList().ToList());
         }
     }
 }

@@ -1,10 +1,12 @@
 ﻿using System.Reflection;
 using System.Windows;
 using Application;
+using Application.Queries;
 using MediatR;
 using Microsoft.Extensions.DependencyInjection;
 using Persistence.Models;
 using Presentation.View;
+using Presentation.ViewModels;
 
 namespace Presentation
 {
@@ -21,15 +23,16 @@ namespace Presentation
 
         private void ConfigureServices(IServiceCollection services)
         {
-            services.AddSingleton<IDataAccess, BankProvider>();
+            services.AddScoped<IDataAccess, BankProvider>();
             services.AddSingleton<MainWindow>();
-            //services.AddMediatR(typeof(MediatREntryPoint).Assembly);
-            services.AddMediatR(typeof(App).GetTypeInfo().Assembly);
+            services.AddScoped<MainWindowViewModel, MainWindowViewModel>();
+            services.AddMediatR(typeof(MediatREntryPoint).Assembly);
         }
 
         private void OnStartup(object sender, StartupEventArgs e)
         {
             var mainWindow = Provider.GetService<MainWindow>();
+            mainWindow.DataContext = Provider.GetService<MainWindowViewModel>();    // TODO убрать костыль
             mainWindow.Show();
         }
     }

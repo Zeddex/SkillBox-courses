@@ -26,6 +26,7 @@ namespace Presentation.ViewModels
             if (_provider.CheckConnection())
             {
                 //Departments = _provider.DepartmentsList();
+                //Departments = _mediator.Send(new GetDepartmentsListQuery()).Result;
                 Departments = _mediator.Send(new GetDepartmentsListQuery()).Result;
                 _provider.Transaction += Core_Transaction;
             }
@@ -42,7 +43,9 @@ namespace Presentation.ViewModels
             _log.AddToDbLog(clientId, message);
         }
 
-        public ObservableCollection<Department> Departments { get; set; }
+        //public ObservableCollection<Department> Departments { get; set; }
+        public List<Department> Departments { get; set; }
+        //public ObservableCollection<string> Transactions { get; set; } = _log.logFile;
         public ObservableCollection<string> Transactions { get; set; } = _log.logFile;
         public Dictionary<string, decimal> ClientsList { get; set; }
         public string ClientsName { get; set; }

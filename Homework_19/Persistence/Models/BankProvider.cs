@@ -18,9 +18,11 @@ namespace Persistence.Models
             return (context.Database.CanConnect());
         }
 
-        public ObservableCollection<Department> DepartmentsList()
+        //public ObservableCollection<Department> DepartmentsList()
+        public List<Department> DepartmentsList()
         {
-            ObservableCollection<Department> dep = new();
+            //ObservableCollection<Department> dep = new();
+            List<Department> dep = new();
 
             using (AppContext context = new())
             {

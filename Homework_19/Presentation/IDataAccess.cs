@@ -10,7 +10,8 @@ namespace Persistence.Models
         void AddTransaction(int clientId, string operation);
         public bool CheckConnection();
         public event Action<int, string>? Transaction;
-        ObservableCollection<Department> DepartmentsList();
+        //ObservableCollection<Department> DepartmentsList();
+        List<Department> DepartmentsList();
         int GetClientId(string name);
         void GetClientInfo(int clientId, out decimal clientFunds, out decimal clientLoan, out decimal clientDeposit, out string clientDepositType);
         string GetClientName(int clientId);

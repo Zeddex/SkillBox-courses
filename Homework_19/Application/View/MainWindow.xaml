@@ -6,9 +6,6 @@
         xmlns:vm="clr-namespace:Presentation.ViewModels"
         mc:Ignorable="d"
         Title="MyBank" Height="600" Width="1000" MinHeight="200" MinWidth="300">
-    <!--<Window.DataContext>
-        <vm:MainWindowViewModel/>
-    </Window.DataContext>-->
 
     <Grid>
         <Grid.ColumnDefinitions>

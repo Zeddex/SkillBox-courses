@@ -1,8 +1,9 @@
-﻿using Domain.Entities;
+﻿using System.Collections.Generic;
+using Domain.Entities;
 using MediatR;
 using System.Collections.ObjectModel;
 
 namespace Application.Queries
 {
-    public record GetDepartmentsListQuery() : IRequest<ObservableCollection<Department>>;
+    public record GetDepartmentsListQuery() : IRequest<List<Department>>;
 }
