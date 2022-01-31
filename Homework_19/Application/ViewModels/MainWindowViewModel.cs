@@ -2,7 +2,6 @@
 using Domain.Entities;
 using Domain.Ext;
 using System.Collections.Generic;
-using System.Collections.ObjectModel;
 using System.Linq;
 using System.Windows;
 using System.Windows.Input;
@@ -16,8 +15,26 @@ namespace Presentation.ViewModels
     public class MainWindowViewModel : ViewModel
     {
         private readonly BankProvider _provider = new();
-        private static readonly Log _log = new();
         private readonly IMediator _mediator;
+        //private static readonly Log _log = new Log(_mediator);
+        private static readonly Log _log = new();
+
+        public List<Department> Departments { get; set; }
+        public List<string> Transactions { get; set; } = _log.logFile;
+        public Dictionary<string, decimal> ClientsList { get; set; }
+        public string ClientsName { get; set; }
+        public string Recipient { get; set; }
+        public string FundsInfo { get; set; }
+        public string LoanInfo { get; set; }
+        public string DepositInfo { get; set; }
+        public string DepTypeInfo { get; set; }
+        public string LoanRateInfo { get; set; }
+        public string DepRateInfo { get; set; }
+        public string AmountTransfer { get; set; }
+        public string LoanAmount { get; set; }
+        public string SimpleDepositAmount { get; set; }
+        public string CapDepositAmount { get; set; }
+        private Department _selectedDepartment;
 
         public MainWindowViewModel(IMediator mediator)
         {
@@ -25,9 +42,7 @@ namespace Presentation.ViewModels
 
             if (_provider.CheckConnection())
             {
-                //Departments = _provider.DepartmentsList();
-                //Departments = _mediator.Send(new GetDepartmentsListQuery()).Result;
-                Departments = _mediator.Send(new GetDepartmentsListQuery()).Result;
+                Departments = _mediator.Send(new GetDepartmentsList.Query()).Result;
                 _provider.Transaction += Core_Transaction;
             }
 
@@ -43,25 +58,6 @@ namespace Presentation.ViewModels
             _log.AddToDbLog(clientId, message);
         }
 
-        //public ObservableCollection<Department> Departments { get; set; }
-        public List<Department> Departments { get; set; }
-        //public ObservableCollection<string> Transactions { get; set; } = _log.logFile;
-        public ObservableCollection<string> Transactions { get; set; } = _log.logFile;
-        public Dictionary<string, decimal> ClientsList { get; set; }
-        public string ClientsName { get; set; }
-        public string Recipient { get; set; }
-        public string FundsInfo { get; set; }
-        public string LoanInfo { get; set; }
-        public string DepositInfo { get; set; }
-        public string DepTypeInfo { get; set; }
-        public string LoanRateInfo { get; set; }
-        public string DepRateInfo { get; set; }
-        public string AmountTransfer { get; set; }
-        public string LoanAmount { get; set; }
-        public string SimpleDepositAmount { get; set; }
-        public string CapDepositAmount { get; set; }
-
-        private Department _selectedDepartment;
         public Department SelectedDepartment
         {
             get => _selectedDepartment;
@@ -225,20 +221,23 @@ namespace Presentation.ViewModels
         /// <param name="departmentName"></param>
         private void SelectClients(string departmentName)
         {
-            int depId = _provider.GetDepartmentId(departmentName);
-            ClientsList = _provider.ShowClients(depId);
+            int depId = _mediator.Send(new GetDepartmentId.Query(departmentName)).Result;
+
+            ClientsList = _mediator.Send(new GetClientsByDepId.Query(depId)).Result;
         }
 
         private void ShowClientsInfo(string clientData)
         {
             string clientName = StringExtensions.ClientNameParse(clientData);
-            int clientId = _provider.GetClientId(clientName);
-            int departmentId = _provider.GetDepartmentId(SelectedDepartment.DepartmentNameString);
+            int clientId = _mediator.Send(new GetClientIdByName.Query(clientName)).Result;
+            int departmentId = _mediator.Send(new GetDepartmentId.Query(SelectedDepartment.DepartmentNameString)).Result;
 
-            _provider.GetClientInfo(clientId, out var clientFunds, out var clientLoan, out var clientDeposit,
-                out string clientDepositType);
-
-            _provider.GetDepartmentInfo(departmentId, out var departmentLoanRate, out var departmentDepositRate);
+            decimal clientFunds = _mediator.Send(new GetClientFunds.Query(clientId)).Result;
+            decimal clientLoan = _mediator.Send(new GetClientLoan.Query(clientId)).Result;
+            decimal clientDeposit = _mediator.Send(new GetClientDeposit.Query(clientId)).Result;
+            string clientDepositType = _mediator.Send(new GetClientDepositType.Query(clientId)).Result;
+            int departmentLoanRate = _mediator.Send(new GetDepartmentLoanRate.Query(departmentId)).Result;
+            int departmentDepositRate = _mediator.Send(new GetDepartmentDepositRate.Query(departmentId)).Result;
 
             ClientsName = clientName;
             FundsInfo = clientFunds.ToString();
@@ -268,8 +267,8 @@ namespace Presentation.ViewModels
 
                 void MonthList()
                 {
-                    int clientId = _provider.GetClientId(ClientsName);
-                    MonthsDepositList = _provider.DepositInfo(clientId, DepTypeInfo, int.Parse(DepRateInfo)).ToList();
+                    int clientId = _mediator.Send(new GetClientIdByName.Query(ClientsName)).Result;
+                    MonthsDepositList = _mediator.Send(new GetDepositAmount.Query(clientId, DepTypeInfo, int.Parse(DepRateInfo))).Result;
                 }
             }
         }
@@ -277,8 +276,8 @@ namespace Presentation.ViewModels
         private void MakeTransfer()
         {
             string recipient = StringExtensions.ClientNameParse(Recipient);
-            int recipientId = _provider.GetClientId(recipient);
-            int clientId = _provider.GetClientId(ClientsName);
+            int recipientId = _mediator.Send(new GetClientIdByName.Query(recipient)).Result;
+            int clientId = _mediator.Send(new GetClientIdByName.Query(ClientsName)).Result;
             decimal amountTransfer;
             decimal clientsFunds = decimal.Parse(FundsInfo);
 
@@ -309,7 +308,8 @@ namespace Presentation.ViewModels
             }
 
             // transfer funds
-            _provider.TransferFunds(clientId, recipientId, amountTransfer);
+            //_provider.TransferFunds(clientId, recipientId, amountTransfer);     // TODO Command
+            _mediator.Send(new TransferFunds.Command(clientId, recipientId, amountTransfer));
 
             RefreshView();
 
@@ -322,7 +322,7 @@ namespace Presentation.ViewModels
         private void GetLoan()
         {
             string clientName = StringExtensions.ClientNameParse(SelectedClient);
-            int clientId = _provider.GetClientId(clientName);
+            int clientId = _mediator.Send(new GetClientIdByName.Query(clientName)).Result;
             decimal amountLoan;
 
             try
@@ -337,7 +337,8 @@ namespace Presentation.ViewModels
             }
 
             // get loan
-            _provider.GetLoan(clientId, amountLoan);
+            //_provider.GetLoan(clientId, amountLoan);    // TODO Command
+            _mediator.Send(new GetLoan.Command(clientId, amountLoan));
 
             RefreshView();
 
@@ -350,7 +351,7 @@ namespace Presentation.ViewModels
         private void MakeSimpleDeposit()
         {
             string clientName = StringExtensions.ClientNameParse(SelectedClient);
-            int clientId = _provider.GetClientId(clientName);
+            int clientId = _mediator.Send(new GetClientIdByName.Query(clientName)).Result;
             decimal amountSimpDeposit;
             decimal clientsFunds = decimal.Parse(FundsInfo);
 
@@ -375,7 +376,8 @@ namespace Presentation.ViewModels
             }
 
             // make simple deposit
-            _provider.MakeSimpleDeposit(clientId, amountSimpDeposit);
+            //_provider.MakeSimpleDeposit(clientId, amountSimpDeposit);       // TODO Command
+            _mediator.Send(new GetLoan.Command(clientId, amountSimpDeposit));
 
             RefreshView();
 
@@ -388,7 +390,7 @@ namespace Presentation.ViewModels
         private void MakeCapDeposit()
         {
             string clientName = StringExtensions.ClientNameParse(SelectedClient);
-            int clientId = _provider.GetClientId(clientName);
+            int clientId = _mediator.Send(new GetClientIdByName.Query(clientName)).Result;
             decimal amountCapDeposit;
             decimal clientsFunds = decimal.Parse(FundsInfo);
 
@@ -413,7 +415,8 @@ namespace Presentation.ViewModels
             }
 
             // make simple deposit
-            _provider.MakeCapitalizedDeposit(clientId, amountCapDeposit);
+            //_provider.MakeCapitalizedDeposit(clientId, amountCapDeposit);       // TODO Command
+            _mediator.Send(new GetLoan.Command(clientId, amountCapDeposit));
 
             RefreshView();
 

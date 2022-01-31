@@ -18,10 +18,8 @@ namespace Persistence.Models
             return (context.Database.CanConnect());
         }
 
-        //public ObservableCollection<Department> DepartmentsList()
         public List<Department> DepartmentsList()
         {
-            //ObservableCollection<Department> dep = new();
             List<Department> dep = new();
 
             using (AppContext context = new())
@@ -97,8 +95,9 @@ namespace Persistence.Models
             return name;
         }
 
-        public void GetClientInfo(int clientId, out decimal clientFunds, out decimal clientLoan, out decimal clientDeposit, out string clientDepositType)
+        public decimal GetClientFunds(int clientId)
         {
+            decimal funds;
 
             using (AppContext context = new())
             {
@@ -115,15 +114,91 @@ namespace Persistence.Models
                     });
                 var client = result.Single(m => m.Id == clientId);
 
-                clientFunds = client.Funds;
-                clientLoan = client.Loan;
-                clientDeposit = client.Deposit;
-                clientDepositType = client.DepositType;
+                funds = client.Funds;
             }
+
+            return funds;
         }
 
-        public void GetDepartmentInfo(int depId, out int departmentLoanRate, out int departmentDepositRate)
+        public decimal GetClientLoan(int clientId)
         {
+            decimal loan;
+
+            using (AppContext context = new())
+            {
+                var result = context.Clients.Join(context.Money,
+                    c => c.Id,
+                    m => m.ClientId,
+                    (c, m) => new
+                    {
+                        Id = m.ClientId,
+                        Funds = m.Funds,
+                        Loan = m.Loan,
+                        Deposit = m.Deposit,
+                        DepositType = m.DepositTypeString
+                    });
+                var client = result.Single(m => m.Id == clientId);
+
+                loan = client.Loan;
+            }
+
+            return loan;
+        }
+
+        public decimal GetClientDeposit(int clientId)
+        {
+            decimal deposit;
+
+            using (AppContext context = new())
+            {
+                var result = context.Clients.Join(context.Money,
+                    c => c.Id,
+                    m => m.ClientId,
+                    (c, m) => new
+                    {
+                        Id = m.ClientId,
+                        Funds = m.Funds,
+                        Loan = m.Loan,
+                        Deposit = m.Deposit,
+                        DepositType = m.DepositTypeString
+                    });
+                var client = result.Single(m => m.Id == clientId);
+
+                deposit = client.Deposit;
+            }
+
+            return deposit;
+        }
+
+        public string GetClientDepositType(int clientId)
+        {
+            string depositType;
+
+            using (AppContext context = new())
+            {
+                var result = context.Clients.Join(context.Money,
+                    c => c.Id,
+                    m => m.ClientId,
+                    (c, m) => new
+                    {
+                        Id = m.ClientId,
+                        Funds = m.Funds,
+                        Loan = m.Loan,
+                        Deposit = m.Deposit,
+                        DepositType = m.DepositTypeString
+                    });
+                var client = result.Single(m => m.Id == clientId);
+
+                depositType = client.DepositType;
+            }
+
+            return depositType;
+        }
+
+        public int GetDepartmentLoanRate(int depId)
+        {
+            int depLoanRate;
+
             using (AppContext context = new())
             {
                 var result = context.Clients.Join(context.Departments,
@@ -137,9 +212,33 @@ namespace Persistence.Models
                     });
                 var dep = result.Single(d => d.Id == depId);
 
-                departmentLoanRate = dep.LoanRate;
-                departmentDepositRate = dep.DepositRate;
+                depLoanRate = dep.LoanRate;
             }
+
+            return depLoanRate;
+        }
+
+        public int GetDepartmentDepositRate(int depId)
+        {
+            int depDepositRate;
+
+            using (AppContext context = new())
+            {
+                var result = context.Clients.Join(context.Departments,
+                    c => c.Id,
+                    d => d.Id,
+                    (c, d) => new
+                    {
+                        Id = d.Id,
+                        LoanRate = d.LoanRate,
+                        DepositRate = d.DepositRate
+                    });
+                var dep = result.Single(d => d.Id == depId);
+
+                depDepositRate = dep.DepositRate;
+            }
+
+            return depDepositRate;
         }
 
         public void MakeSimpleDeposit(int clientId, decimal amount)
@@ -324,7 +423,7 @@ namespace Persistence.Models
         /// <param name="depType"></param>
         /// <param name="depRate"></param>
         /// <returns></returns>
-        public decimal[] DepositInfo(int clientId, string depType, int depRate)
+        public List<decimal> DepositInfo(int clientId, string depType, int depRate)
         {
             decimal[] months = new decimal[12];
 
@@ -366,7 +465,8 @@ namespace Persistence.Models
                     months[i] = Math.Round(months[i], 2);
                 }
             }
-            return months;
+
+            return months.ToList();
         }
 
         /// <summary>

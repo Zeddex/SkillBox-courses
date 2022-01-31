@@ -10,13 +10,17 @@ namespace Persistence.Models
         void AddTransaction(int clientId, string operation);
         public bool CheckConnection();
         public event Action<int, string>? Transaction;
-        //ObservableCollection<Department> DepartmentsList();
         List<Department> DepartmentsList();
         int GetClientId(string name);
-        void GetClientInfo(int clientId, out decimal clientFunds, out decimal clientLoan, out decimal clientDeposit, out string clientDepositType);
+        decimal GetClientFunds(int clientId);
+        decimal GetClientLoan(int clientId);
+        decimal GetClientDeposit(int clientId);
+        string GetClientDepositType(int clientId);
         string GetClientName(int clientId);
         int GetDepartmentId(string depName);
-        void GetDepartmentInfo(int depId, out int departmentLoanRate, out int departmentDepositRate);
+        int GetDepartmentLoanRate(int depId);
+        int GetDepartmentDepositRate(int depId);
+        List<decimal> DepositInfo(int clientId, string depType, int depRate);
         decimal GetDepositAmount(int clientId);
         decimal GetFundsAmount(int clientId);
         decimal GetLoanAmount(int clientId);
@@ -26,5 +30,9 @@ namespace Persistence.Models
         void UpdateDepositAmount(int clientId, decimal amount);
         void UpdateFundsAmount(int clientId, decimal amount);
         void UpdateLoanAmount(int clientId, decimal amount);
+        void TransferFunds(int senderId, int recipientId, decimal amount);
+        void GetLoan(int clientId, decimal amount);
+        void MakeSimpleDeposit(int clientId, decimal amount);
+        void MakeCapitalizedDeposit(int clientId, decimal amount);
     }
 }

@@ -1,5 +1,4 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.Threading;
 using System.Threading.Tasks;
 using Domain.Entities;
@@ -8,11 +7,11 @@ using Persistence.Models;
 
 namespace Application.Queries
 {
-    public class GetDepartmentsList
+    public class GetDepartmentId
     {
-        public record Query : IRequest<List<Department>>;
+        public record Query(string depName) : IRequest<int>;
 
-        public class Handler : IRequestHandler<Query, List<Department>>
+        public class Handler : IRequestHandler<Query, int>
         {
             private readonly IDataAccess _data;
 
@@ -21,9 +20,9 @@ namespace Application.Queries
                 _data = data;
             }
 
-            public async Task<List<Department>> Handle(Query request, CancellationToken cancellationToken)
+            public Task<int> Handle(Query request, CancellationToken cancellationToken)
             {
-                return await Task.FromResult(_data.DepartmentsList());
+                return Task.FromResult(_data.GetDepartmentId(request.depName));
             }
         }
     }
