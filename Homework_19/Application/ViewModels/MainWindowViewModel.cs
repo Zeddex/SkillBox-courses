@@ -2,6 +2,7 @@
 using Domain.Entities;
 using Domain.Ext;
 using System.Collections.Generic;
+using System.Collections.ObjectModel;
 using System.Linq;
 using System.Windows;
 using System.Windows.Input;
@@ -16,11 +17,12 @@ namespace Presentation.ViewModels
     {
         private readonly BankProvider _provider = new();
         private readonly IMediator _mediator;
+        private static Log _log;
         //private static readonly Log _log = new Log(_mediator);
-        private static readonly Log _log = new();
+        //private static readonly Log _log = new();
 
         public List<Department> Departments { get; set; }
-        public List<string> Transactions { get; set; } = _log.logFile;
+        public List<string> Transactions { get; set; }
         public Dictionary<string, decimal> ClientsList { get; set; }
         public string ClientsName { get; set; }
         public string Recipient { get; set; }
@@ -39,11 +41,13 @@ namespace Presentation.ViewModels
         public MainWindowViewModel(IMediator mediator)
         {
             _mediator = mediator;
+            _log = new Log(mediator);
+            Transactions = _log.logFile;
 
             if (_provider.CheckConnection())
             {
                 Departments = _mediator.Send(new GetDepartmentsList.Query()).Result;
-                _provider.Transaction += Core_Transaction;
+                _provider.Transaction += Core_Transaction;      // TODO не работает событие
             }
 
             else
@@ -308,10 +312,9 @@ namespace Presentation.ViewModels
             }
 
             // transfer funds
-            //_provider.TransferFunds(clientId, recipientId, amountTransfer);     // TODO Command
             _mediator.Send(new TransferFunds.Command(clientId, recipientId, amountTransfer));
 
-            RefreshView();
+            RefreshView();      // TODO refresh data
 
             // close popup window
             PopupTransfer = false;
@@ -337,7 +340,6 @@ namespace Presentation.ViewModels
             }
 
             // get loan
-            //_provider.GetLoan(clientId, amountLoan);    // TODO Command
             _mediator.Send(new GetLoan.Command(clientId, amountLoan));
 
             RefreshView();
@@ -376,8 +378,7 @@ namespace Presentation.ViewModels
             }
 
             // make simple deposit
-            //_provider.MakeSimpleDeposit(clientId, amountSimpDeposit);       // TODO Command
-            _mediator.Send(new GetLoan.Command(clientId, amountSimpDeposit));
+            _mediator.Send(new MakeSimpleDeposit.Command(clientId, amountSimpDeposit));
 
             RefreshView();
 
@@ -415,8 +416,7 @@ namespace Presentation.ViewModels
             }
 
             // make simple deposit
-            //_provider.MakeCapitalizedDeposit(clientId, amountCapDeposit);       // TODO Command
-            _mediator.Send(new GetLoan.Command(clientId, amountCapDeposit));
+            _mediator.Send(new MakeCapitalizedDeposit.Command(clientId, amountCapDeposit));
 
             RefreshView();
 

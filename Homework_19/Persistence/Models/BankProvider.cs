@@ -108,9 +108,6 @@ namespace Persistence.Models
                     {
                         Id = m.ClientId,
                         Funds = m.Funds,
-                        Loan = m.Loan,
-                        Deposit = m.Deposit,
-                        DepositType = m.DepositTypeString
                     });
                 var client = result.Single(m => m.Id == clientId);
 
@@ -132,10 +129,7 @@ namespace Persistence.Models
                     (c, m) => new
                     {
                         Id = m.ClientId,
-                        Funds = m.Funds,
                         Loan = m.Loan,
-                        Deposit = m.Deposit,
-                        DepositType = m.DepositTypeString
                     });
                 var client = result.Single(m => m.Id == clientId);
 
@@ -157,10 +151,7 @@ namespace Persistence.Models
                     (c, m) => new
                     {
                         Id = m.ClientId,
-                        Funds = m.Funds,
-                        Loan = m.Loan,
                         Deposit = m.Deposit,
-                        DepositType = m.DepositTypeString
                     });
                 var client = result.Single(m => m.Id == clientId);
 
@@ -182,9 +173,6 @@ namespace Persistence.Models
                     (c, m) => new
                     {
                         Id = m.ClientId,
-                        Funds = m.Funds,
-                        Loan = m.Loan,
-                        Deposit = m.Deposit,
                         DepositType = m.DepositTypeString
                     });
                 var client = result.Single(m => m.Id == clientId);
@@ -208,7 +196,6 @@ namespace Persistence.Models
                     {
                         Id = d.Id,
                         LoanRate = d.LoanRate,
-                        DepositRate = d.DepositRate
                     });
                 var dep = result.Single(d => d.Id == depId);
 
@@ -230,7 +217,6 @@ namespace Persistence.Models
                     (c, d) => new
                     {
                         Id = d.Id,
-                        LoanRate = d.LoanRate,
                         DepositRate = d.DepositRate
                     });
                 var dep = result.Single(d => d.Id == depId);

@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Collections.ObjectModel;
 using System.Threading;
 using System.Threading.Tasks;
 using MediatR;
@@ -11,7 +12,7 @@ namespace Application.Queries
     {
         public record Query(int depId) : IRequest<Dictionary<string, decimal>>;
 
-        public class Handler : IRequestHandler<Query, Dictionary<string, decimal>>
+        public class Handler : IRequestHandler<Query, Dictionary<string, decimal>> 
         {
             private readonly IDataAccess _data;
 
