@@ -14,6 +14,7 @@ namespace Persistence.Models
         public Log(IMediator mediator)
         {
             _mediator = mediator;
+            logFile = new();
         }
 
         /// <summary>

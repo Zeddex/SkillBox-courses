@@ -1,11 +1,14 @@
 ﻿using System;
+using System.Collections.Generic;
+using System.Linq;
 using Domain.Entities;
 using Domain.Enums;
+using Domain.Ext;
 using Microsoft.EntityFrameworkCore;
 
 namespace Persistence.Models
 {
-    public class AppContext : DbContext
+    public class AppContext : DbContext, IDbContext
     {
         public DbSet<Client> Clients { get; set; }
         public DbSet<Department> Departments { get; set; }
@@ -105,6 +108,341 @@ namespace Persistence.Models
                 .Entity<Money>()
                 .Property(e => e.DepositType)
                 .HasConversion<string>();
+        }
+
+        public List<Department> DepartmentsList()
+        {
+            List<Department> dep = new();
+
+            using (AppContext context = new())
+            {
+                List<Department> depList = context.Departments.ToList();
+
+                foreach (var item in depList)
+                {
+                    dep.Add(item);
+                }
+            }
+
+            return dep;
+        }
+
+        public Dictionary<string, decimal> ShowClients(int depId)
+        {
+            Dictionary<string, decimal> clientsList = new();
+
+            using (AppContext context = new())
+            {
+                var clients = from client in context.Clients
+                    join department in context.Departments on client.DepartmentRefId equals department.Id
+                    join money in context.Money on client.Id equals money.ClientId
+                    where department.Id == depId
+                    select new
+                    {
+                        Name = client.Name,
+                        Funds = money.Funds
+                    };
+
+                foreach (var client in clients)
+                {
+                    clientsList.Add(client.Name, client.Funds);
+                }
+            }
+            return clientsList;
+        }
+
+        public decimal GetClientDeposit(int clientId)
+        {
+            decimal deposit;
+
+            using (AppContext context = new())
+            {
+                var result = context.Clients.Join(context.Money,
+                    c => c.Id,
+                    m => m.ClientId,
+                    (c, m) => new
+                    {
+                        Id = m.ClientId,
+                        Deposit = m.Deposit,
+                    });
+                var client = result.Single(m => m.Id == clientId);
+
+                deposit = client.Deposit;
+            }
+
+            return deposit;
+        }
+
+        public string GetClientDepositType(int clientId)
+        {
+            string depositType;
+
+            using (AppContext context = new())
+            {
+                var result = context.Clients.Join(context.Money,
+                    c => c.Id,
+                    m => m.ClientId,
+                    (c, m) => new
+                    {
+                        Id = m.ClientId,
+                        DepositType = m.DepositTypeString
+                    });
+                var client = result.Single(m => m.Id == clientId);
+
+                depositType = client.DepositType;
+            }
+
+            return depositType;
+        }
+
+        public decimal GetClientFunds(int clientId)
+        {
+            decimal funds;
+
+            using (AppContext context = new())
+            {
+                var result = context.Clients.Join(context.Money,
+                    c => c.Id,
+                    m => m.ClientId,
+                    (c, m) => new
+                    {
+                        Id = m.ClientId,
+                        Funds = m.Funds,
+                    });
+                var client = result.Single(m => m.Id == clientId);
+
+                funds = client.Funds;
+            }
+
+            return funds;
+        }
+
+        public int GetClientId(string name)
+        {
+            int id;
+
+            using (AppContext context = new())
+            {
+                var client = context.Clients.First(c => c.Name == name);
+                id = client.Id;
+            }
+            return id;
+        }
+
+        public decimal GetClientLoan(int clientId)
+        {
+            decimal loan;
+
+            using (AppContext context = new())
+            {
+                var result = context.Clients.Join(context.Money,
+                    c => c.Id,
+                    m => m.ClientId,
+                    (c, m) => new
+                    {
+                        Id = m.ClientId,
+                        Loan = m.Loan,
+                    });
+                var client = result.Single(m => m.Id == clientId);
+
+                loan = client.Loan;
+            }
+
+            return loan;
+        }
+
+        public string GetClientName(int clientId)
+        {
+            string name;
+
+            using (AppContext context = new())
+            {
+                var client = context.Clients.Single(c => c.Id == clientId);
+                name = client.Name;
+            }
+            return name;
+        }
+
+        public int GetDepartmentId(string depName)
+        {
+            int depId;
+
+            using (AppContext context = new())
+            {
+                var dep = context.Departments.Single(d => d.DepartmentNameString == depName);
+                depId = dep.Id;
+            }
+            return depId;
+        }
+
+        public int GetDepartmentLoanRate(int depId)
+        {
+            int depLoanRate;
+
+            using (AppContext context = new())
+            {
+                var result = context.Clients.Join(context.Departments,
+                    c => c.Id,
+                    d => d.Id,
+                    (c, d) => new
+                    {
+                        Id = d.Id,
+                        LoanRate = d.LoanRate,
+                    });
+                var dep = result.Single(d => d.Id == depId);
+
+                depLoanRate = dep.LoanRate;
+            }
+
+            return depLoanRate;
+        }
+
+        public int GetDepartmentDepositRate(int depId)
+        {
+            int depDepositRate;
+
+            using (AppContext context = new())
+            {
+                var result = context.Clients.Join(context.Departments,
+                    c => c.Id,
+                    d => d.Id,
+                    (c, d) => new
+                    {
+                        Id = d.Id,
+                        DepositRate = d.DepositRate
+                    });
+                var dep = result.Single(d => d.Id == depId);
+
+                depDepositRate = dep.DepositRate;
+            }
+
+            return depDepositRate;
+        }
+
+        public void GetLoan(int clientId, decimal amount)
+        {
+            throw new NotImplementedException();
+        }
+
+        public decimal GetDepositAmount(int clientId)
+        {
+            decimal money;
+
+            using (AppContext context = new())
+            {
+                var client = context.Money.First(c => c.ClientId == clientId);
+                money = client.Deposit;
+            }
+            return money;
+        }
+
+        public decimal GetLoanAmount(int clientId)
+        {
+            decimal money;
+
+            using (AppContext context = new())
+            {
+                var client = context.Money.First(c => c.ClientId == clientId);
+                money = client.Loan;
+            }
+            return money;
+        }
+
+        public decimal GetFundsAmount(int clientId)
+        {
+            decimal money;
+
+            using (AppContext context = new())
+            {
+                var client = context.Money.First(c => c.ClientId == clientId);
+                money = client.Funds;
+            }
+            return money;
+        }
+
+        public void SetDepositAsCapitalized(int clientId)
+        {
+            using (AppContext context = new())
+            {
+                var client = context.Money.FirstOrDefault(c => c.ClientId == clientId);
+
+                if (client != null)
+                {
+                    client.DepositType = DepositType.Capitalization;
+                    _ = context.SaveChanges();
+                }
+            }
+        }
+
+        public void SetDepositAsSimple(int clientId)
+        {
+            using (AppContext context = new())
+            {
+                var client = context.Money.FirstOrDefault(c => c.ClientId == clientId);
+
+                if (client != null)
+                {
+                    client.DepositType = DepositType.Simple;
+                    _ = context.SaveChanges();
+                }
+            }
+        }
+
+        public void UpdateLoanAmount(int clientId, decimal amount)
+        {
+            using (AppContext context = new())
+            {
+                var client = context.Money.FirstOrDefault(c => c.ClientId == clientId);
+
+                if (client != null)
+                {
+                    client.Loan = amount;
+                    _ = context.SaveChanges();
+                }
+            }
+        }
+
+        public void UpdateDepositAmount(int clientId, decimal amount)
+        {
+            using (AppContext context = new())
+            {
+                var client = context.Money.FirstOrDefault(c => c.ClientId == clientId);
+
+                if (client != null)
+                {
+                    client.Deposit = amount;
+                    _ = context.SaveChanges();
+                }
+            }
+        }
+
+        public void UpdateFundsAmount(int clientId, decimal amount)
+        {
+            using (AppContext context = new())
+            {
+                var client = context.Money.FirstOrDefault(c => c.ClientId == clientId);
+
+                if (client != null)
+                {
+                    client.Funds = amount;
+                    _ = context.SaveChanges();
+                }
+            }
+        }
+
+        public void AddTransaction(int clientId, string operation)
+        {
+            using (AppContext context = new())
+            {
+                Transaction transaction = new()
+                {
+                    Operation = operation,
+                    ClientRefId = clientId
+                };
+
+                _ = context.Transactions.Add(transaction);
+                _ = context.SaveChanges();
+            }
         }
     }
 }

@@ -1,28 +1,24 @@
-﻿using System;
-using Domain.Entities;
+﻿using Domain.Entities;
 using System.Collections.Generic;
-using System.Collections.ObjectModel;
 
 namespace Persistence.Models
 {
-    public interface IDataAccess
+    public interface IDbContext
     {
         void AddTransaction(int clientId, string operation);
-        public bool CheckConnection();
-        //public event Action<int, string>? Transaction;
         List<Department> DepartmentsList();
-        int GetClientId(string name);
-        decimal GetClientFunds(int clientId);
-        decimal GetClientLoan(int clientId);
         decimal GetClientDeposit(int clientId);
         string GetClientDepositType(int clientId);
+        decimal GetClientFunds(int clientId);
+        int GetClientId(string name);
+        decimal GetClientLoan(int clientId);
         string GetClientName(int clientId);
+        int GetDepartmentDepositRate(int depId);
         int GetDepartmentId(string depName);
         int GetDepartmentLoanRate(int depId);
-        int GetDepartmentDepositRate(int depId);
-        List<decimal> DepositInfo(int clientId, string depType, int depRate);
         decimal GetDepositAmount(int clientId);
         decimal GetFundsAmount(int clientId);
+        void GetLoan(int clientId, decimal amount);
         decimal GetLoanAmount(int clientId);
         void SetDepositAsCapitalized(int clientId);
         void SetDepositAsSimple(int clientId);
@@ -30,9 +26,5 @@ namespace Persistence.Models
         void UpdateDepositAmount(int clientId, decimal amount);
         void UpdateFundsAmount(int clientId, decimal amount);
         void UpdateLoanAmount(int clientId, decimal amount);
-        void TransferFunds(int senderId, int recipientId, decimal amount);
-        void GetLoan(int clientId, decimal amount);
-        void MakeSimpleDeposit(int clientId, decimal amount);
-        void MakeCapitalizedDeposit(int clientId, decimal amount);
     }
 }

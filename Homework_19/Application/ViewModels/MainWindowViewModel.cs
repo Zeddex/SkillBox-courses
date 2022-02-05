@@ -18,7 +18,6 @@ namespace Presentation.ViewModels
         private readonly BankProvider _provider = new();
         private readonly IMediator _mediator;
         private static Log _log;
-        //private static readonly Log _log = new Log(_mediator);
         //private static readonly Log _log = new();
 
         public List<Department> Departments { get; set; }
@@ -43,11 +42,11 @@ namespace Presentation.ViewModels
             _mediator = mediator;
             _log = new Log(mediator);
             Transactions = _log.logFile;
+            _provider.Transaction += CoreTransaction;
 
             if (_provider.CheckConnection())
             {
                 Departments = _mediator.Send(new GetDepartmentsList.Query()).Result;
-                _provider.Transaction += Core_Transaction;      // TODO не работает событие
             }
 
             else
@@ -56,7 +55,7 @@ namespace Presentation.ViewModels
             }
         }
 
-        private void Core_Transaction(int clientId, string message)
+        private void CoreTransaction(int clientId, string message)
         {
             _log.AddToLog(message);
             _log.AddToDbLog(clientId, message);
