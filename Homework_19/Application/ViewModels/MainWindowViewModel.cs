@@ -20,23 +20,6 @@ namespace Presentation.ViewModels
         private static Log _log;
         //private static readonly Log _log = new();
 
-        public List<Department> Departments { get; set; }
-        public List<string> Transactions { get; set; }
-        public Dictionary<string, decimal> ClientsList { get; set; }
-        public string ClientsName { get; set; }
-        public string Recipient { get; set; }
-        public string FundsInfo { get; set; }
-        public string LoanInfo { get; set; }
-        public string DepositInfo { get; set; }
-        public string DepTypeInfo { get; set; }
-        public string LoanRateInfo { get; set; }
-        public string DepRateInfo { get; set; }
-        public string AmountTransfer { get; set; }
-        public string LoanAmount { get; set; }
-        public string SimpleDepositAmount { get; set; }
-        public string CapDepositAmount { get; set; }
-        private Department _selectedDepartment;
-
         public MainWindowViewModel(IMediator mediator)
         {
             _mediator = mediator;
@@ -61,6 +44,23 @@ namespace Presentation.ViewModels
             _log.AddToDbLog(clientId, message);
         }
 
+        public List<Department> Departments { get; set; }
+        public List<string> Transactions { get; set; }
+        public Dictionary<string, decimal> ClientsList { get; set; }
+        public string ClientsName { get; set; }
+        public string Recipient { get; set; }
+        public string FundsInfo { get; set; }
+        public string LoanInfo { get; set; }
+        public string DepositInfo { get; set; }
+        public string DepTypeInfo { get; set; }
+        public string LoanRateInfo { get; set; }
+        public string DepRateInfo { get; set; }
+        public string AmountTransfer { get; set; }
+        public string LoanAmount { get; set; }
+        public string SimpleDepositAmount { get; set; }
+        public string CapDepositAmount { get; set; }
+        private Department _selectedDepartment;
+
         public Department SelectedDepartment
         {
             get => _selectedDepartment;
@@ -78,10 +78,7 @@ namespace Presentation.ViewModels
         public List<decimal> MonthsDepositList
         {
             get => _monthsDepositList;
-            set
-            {
-                Set(ref _monthsDepositList, value);
-            }
+            set => Set(ref _monthsDepositList, value);
         }
 
         private string _selectedClient;
@@ -127,40 +124,28 @@ namespace Presentation.ViewModels
         public bool PopupLoan
         {
             get => _popupLoan;
-            set
-            {
-                Set(ref _popupLoan, value);
-            }
+            set => Set(ref _popupLoan, value);
         }
 
         private bool _popupSimpDep;
         public bool PopupSimpDep
         {
             get => _popupSimpDep;
-            set
-            {
-                Set(ref _popupSimpDep, value);
-            }
+            set => Set(ref _popupSimpDep, value);
         }
 
         private bool _popupCapDep;
         public bool PopupCapDep
         {
             get => _popupCapDep;
-            set
-            {
-                Set(ref _popupCapDep, value);
-            }
+            set => Set(ref _popupCapDep, value);
         }
 
         private bool _popupDepInfo;
         public bool PopupDepInfo
         {
             get => _popupDepInfo;
-            set
-            {
-                Set(ref _popupDepInfo, value);
-            }
+            set => Set(ref _popupDepInfo, value);
         }
 
         #region Commands

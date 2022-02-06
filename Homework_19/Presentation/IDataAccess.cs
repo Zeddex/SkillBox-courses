@@ -9,7 +9,6 @@ namespace Persistence.Models
     {
         void AddTransaction(int clientId, string operation);
         public bool CheckConnection();
-        //public event Action<int, string>? Transaction;
         List<Department> DepartmentsList();
         int GetClientId(string name);
         decimal GetClientFunds(int clientId);

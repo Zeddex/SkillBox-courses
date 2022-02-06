@@ -18,7 +18,6 @@ namespace Persistence.Models
         int GetDepartmentLoanRate(int depId);
         decimal GetDepositAmount(int clientId);
         decimal GetFundsAmount(int clientId);
-        void GetLoan(int clientId, decimal amount);
         decimal GetLoanAmount(int clientId);
         void SetDepositAsCapitalized(int clientId);
         void SetDepositAsSimple(int clientId);

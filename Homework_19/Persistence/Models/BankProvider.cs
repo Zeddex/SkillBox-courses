@@ -11,6 +11,7 @@ namespace Persistence.Models
     public class BankProvider : IDataAccess
     {
         private readonly IDbContext _db = new AppContext();
+
         public event Action<int, string>? Transaction;
 
         public bool CheckConnection()
@@ -18,8 +19,6 @@ namespace Persistence.Models
             AppContext context = new();
             return (context.Database.CanConnect());
         }
-
-        // ---------------------------------------------
 
         public List<Department> DepartmentsList()
         {
