@@ -1,8 +1,10 @@
-﻿using System.Reflection;
+﻿using System.Configuration;
+using System.Reflection;
 using System.Windows;
 using Application;
 using Application.Queries;
 using MediatR;
+using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.DependencyInjection;
 using Persistence.Models;
 using Presentation.View;
@@ -23,6 +25,7 @@ namespace Presentation
 
         private void ConfigureServices(IServiceCollection services)
         {
+            services.AddDbContext<AppContext>();
             services.AddScoped<IDataAccess, BankProvider>();
             services.AddSingleton<MainWindow>();
             services.AddScoped<MainWindowViewModel, MainWindowViewModel>();

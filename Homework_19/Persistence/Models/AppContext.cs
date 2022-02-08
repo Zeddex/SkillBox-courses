@@ -3,7 +3,6 @@ using System.Collections.Generic;
 using System.Linq;
 using Domain.Entities;
 using Domain.Enums;
-using Domain.Ext;
 using Microsoft.EntityFrameworkCore;
 
 namespace Persistence.Models
@@ -22,7 +21,8 @@ namespace Persistence.Models
 
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         {
-            optionsBuilder.UseSqlServer("Server=(localdb)\\mssqllocaldb;Database=bank2;Trusted_Connection=True;");
+            optionsBuilder.UseSqlServer(("Server=(localdb)\\mssqllocaldb;Database=bank2;Trusted_Connection=True;"), 
+                x => x.MigrationsAssembly("Persistence"));
         }
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)

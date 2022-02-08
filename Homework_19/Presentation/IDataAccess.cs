@@ -1,7 +1,6 @@
 ﻿using System;
 using Domain.Entities;
 using System.Collections.Generic;
-using System.Collections.ObjectModel;
 
 namespace Persistence.Models
 {
