@@ -6,17 +6,17 @@ namespace Domain.Entities
 {
     public class Client
     {
-        [Key]
-        [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
+        //[Key]
+        //[DatabaseGenerated(DatabaseGeneratedOption.Identity)]
         public int Id { get; set; }
 
-        [Required]
-        [StringLength(50)]
+        //[Required]
+        //[StringLength(50)]
         public string Name { get; set; }
 
-        public int DepartmentRefId { get; set; }
+        public int? DepartmentRefId { get; set; }
 
-        [ForeignKey(nameof(DepartmentRefId))]
+        //[ForeignKey(nameof(DepartmentRefId))]
         public Department Department { get; set; }
 
         public Money Funds { get; set; }

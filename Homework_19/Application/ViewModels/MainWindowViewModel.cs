@@ -18,7 +18,6 @@ namespace Presentation.ViewModels
         private readonly BankProvider _provider = new();
         private readonly IMediator _mediator;
         private static Log _log;
-        //private static readonly Log _log = new();
 
         public MainWindowViewModel(IMediator mediator)
         {

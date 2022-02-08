@@ -8,19 +8,19 @@ namespace Domain.Entities
 {
     public class Department
     {
-        [Key]
-        [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
+        //[Key]
+        //[DatabaseGenerated(DatabaseGeneratedOption.Identity)]
         public int Id { get; set; }
 
-        [Column("DepartmentName")]
+        //[Column("DepartmentName")]
         public string DepartmentNameString
         {
             get => DepartmentName.ToString();
             set => DepartmentName = value.ParseEnum<DepartmentName>();
         }
 
-        [NotMapped]
-        [Column(TypeName = "nvarchar(50)")]
+        //[NotMapped]
+        //[Column(TypeName = "nvarchar(50)")]
         public DepartmentName DepartmentName { get; set; }
 
         public int LoanRate { get; set; }

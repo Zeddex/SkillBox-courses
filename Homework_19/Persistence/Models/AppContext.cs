@@ -10,10 +10,10 @@ namespace Persistence.Models
 {
     public class AppContext : DbContext, IDbContext
     {
-        public DbSet<Client> Clients { get; set; }
-        public DbSet<Department> Departments { get; set; }
-        public DbSet<Transaction> Transactions { get; set; }
-        public DbSet<Money> Money { get; set; }
+        public DbSet<Client> Clients { get; set; } = null!;
+        public DbSet<Department> Departments { get; set; } = null!;
+        public DbSet<Transaction> Transactions { get; set; } = null!;
+        public DbSet<Money> Money { get; set; } = null!;
 
         public AppContext()
         {
@@ -22,11 +22,59 @@ namespace Persistence.Models
 
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         {
-            optionsBuilder.UseSqlServer("Server=(localdb)\\mssqllocaldb;Database=bank;Trusted_Connection=True;");
+            optionsBuilder.UseSqlServer("Server=(localdb)\\mssqllocaldb;Database=bank2;Trusted_Connection=True;");
         }
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
+            modelBuilder
+                .Entity<Client>()
+                .Property(p => p.Id)
+                .ValueGeneratedOnAdd();
+
+            modelBuilder
+                .Entity<Client>()
+                .Property(p => p.Name)
+                .IsRequired();
+
+            modelBuilder
+                .Entity<Client>()
+                .HasOne(c => c.Funds)
+                .WithOne(m => m.Client)
+                .HasForeignKey<Money>(m => m.ClientId);
+
+            modelBuilder
+                .Entity<Client>()
+                .HasOne(c => c.Department)
+                .WithMany(d => d.Clients)
+                .HasForeignKey(c => c.DepartmentRefId);
+
+            modelBuilder
+                .Entity<Department>()
+                .Property(e => e.DepartmentName)
+                .HasConversion<string>();
+
+            modelBuilder
+                .Entity<Transaction>()
+                .HasOne(t => t.Client)
+                .WithMany(c => c.Transactions)
+                .HasForeignKey(t => t.ClientRefId);
+
+            modelBuilder
+                .Entity<Transaction>()
+                .Property(p => p.Operation)
+                .IsRequired();
+
+            modelBuilder
+                .Entity<Transaction>()
+                .Property(p => p.Id)
+                .ValueGeneratedOnAdd();
+
+            modelBuilder
+                .Entity<Money>()
+                .Property(e => e.DepositType)
+                .HasConversion<string>();
+
             modelBuilder.Entity<Client>().HasData(
                 new Client { Id = 1, Name = "Orson Avery", DepartmentRefId = 1 },
                 new Client { Id = 2, Name = "Whoopi Franks", DepartmentRefId = 1 },
@@ -98,17 +146,9 @@ namespace Persistence.Models
                 new Money { ClientId = 29, Funds = 31206, Loan = 0, Deposit = 0, DepositType = DepositType.No },
                 new Money { ClientId = 30, Funds = 32768, Loan = 0, Deposit = 0, DepositType = DepositType.No }
             );
-
-            modelBuilder
-                .Entity<Department>()
-                .Property(e => e.DepartmentName)
-                .HasConversion<string>();
-
-            modelBuilder
-                .Entity<Money>()
-                .Property(e => e.DepositType)
-                .HasConversion<string>();
         }
+
+        //------------------------------------------------------------------
 
         public List<Department> DepartmentsList()
         {
