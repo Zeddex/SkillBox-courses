@@ -51,8 +51,17 @@ namespace Persistence.Models
 
             modelBuilder
                 .Entity<Department>()
-                .Property(e => e.DepartmentName)
+                .Property(p => p.DepartmentName)
                 .HasConversion<string>();
+
+            modelBuilder
+                .Entity<Department>()
+                .Ignore(p => p.DepartmentName);
+
+            modelBuilder
+                .Entity<Department>()
+                .Property(d => d.DepartmentNameString)
+                .HasColumnName("DepartmentName");
 
             modelBuilder
                 .Entity<Transaction>()
@@ -72,8 +81,17 @@ namespace Persistence.Models
 
             modelBuilder
                 .Entity<Money>()
-                .Property(e => e.DepositType)
+                .Property(p => p.DepositType)
                 .HasConversion<string>();
+
+            modelBuilder
+                .Entity<Money>()
+                .Ignore(p => p.DepositType);
+
+            modelBuilder
+                .Entity<Money>()
+                .Property(m => m.DepositTypeString)
+                .HasColumnName("DepositType");
 
             modelBuilder.Entity<Client>().HasData(
                 new Client { Id = 1, Name = "Orson Avery", DepartmentRefId = 1 },
