@@ -81,6 +81,10 @@ namespace Persistence.Models
 
             modelBuilder
                 .Entity<Money>()
+                .HasKey(k => k.ClientId);
+
+            modelBuilder
+                .Entity<Money>()
                 .Property(p => p.DepositType)
                 .HasConversion<string>();
 

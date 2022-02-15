@@ -2,9 +2,7 @@
 using System.Reflection;
 using System.Windows;
 using Application;
-using Application.Queries;
 using MediatR;
-using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.DependencyInjection;
 using Persistence.Models;
 using Presentation.View;
