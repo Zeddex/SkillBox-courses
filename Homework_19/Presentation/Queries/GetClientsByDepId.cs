@@ -4,7 +4,6 @@ using System.Collections.ObjectModel;
 using System.Threading;
 using System.Threading.Tasks;
 using MediatR;
-using Persistence.Models;
 
 namespace Application.Queries
 {

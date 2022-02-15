@@ -1,7 +1,7 @@
 ﻿using Domain.Entities;
 using System.Collections.Generic;
 
-namespace Persistence.Models
+namespace Application
 {
     public interface IDbContext
     {
