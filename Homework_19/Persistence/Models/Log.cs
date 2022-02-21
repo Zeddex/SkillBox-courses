@@ -1,6 +1,6 @@
-﻿using System.Collections.Generic;
-using Application.Commands;
+﻿using Application.Commands;
 using MediatR;
+using System.Collections.Generic;
 
 namespace Persistence.Models
 {

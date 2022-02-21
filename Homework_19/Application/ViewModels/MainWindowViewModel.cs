@@ -1,14 +1,12 @@
-﻿using System;
+﻿using Application.Commands;
+using Application.Queries;
 using Domain.Entities;
 using Domain.Ext;
-using System.Collections.Generic;
-using System.Linq;
-using System.Windows;
-using System.Windows.Input;
-using Application.Queries;
-using Application.Commands;
 using MediatR;
 using Persistence.Models;
+using System.Collections.Generic;
+using System.Windows;
+using System.Windows.Input;
 
 namespace Presentation.ViewModels
 {
@@ -23,7 +21,7 @@ namespace Presentation.ViewModels
             _mediator = mediator;
             _log = new Log(mediator);
             Transactions = _log.logFile;
-            _provider.Transaction += CoreTransaction;
+            BankProvider.Transaction += CoreTransaction;
 
             if (_provider.CheckConnection())
             {

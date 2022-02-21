@@ -1,10 +1,9 @@
-﻿using Domain.Entities;
-using Domain.Enums;
+﻿using Application;
+using Domain.Entities;
+using Domain.Ext;
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using Application;
-using Domain.Ext;
 
 namespace Persistence.Models
 {
@@ -12,7 +11,7 @@ namespace Persistence.Models
     {
         private readonly IDbContext _db = new AppContext();
 
-        public event Action<int, string>? Transaction;
+        public static event Action<int, string>? Transaction;
 
         public bool CheckConnection()
         {

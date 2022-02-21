@@ -1,12 +1,10 @@
-﻿using System.Configuration;
-using System.Reflection;
-using System.Windows;
-using Application;
+﻿using Application;
 using MediatR;
 using Microsoft.Extensions.DependencyInjection;
 using Persistence.Models;
 using Presentation.View;
 using Presentation.ViewModels;
+using System.Windows;
 
 namespace Presentation
 {
