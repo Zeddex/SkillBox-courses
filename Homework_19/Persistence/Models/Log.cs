@@ -1,13 +1,19 @@
-﻿using Application.Commands;
+﻿using System;
+using Application.Commands;
 using MediatR;
 using System.Collections.Generic;
+using System.Collections.ObjectModel;
+using System.Collections.Specialized;
+using System.ComponentModel;
+using System.Runtime.CompilerServices;
+using System.Windows.Threading;
 
 namespace Persistence.Models
 {
     public class Log
     {
         public List<string> logFile = new();
-        //private readonly IDataAccess _provider = new BankProvider();
+        //public ObservableCollection<string> logFile = new();
         private readonly IMediator _mediator;
 
         public Log(IMediator mediator)
@@ -27,7 +33,6 @@ namespace Persistence.Models
 
         public void AddToDbLog(int clientId, string message)
         {
-            //_provider.AddTransaction(clientId, message);
             _mediator.Send(new AddTransaction.Command(clientId, message));
         }
     }

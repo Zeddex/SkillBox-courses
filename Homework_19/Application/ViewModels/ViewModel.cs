@@ -1,5 +1,9 @@
-﻿using System.ComponentModel;
+﻿using System.Collections.Generic;
+using System.Collections.Specialized;
+using System.ComponentModel;
 using System.Runtime.CompilerServices;
+using System.Windows.Documents;
+using System.Windows.Threading;
 
 namespace Presentation.ViewModels
 {
@@ -7,7 +11,7 @@ namespace Presentation.ViewModels
     {
         public event PropertyChangedEventHandler PropertyChanged;
 
-        public void OnPropertyChanged([CallerMemberName] string prop = "")
+        public void OnPropertyChanged([CallerMemberName] string prop = null)
         {
             PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(prop));
         }
@@ -16,8 +20,10 @@ namespace Presentation.ViewModels
         {
             if (Equals(field, value))
                 return false;
+
             field = value;
             OnPropertyChanged(propertyName);
+
             return true;
         }
     }

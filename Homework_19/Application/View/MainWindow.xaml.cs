@@ -1,5 +1,4 @@
 ﻿using System.Windows;
-using MediatR;
 
 namespace Presentation.View
 {

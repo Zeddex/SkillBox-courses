@@ -1,10 +1,12 @@
-﻿using Application.Commands;
+﻿using System;
+using Application.Commands;
 using Application.Queries;
 using Domain.Entities;
 using Domain.Ext;
 using MediatR;
 using Persistence.Models;
 using System.Collections.Generic;
+using System.Collections.ObjectModel;
 using System.Windows;
 using System.Windows.Input;
 
@@ -42,6 +44,7 @@ namespace Presentation.ViewModels
 
         public List<Department> Departments { get; set; }
         public List<string> Transactions { get; set; }
+        //public ObservableCollection<string> Transactions { get; set; }
         public Dictionary<string, decimal> ClientsList { get; set; }
         public string ClientsName { get; set; }
         public string Recipient { get; set; }
@@ -70,13 +73,6 @@ namespace Presentation.ViewModels
             }
         }
 
-        private List<decimal> _monthsDepositList;
-        public List<decimal> MonthsDepositList
-        {
-            get => _monthsDepositList;
-            set => Set(ref _monthsDepositList, value);
-        }
-
         private string _selectedClient;
         public string SelectedClient
         {
@@ -98,6 +94,13 @@ namespace Presentation.ViewModels
                 OnPropertyChanged(nameof(LoanRateInfo));
                 OnPropertyChanged(nameof(DepRateInfo));
             }
+        }
+
+        private List<decimal> _monthsDepositList;
+        public List<decimal> MonthsDepositList
+        {
+            get => _monthsDepositList;
+            set => Set(ref _monthsDepositList, value);
         }
 
         private bool _popupTransfer;
@@ -294,7 +297,7 @@ namespace Presentation.ViewModels
             // transfer funds
             _mediator.Send(new TransferFunds.Command(clientId, recipientId, amountTransfer));
 
-            RefreshView();      // TODO refresh data
+            RefreshView();
 
             // close popup window
             PopupTransfer = false;
@@ -406,7 +409,7 @@ namespace Presentation.ViewModels
             _ = MessageBox.Show("Success", "Capitalized deposit", MessageBoxButton.OK, MessageBoxImage.Asterisk);
         }
 
-        private void RefreshView()
+        private void RefreshView()      //TODO не работает
         {
             ShowClientsInfo(SelectedClient);
             SelectClients(SelectedDepartment.DepartmentNameString);
@@ -417,6 +420,7 @@ namespace Presentation.ViewModels
             OnPropertyChanged(nameof(LoanInfo));
             OnPropertyChanged(nameof(DepositInfo));
             OnPropertyChanged(nameof(DepTypeInfo));
+            OnPropertyChanged(nameof(Transactions));
         }
 
         #endregion
