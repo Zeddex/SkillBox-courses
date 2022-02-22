@@ -190,6 +190,22 @@ namespace Persistence.Models
             return dep;
         }
 
+        public List<string> TransactionsList()
+        {
+            List<string> transList = new List<string>();
+
+            using (AppContext context = new())
+            {
+                var transactions = context.Transactions.ToList();
+
+                foreach (var transaction in transactions)
+                {
+                    transList.Add(transaction.Operation);
+                }
+            }
+            return transList;
+        }
+
         public Dictionary<string, decimal> ShowClients(int depId)
         {
             Dictionary<string, decimal> clientsList = new();

@@ -13,6 +13,11 @@ namespace Persistence.Models
 
         public static event Action<int, string>? Transaction;
 
+        public List<string> TransactionsList()
+        {
+            return _db.TransactionsList();
+        }
+
         public bool CheckConnection()
         {
             AppContext context = new();

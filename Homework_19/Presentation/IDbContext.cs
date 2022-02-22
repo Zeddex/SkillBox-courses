@@ -7,6 +7,7 @@ namespace Application
     {
         void AddTransaction(int clientId, string operation);
         List<Department> DepartmentsList();
+        List<string> TransactionsList();
         decimal GetClientDeposit(int clientId);
         string GetClientDepositType(int clientId);
         decimal GetClientFunds(int clientId);

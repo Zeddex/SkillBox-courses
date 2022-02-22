@@ -103,6 +103,13 @@ namespace Presentation.ViewModels
             set => Set(ref _monthsDepositList, value);
         }
 
+        private List<string> _transactionsList;
+        public List<string> TransactionsList
+        {
+            get => _transactionsList;
+            set => Set(ref _transactionsList, value);
+        }
+
         private bool _popupTransfer;
         public bool PopupTransfer
         {
@@ -411,16 +418,18 @@ namespace Presentation.ViewModels
 
         private void RefreshView()      //TODO не работает
         {
-            ShowClientsInfo(SelectedClient);
-            SelectClients(SelectedDepartment.DepartmentNameString);
+            //ShowClientsInfo(SelectedClient);
+            //SelectClients(SelectedDepartment.DepartmentNameString);
 
-            OnPropertyChanged(nameof(ClientsList));
-            OnPropertyChanged(nameof(SelectedClient));
-            OnPropertyChanged(nameof(FundsInfo));
-            OnPropertyChanged(nameof(LoanInfo));
-            OnPropertyChanged(nameof(DepositInfo));
-            OnPropertyChanged(nameof(DepTypeInfo));
-            OnPropertyChanged(nameof(Transactions));
+            //OnPropertyChanged(nameof(ClientsList));
+            //OnPropertyChanged(nameof(SelectedClient));
+            //OnPropertyChanged(nameof(FundsInfo));
+            //OnPropertyChanged(nameof(LoanInfo));
+            //OnPropertyChanged(nameof(DepositInfo));
+            //OnPropertyChanged(nameof(DepTypeInfo));
+            //OnPropertyChanged(nameof(Transactions));
+
+            Transactions = _mediator.Send(new GetTransactionsList.Query()).Result;
         }
 
         #endregion

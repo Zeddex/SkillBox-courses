@@ -7,6 +7,7 @@ namespace Application
     public interface IDataAccess
     {
         void AddTransaction(int clientId, string operation);
+        List<string> TransactionsList();
         public bool CheckConnection();
         List<Department> DepartmentsList();
         int GetClientId(string name);
