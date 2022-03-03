@@ -1,7 +1,5 @@
 ﻿using Domain.Enums;
 using Domain.Ext;
-using System.ComponentModel.DataAnnotations;
-using System.ComponentModel.DataAnnotations.Schema;
 
 namespace Domain.Entities
 {

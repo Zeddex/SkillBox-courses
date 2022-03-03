@@ -1,8 +1,6 @@
 ﻿using Domain.Enums;
-using System.Collections.Generic;
-using System.ComponentModel.DataAnnotations;
-using System.ComponentModel.DataAnnotations.Schema;
 using Domain.Ext;
+using System.Collections.Generic;
 
 namespace Domain.Entities
 {

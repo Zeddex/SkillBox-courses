@@ -1,9 +1,5 @@
-﻿using System.Collections.Generic;
-using System.Collections.Specialized;
-using System.ComponentModel;
+﻿using System.ComponentModel;
 using System.Runtime.CompilerServices;
-using System.Windows.Documents;
-using System.Windows.Threading;
 
 namespace Presentation.ViewModels
 {

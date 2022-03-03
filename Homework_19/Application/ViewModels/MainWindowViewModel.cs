@@ -6,7 +6,6 @@ using Domain.Ext;
 using MediatR;
 using Persistence.Models;
 using System.Collections.Generic;
-using System.Collections.ObjectModel;
 using System.Windows;
 using System.Windows.Input;
 
@@ -42,9 +41,14 @@ namespace Presentation.ViewModels
             _log.AddToDbLog(clientId, message);
         }
 
+        private List<string> _transactions;
+        public List<string> Transactions
+        {
+            get => _mediator.Send(new GetTransactionsList.Query()).Result;
+            set => _transactions = value;
+        }
+
         public List<Department> Departments { get; set; }
-        public List<string> Transactions { get; set; }
-        //public ObservableCollection<string> Transactions { get; set; }
         public Dictionary<string, decimal> ClientsList { get; set; }
         public string ClientsName { get; set; }
         public string Recipient { get; set; }
@@ -58,8 +62,8 @@ namespace Presentation.ViewModels
         public string LoanAmount { get; set; }
         public string SimpleDepositAmount { get; set; }
         public string CapDepositAmount { get; set; }
-        private Department _selectedDepartment;
 
+        private Department _selectedDepartment;
         public Department SelectedDepartment
         {
             get => _selectedDepartment;
@@ -304,12 +308,12 @@ namespace Presentation.ViewModels
             // transfer funds
             _mediator.Send(new TransferFunds.Command(clientId, recipientId, amountTransfer));
 
-            RefreshView();
-
             // close popup window
             PopupTransfer = false;
 
             _ = MessageBox.Show("Transfer completed", "Funds transfer", MessageBoxButton.OK, MessageBoxImage.Asterisk);
+
+            RefreshView();
         }
 
         private void GetLoan()
@@ -332,12 +336,12 @@ namespace Presentation.ViewModels
             // get loan
             _mediator.Send(new GetLoan.Command(clientId, amountLoan));
 
-            RefreshView();
-
             // close popup window
             PopupLoan = false;
 
             _ = MessageBox.Show("Success", "Get loan", MessageBoxButton.OK, MessageBoxImage.Asterisk);
+
+            RefreshView();
         }
 
         private void MakeSimpleDeposit()
@@ -370,12 +374,12 @@ namespace Presentation.ViewModels
             // make simple deposit
             _mediator.Send(new MakeSimpleDeposit.Command(clientId, amountSimpDeposit));
 
-            RefreshView();
-
             // close popup window
             PopupSimpDep = false;
 
             _ = MessageBox.Show("Success", "Simple deposit", MessageBoxButton.OK, MessageBoxImage.Asterisk);
+
+            RefreshView();
         }
 
         private void MakeCapDeposit()
@@ -408,28 +412,26 @@ namespace Presentation.ViewModels
             // make simple deposit
             _mediator.Send(new MakeCapitalizedDeposit.Command(clientId, amountCapDeposit));
 
-            RefreshView();
-
             // close popup window
             PopupCapDep = false;
 
             _ = MessageBox.Show("Success", "Capitalized deposit", MessageBoxButton.OK, MessageBoxImage.Asterisk);
+
+            RefreshView();
         }
 
-        private void RefreshView()      //TODO не работает
+        private void RefreshView() 
         {
-            //ShowClientsInfo(SelectedClient);
-            //SelectClients(SelectedDepartment.DepartmentNameString);
+            ShowClientsInfo(SelectedClient);
+            SelectClients(SelectedDepartment.DepartmentNameString);
 
-            //OnPropertyChanged(nameof(ClientsList));
-            //OnPropertyChanged(nameof(SelectedClient));
-            //OnPropertyChanged(nameof(FundsInfo));
-            //OnPropertyChanged(nameof(LoanInfo));
-            //OnPropertyChanged(nameof(DepositInfo));
-            //OnPropertyChanged(nameof(DepTypeInfo));
-            //OnPropertyChanged(nameof(Transactions));
-
-            Transactions = _mediator.Send(new GetTransactionsList.Query()).Result;
+            OnPropertyChanged(nameof(ClientsList));
+            OnPropertyChanged(nameof(SelectedClient));
+            OnPropertyChanged(nameof(FundsInfo));
+            OnPropertyChanged(nameof(LoanInfo));
+            OnPropertyChanged(nameof(DepositInfo));
+            OnPropertyChanged(nameof(DepTypeInfo));
+            OnPropertyChanged(nameof(Transactions));
         }
 
         #endregion
