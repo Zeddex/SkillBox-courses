@@ -6,32 +6,31 @@ using System.Collections.Generic;
 using System.Diagnostics;
 using System.Linq;
 using System.Threading.Tasks;
+using Homework_20.DAL.MemoryStorage;
 
 namespace Homework_20.Controllers
 {
     public class NoteController : Controller
     {
         private readonly ILogger<NoteController> _logger;
+        private readonly INoteStorage _noteStorage;
 
-        public NoteController(ILogger<NoteController> logger)
+        public NoteController(ILogger<NoteController> logger, INoteStorage noteStorage)
         {
             _logger = logger;
+            _noteStorage = noteStorage;
         }
 
         public IActionResult Index()
         {
+            var notes = _noteStorage.GetAll();
+
             return View();
         }
 
-        public IActionResult User()
+        public IActionResult Id()
         {
             return View();
-        }
-
-        [ResponseCache(Duration = 0, Location = ResponseCacheLocation.None, NoStore = true)]
-        public IActionResult Error()
-        {
-            return View(new ErrorViewModel { RequestId = Activity.Current?.Id ?? HttpContext.TraceIdentifier });
         }
     }
 }
