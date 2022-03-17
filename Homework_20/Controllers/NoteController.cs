@@ -25,7 +25,7 @@ namespace Homework_20.Controllers
         {
             var notes = _noteStorage.GetAll();
 
-            return View(_noteStorage.GetAll());
+            return View(notes);
         }
 
         public IActionResult Details(int id)
