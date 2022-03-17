@@ -1,34 +1,14 @@
-﻿<head>
-    <meta charset='utf-8'>
-    <style>
-        .list {
-            max-width: 500px;
-            margin: 10px auto;
-            padding: 10px 10px;
-            background: #f4f7f8;
-            border-radius: 8px;
-        }
-        ul {
-            padding-left: 2rem;
-            list-style-type: none;
-        }
-        ul li {
-            background-position: 0 0;
-            background-size: 1.6rem 1.6rem;
-            background-repeat: no-repeat;
-        }
-        .list a {
-            text-decoration: none;
-            margin: 0 10px;
-            font-size: 14px;
-        }
-    </style>
-</head>
+﻿@model List<Homework_20.Models.Note>
 
-<body>
+<h2>Notes List</h2>
 <div class="list">
-    <ol>
-
-    </ol>
+    @foreach (var note in Model)
+    {
+        <ul>
+            <li><a href="~/Note/Details/@note.Id">ID: @note.Id</a></li>
+            <li>First Name: @note.FirstName</li>
+            <li>Middle Name: @note.MiddleName</li>
+            <li>Last Name: @note.LastName</li>
+        </ul>
+    }
 </div>
-</body>

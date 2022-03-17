@@ -6,7 +6,7 @@ using System.Collections.Generic;
 using System.Diagnostics;
 using System.Linq;
 using System.Threading.Tasks;
-using Homework_20.DAL.MemoryStorage;
+using Homework_20.MemoryStorage;
 
 namespace Homework_20.Controllers
 {
@@ -25,12 +25,25 @@ namespace Homework_20.Controllers
         {
             var notes = _noteStorage.GetAll();
 
-            return View();
+            return View(_noteStorage.GetAll());
         }
 
-        public IActionResult Id()
+        public IActionResult Details(int id)
         {
-            return View();
+            var note = _noteStorage.GetById(id);
+
+            if (note == null)
+            {
+                return RedirectToAction("Index");
+            }
+
+            return View(note);
+        }
+
+        [ResponseCache(Duration = 0, Location = ResponseCacheLocation.None, NoStore = true)]
+        public IActionResult Error()
+        {
+            return View(new ErrorViewModel { RequestId = Activity.Current?.Id ?? HttpContext.TraceIdentifier });
         }
     }
 }

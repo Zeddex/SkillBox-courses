@@ -5,9 +5,7 @@ using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
+using Homework_20.MemoryStorage;
 
 namespace Homework_20
 {
@@ -22,6 +20,7 @@ namespace Homework_20
 
         public void ConfigureServices(IServiceCollection services)
         {
+            services.AddSingleton<INoteStorage, NoteMemoryStorage>();
             services.AddControllersWithViews();
         }
 
@@ -31,17 +30,9 @@ namespace Homework_20
             {
                 app.UseDeveloperExceptionPage();
             }
-            else
-            {
-                app.UseExceptionHandler("/Home/Error");
-                app.UseHsts();
-            }
 
-            app.UseHttpsRedirection();
             app.UseStaticFiles();
-
             app.UseRouting();
-
 
             app.UseEndpoints(endpoints =>
             {
