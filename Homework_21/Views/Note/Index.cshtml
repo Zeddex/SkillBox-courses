@@ -1,0 +1,19 @@
+﻿@using Homework_21.Models
+@model List<Note>
+
+<table class="simple-little-table" cellspacing='0'>
+    <tr style="font-size:20px;">
+        <th>ID</th>
+        <th>Компания</th>
+        <th>Имя</th>
+    </tr>
+    @foreach (var note in Model)
+    {
+        <tr>
+            <th>@note.Id</th>
+            <th>@note.Name</th>
+            <th>@note.Surname</th>
+
+        </tr>
+    }
+</table>
