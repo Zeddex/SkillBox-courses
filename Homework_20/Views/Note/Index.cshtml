@@ -1,0 +1,14 @@
+﻿@model List<Homework_20.Models.Note>
+
+<h2>Notes List</h2>
+<div class="list">
+    @foreach (var note in Model)
+    {
+        <ul>
+            <li><a href="~/Note/Details/@note.Id">ID: @note.Id</a></li>
+            <li>First Name: @note.FirstName</li>
+            <li>Middle Name: @note.MiddleName</li>
+            <li>Last Name: @note.LastName</li>
+        </ul>
+    }
+</div>
