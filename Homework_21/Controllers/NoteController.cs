@@ -6,7 +6,6 @@ using System.Collections.Generic;
 using System.Diagnostics;
 using System.Linq;
 using System.Threading.Tasks;
-using Homework_21.Models;
 using Microsoft.EntityFrameworkCore;
 
 namespace Homework_21.Controllers
@@ -52,8 +51,7 @@ namespace Homework_21.Controllers
 
         public IActionResult Edit(Note note)
         {
-            return RedirectToAction("Index");
-            //return View();
+            return View();
         }
 
         [ResponseCache(Duration = 0, Location = ResponseCacheLocation.None, NoStore = true)]
