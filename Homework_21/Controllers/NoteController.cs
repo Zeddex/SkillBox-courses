@@ -28,7 +28,32 @@ namespace Homework_21.Controllers
         public IActionResult Details(int id)
         {
             var note = _db.Notes.SingleOrDefault(x => x.Id == id);
+
+            if (note == null)
+            {
+                return RedirectToAction("Index");
+            }
+
             return View(note);
+        }
+
+        public IActionResult Add(Note note)
+        {
+            return RedirectToAction("Index");
+            //return View();
+        }
+
+        public async Task<IActionResult> Delete(Note note)
+        {
+            _db.Notes.Remove(note);
+            await _db.SaveChangesAsync();
+            return RedirectToAction("Index");
+        }
+
+        public IActionResult Edit(Note note)
+        {
+            return RedirectToAction("Index");
+            //return View();
         }
 
         [ResponseCache(Duration = 0, Location = ResponseCacheLocation.None, NoStore = true)]

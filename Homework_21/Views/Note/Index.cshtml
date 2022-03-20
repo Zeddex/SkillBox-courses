@@ -4,16 +4,22 @@
 <table class="simple-little-table" cellspacing='0'>
     <tr style="font-size:20px;">
         <th>ID</th>
-        <th>Компания</th>
-        <th>Имя</th>
+        <th>Name</th>
+        <th>Surname</th>
+        <th></th>
+        <th></th>
     </tr>
     @foreach (var note in Model)
     {
         <tr>
-            <th>@note.Id</th>
+            <th><a href="~/Note/Details/@note.Id">@note.Id</a></th>
             <th>@note.Name</th>
             <th>@note.Surname</th>
-
-        </tr>
+ @*         <th><a href="~/Note/Details/Edit/@note.Id">Edit</a></th>*@
+            <th>@Html.ActionLink("Edit", "Edit", note, null)</th>
+            <th>@Html.ActionLink("Delete", "Delete", note, null)</th>
+            </tr>
     }
 </table>
+
+<input type="button" class="btn-prim" value="Add record" onclick="location.href='@Url.Action("Add", "Note")'" />
