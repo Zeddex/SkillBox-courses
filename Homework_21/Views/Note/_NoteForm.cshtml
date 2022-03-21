@@ -1,0 +1,34 @@
+﻿@model Homework_21.Models.Note
+
+@using (Html.BeginForm())
+{
+    <div class="validation" asp-validation-summary="ModelOnly"></div>
+
+    <label class="lable" asp-for="Name">Name:</label>
+    <input asp-for="Name" />
+    <span asp-validation-for="Name"></span>
+    <br />
+
+    <label class="lable" asp-for="Surname">Surname:</label>
+    <input asp-for="Surname" />
+    <span asp-validation-for="Surname"></span>
+    <br />
+
+    <label class="lable" asp-for="Phone">Phone:</label>
+    <input asp-for="Phone" />
+    <span asp-validation-for="Phone"></span>
+    <br />
+
+    <label class="lable" asp-for="Address">Address:</label>
+    <input asp-for="Address" />
+    <span asp-validation-for="Address"></span>
+    <br />
+
+    <label class="lable" asp-for="Iban">IBAN:</label>
+    <input asp-for="Iban" />
+    <span asp-validation-for="Iban"></span>
+    <br />
+
+    <input class="button" type="submit" value="Save" />
+    <a class="button" asp-action="Index">Cancel</a>
+}

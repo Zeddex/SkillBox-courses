@@ -19,10 +19,14 @@
             <th><a href="~/Note/Details/@note.Id">@note.Id</a></th>
             <th>@note.Name</th>
             <th>@note.Surname</th>
-            <th>@Html.ActionLink("Edit", "Edit", note)</th>
-            <th>@Html.ActionLink("Delete", "Delete", note)</th>
+            <th><a class="button" asp-action="Edit" asp-route-id=@note.Id>Edit</a></th>
+            <th>
+                <form class="form-simple" method="POST" class="action-form">
+                    <button class="button" asp-action="Delete" asp-route-id="@note.Id">Delete</button>
+                </form>
+            </th>
         </tr>
     }
 </table>
 
-<input type="button" class="btn-prim" value="Add record" onclick="location.href='@Url.Action("Add", "Note")'" />
+<a class="button" asp-action="Add">Add record</a>

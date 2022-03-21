@@ -58,9 +58,16 @@ namespace Homework_21.Controllers
             }
         }
 
-        [HttpGet]
-        public async Task<IActionResult> Delete(Note note)
+        [HttpPost]
+        public async Task<IActionResult> Delete(int id)
         {
+            var note = await _db.Notes.SingleOrDefaultAsync(x => x.Id == id);
+
+            if (note == null)
+            {
+                return NotFound();
+            }
+
             _db.Notes.Remove(note);
             await _db.SaveChangesAsync();
             return RedirectToAction(nameof(Index));
