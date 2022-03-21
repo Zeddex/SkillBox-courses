@@ -15,10 +15,9 @@
             <th><a href="~/Note/Details/@note.Id">@note.Id</a></th>
             <th>@note.Name</th>
             <th>@note.Surname</th>
- @*         <th><a href="~/Note/Details/Edit/@note.Id">Edit</a></th>*@
-            <th>@Html.ActionLink("Edit", "Edit", note, null)</th>
-            <th>@Html.ActionLink("Delete", "Delete", note, null)</th>
-            </tr>
+            <th>@Html.ActionLink("Edit", "Edit", note)</th>
+            <th>@Html.ActionLink("Delete", "Delete", note)</th>
+        </tr>
     }
 </table>
 

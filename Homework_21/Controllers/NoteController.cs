@@ -18,40 +18,80 @@ namespace Homework_21.Controllers
             _db = db;
         }
 
-        public IActionResult Index()
+        [HttpGet]
+        public async Task<IActionResult> Index()
         {
-            var notes = _db.Notes.ToList();
+            var notes = await _db.Notes.ToListAsync();
             return View(notes);
         }
 
-        public IActionResult Details(int id)
+        public async Task<IActionResult> Details(int id)
         {
-            var note = _db.Notes.SingleOrDefault(x => x.Id == id);
+            var note = await _db.Notes.SingleOrDefaultAsync(x => x.Id == id);
 
             if (note == null)
             {
-                return RedirectToAction("Index");
+                return RedirectToAction(nameof(Index));
             }
 
             return View(note);
         }
 
-        public IActionResult Add(Note note)
+        [HttpGet]
+        public IActionResult Add()
         {
-            return RedirectToAction("Index");
-            //return View();
+            return View();
         }
 
+        [HttpPost]
+        public async Task<IActionResult> Add(Note note)
+        {
+            if (ModelState.IsValid)
+            {
+                _db.Notes.Add(note);
+                await _db.SaveChangesAsync();
+                return RedirectToAction(nameof(Index));
+            }
+            else
+            {
+                return RedirectToAction(nameof(Add));
+            }
+        }
+
+        [HttpGet]
         public async Task<IActionResult> Delete(Note note)
         {
             _db.Notes.Remove(note);
             await _db.SaveChangesAsync();
-            return RedirectToAction("Index");
+            return RedirectToAction(nameof(Index));
         }
 
-        public IActionResult Edit(Note note)
+        [HttpGet]
+        public async Task<IActionResult> Edit(int id)
         {
-            return View();
+            var note = await _db.Notes.SingleOrDefaultAsync(x => x.Id == id);
+
+            if (note == null)
+            {
+                return NotFound();
+            }
+
+            return View(note);
+        }
+
+        [HttpPost]
+        public async Task<IActionResult> Edit(Note note)
+        {
+            if (ModelState.IsValid)
+            {
+                _db.Notes.Update(note);
+                await _db.SaveChangesAsync();
+                return RedirectToAction(nameof(Index));
+            }
+            else
+            {
+                return RedirectToAction(nameof(Edit), new { id = note.Id });
+            }
         }
 
         [ResponseCache(Duration = 0, Location = ResponseCacheLocation.None, NoStore = true)]
