@@ -1,0 +1,25 @@
+﻿@model Homework_22.ViewModels.RegistrationModel
+@{
+    ViewData["Title"] = "Registration";
+}
+
+<form asp-action="Login" asp-antiforgery="true">
+    <div class="validation" asp-validation-summary="ModelOnly"></div>
+
+    <label class="lable" asp-for="Login">Login:</label>
+    <input asp-for="Login" />
+    <span asp-validation-for="Login"></span>
+    <br />
+
+    <label class="lable" asp-for="Password">Password:</label>
+    <input asp-for="Password" />
+    <span asp-validation-for="Password"></span>
+    <br />
+
+    <label class="lable" asp-for="ConfirmPassword">Confirm password:</label>
+    <input asp-for="ConfirmPassword" />
+    <span asp-validation-for="ConfirmPassword"></span>
+    <br />
+
+    <input class="button" type="submit" value="Register" />
+</form>
