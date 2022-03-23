@@ -25,22 +25,29 @@ namespace Homework_22
             string connection = Configuration.GetConnectionString("DefaultConnection");
             services.AddDbContext<DiaryContext>(options => options.UseSqlServer(connection));
 
-            //services.AddAuthentication(CookieAuthenticationDefaults.AuthenticationScheme)
-            //    .AddCookie(options =>
-            //{
-            //    options.LoginPath = new Microsoft.AspNetCore.Http.PathString("/Account/Login");
-            //    options.LogoutPath = new Microsoft.AspNetCore.Http.PathString("/Account/Logout");
-            //});
+            services.AddIdentity<User, IdentityRole>()
+                .AddEntityFrameworkStores<DiaryContext>()
+                .AddDefaultTokenProviders();
+
+            services.Configure<IdentityOptions>(options =>
+            {
+                options.Password.RequiredLength = 6;
+                options.Lockout.MaxFailedAccessAttempts = 10;
+                options.Lockout.DefaultLockoutTimeSpan = TimeSpan.FromMinutes(10);
+                options.Lockout.AllowedForNewUsers = true;
+            });
+
             services.ConfigureApplicationCookie(options =>
             {
                 options.Cookie.HttpOnly = true;
-                options.Cookie.Expiration = TimeSpan.FromMinutes(30);
+                options.Cookie.Name = "authToken";
+                options.ExpireTimeSpan = TimeSpan.FromMinutes(120);
                 options.LoginPath = "/Account/Login";
                 options.LogoutPath = "/Account/Logout";
-                options.SlidingExpiration = true;
+                //options.AccessDeniedPath = "/Account/AccessDenied";
             });
 
-            services.AddControllersWithViews();
+            services.AddMvc();
         }
 
         public void Configure(IApplicationBuilder app, IWebHostEnvironment env)

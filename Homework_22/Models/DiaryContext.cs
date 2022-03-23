@@ -24,6 +24,7 @@ namespace Homework_22.Models
                     new Note { Id = 6, Name = "Breanna", Surname = "Benson", Phone = "436-251-379", Address = "P.O. Box 351, 8135 Lorem Av.", Iban = "PL39719618279189562460931448" },
                     new Note { Id = 7, Name = "Octavia", Surname = "Cleveland", Phone = "494-387-366", Address = "448-9849 Blandit Ave", Iban = "GB98GWGL12119886433060" }
             );
+            base.OnModelCreating(modelBuilder);
         }
     }
 }

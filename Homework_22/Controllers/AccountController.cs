@@ -4,6 +4,7 @@ using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
+using System.Security.Claims;
 using Homework_22.ViewModels;
 using Homework_22.Models;
 
@@ -11,13 +12,13 @@ namespace Homework_22.Controllers
 {
     public class AccountController : Controller
     {
-        private readonly DiaryContext _db;
         private readonly UserManager<User> _userManager;
         private readonly SignInManager<User> _signInManager;
 
-        public AccountController(DiaryContext context)
+        public AccountController(UserManager<User> userManager, SignInManager<User> signInManager)
         {
-            _db = context;
+            _userManager = userManager;
+            _signInManager = signInManager;
         }
 
         [HttpGet]
@@ -35,7 +36,7 @@ namespace Homework_22.Controllers
         {
             if (ModelState.IsValid)
             {
-                var loginResult = await _signInManager.PasswordSignInAsync(model.Login,
+                var loginResult = await _signInManager.PasswordSignInAsync(model.Username,
                     model.Password,
                     false,
                     lockoutOnFailure: false);
@@ -47,7 +48,7 @@ namespace Homework_22.Controllers
                         return Redirect(model.ReturnUrl);
                     }
 
-                    return RedirectToAction("Index", "Home");
+                    return RedirectToAction("Index", "Note");
                 }
             }
 
@@ -67,13 +68,13 @@ namespace Homework_22.Controllers
         {
             if (ModelState.IsValid)
             {
-                var user = new User { UserName = model.Login };
+                var user = new User { UserName = model.Username };
                 var createResult = await _userManager.CreateAsync(user, model.Password);
 
                 if (createResult.Succeeded)
                 {
                     await _signInManager.SignInAsync(user, false);
-                    return RedirectToAction("Index", "Home");
+                    return RedirectToAction("Index", "Note");
                 }
 
                 else
@@ -93,7 +94,7 @@ namespace Homework_22.Controllers
         public async Task<IActionResult> Logout()
         {
             await _signInManager.SignOutAsync();
-            return RedirectToAction("Index", "Home");
+            return RedirectToAction("Index", "Note");
         }
     }
 }

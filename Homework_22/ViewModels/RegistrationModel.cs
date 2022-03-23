@@ -5,7 +5,7 @@ namespace Homework_22.ViewModels
     public class RegistrationModel
     {
         [Required(ErrorMessage = "Please enter login")]
-        public string Login { get; set; }
+        public string Username { get; set; }
 
         [Required(ErrorMessage = "Please enter password")]
         [DataType(DataType.Password)]

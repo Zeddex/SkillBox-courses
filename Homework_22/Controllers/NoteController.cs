@@ -1,5 +1,6 @@
 ﻿using Homework_22.Models;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.Extensions.Logging;
 using System;
 using System.Collections.Generic;
@@ -38,12 +39,14 @@ namespace Homework_22.Controllers
         }
 
         [HttpGet]
+        [Authorize]
         public IActionResult Add()
         {
             return View();
         }
 
         [HttpPost]
+        [Authorize]
         public async Task<IActionResult> Add(Note note)
         {
             if (ModelState.IsValid)
@@ -59,6 +62,7 @@ namespace Homework_22.Controllers
         }
 
         [HttpPost]
+        [Authorize]
         public async Task<IActionResult> Delete(int id)
         {
             var note = await _db.Notes.SingleOrDefaultAsync(x => x.Id == id);
@@ -74,6 +78,7 @@ namespace Homework_22.Controllers
         }
 
         [HttpGet]
+        [Authorize]
         public async Task<IActionResult> Edit(int id)
         {
             var note = await _db.Notes.SingleOrDefaultAsync(x => x.Id == id);
@@ -87,6 +92,7 @@ namespace Homework_22.Controllers
         }
 
         [HttpPost]
+        [Authorize]
         public async Task<IActionResult> Edit(Note note)
         {
             if (ModelState.IsValid)
