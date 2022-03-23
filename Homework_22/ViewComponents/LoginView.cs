@@ -2,7 +2,7 @@
 
 namespace Homework_22.ViewComponents
 {
-    public class LogoutView : ViewComponent
+    public class LoginView : ViewComponent
     {
         public IViewComponentResult Invoke()
         {

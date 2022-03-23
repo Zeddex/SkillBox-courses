@@ -52,7 +52,6 @@ body {
 }
 
 .simple-little-table {
-	font-family:Arial, Helvetica, sans-serif;
 	color:#666;
 	font-size:12px;
 	text-shadow: 1px 1px 0px #fff;
@@ -60,29 +59,27 @@ body {
 	margin:20px;
 	border:#ccc 1px solid;
 	border-collapse:separate;
-
 	-moz-border-radius:3px;
 	-webkit-border-radius:3px;
 	border-radius:3px;
-
 	-moz-box-shadow: 0 1px 2px #d1d1d1;
 	-webkit-box-shadow: 0 1px 2px #d1d1d1;
 	box-shadow: 0 1px 2px #d1d1d1;
 }
 
 .simple-little-table th {
-	font-weight:bold;
-	padding:21px 25px 22px 25px;
-	border-top:1px solid #fafafa;
-	border-bottom:1px solid #e0e0e0;
-
+	font-weight: bold;
+	padding: 21px 25px 22px 25px;
+	border-top: 1px solid #fafafa;
+	border-bottom: 1px solid #e0e0e0;
 	background: #ededed;
 	background: -webkit-gradient(linear, left top, left bottom, from(#ededed), to(#ebebeb));
-	background: -moz-linear-gradient(top,  #ededed,  #ebebeb);
+	background: -moz-linear-gradient(top, #ededed, #ebebeb);
+	border-collapse: collapse;
 }
 .simple-little-table th:first-child{
 	text-align: left;
-	padding-left:20px;
+	padding-left: 20px;
 }
 .simple-little-table tr:first-child th:first-child{
 	-moz-border-radius-topleft:3px;
@@ -94,9 +91,9 @@ body {
 	-webkit-border-top-right-radius:3px;
 	border-top-right-radius:3px;
 }
-.simple-little-table tr{
+.simple-little-table tr {
 	text-align: center;
-	padding-left:20px;
+	padding-left: 20px;
 }
 .simple-little-table tr td:first-child{
 	text-align: left;
@@ -227,12 +224,15 @@ form {
 	background: #eaebec;
 	border: none;
 	border-collapse: separate;
-	-moz-border-radius: 3px;
-	-webkit-border-radius: 3px;
-	border-radius: 3px;
-	-moz-box-shadow: 0 1px 2px #d1d1d1;
-	-webkit-box-shadow: 0 1px 2px #d1d1d1;
 	box-shadow: none;
+}
+
+.link-logout {
+	border: none;
+	border-collapse: separate;
+	box-shadow: none;
+	background: none;
+	font-size: 16px;
 }
 
 	input:focus, textarea:focus {
@@ -325,4 +325,10 @@ select {
 
 .hform {
 	padding: 0px 20px;
+}
+
+.login {
+	color: #666;
+	font-size: 14px;
+	text-shadow: 1px 1px 0px #fff;
 }
