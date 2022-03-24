@@ -1,0 +1,24 @@
+﻿@model IEnumerable<Homework_22.Models.User>
+@{
+    ViewData["Title"] = "Users list";
+}
+
+<table class="simple-little-table" cellspacing='0'>
+    <tr style="font-size:20px;">
+        <th>Username</th>
+        <th></th>
+    </tr>
+    @foreach (var user in Model)
+    {
+        <tr>
+            <th>@user.UserName</th>
+            <th>
+                <form class="form-simple" method="post" asp-route-id="@user.Id" asp-action="Delete" id="delButton">
+                    <a href="#" onclick="document.getElementById('delButton').submit()">Delete</a>
+                </form>
+            </th>
+        </tr>
+    }
+</table>
+
+<a class="button" asp-action="Create">Add user</a>

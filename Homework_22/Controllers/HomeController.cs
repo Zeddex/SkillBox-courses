@@ -11,10 +11,10 @@ using Microsoft.EntityFrameworkCore;
 
 namespace Homework_22.Controllers
 {
-    public class NoteController : Controller
+    public class HomeController : Controller
     {
         private readonly DiaryContext _db;
-        public NoteController(DiaryContext context)
+        public HomeController(DiaryContext context)
         {
             _db = context;
         }

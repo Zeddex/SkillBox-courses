@@ -2,7 +2,7 @@
 
 namespace Homework_22.ViewModels
 {
-    public class RegistrationModel
+    public class LoginViewModel
     {
         [Required(ErrorMessage = "Please enter login")]
         public string Username { get; set; }
@@ -11,8 +11,9 @@ namespace Homework_22.ViewModels
         [DataType(DataType.Password)]
         public string Password { get; set; }
 
-        [DataType(DataType.Password)]
-        [Compare(nameof(Password), ErrorMessage = "Password doesn't match")]
-        public string ConfirmPassword { get; set; }
+        [Display(Name = "Remember me")]
+        public bool RememberMe { get; set; }
+
+        public string ReturnUrl { get; set; }
     }
 }
