@@ -1,0 +1,34 @@
+﻿@using Homework_22.Models
+@model List<Note>
+
+@{
+    ViewData["Title"] = "Notes list";
+}
+
+<table class="simple-little-table" cellspacing='0'>
+    <tr style="font-size:20px;">
+        <th>ID</th>
+        <th>Name</th>
+        <th>Surname</th>
+        <th></th>
+        <th></th>
+        <th></th>
+    </tr>
+    @foreach (var note in Model)
+    {
+        <tr>
+            <th>@note.Id</th>
+            <th>@note.Name</th>
+            <th>@note.Surname</th>
+            <th><a href="~/Note/Details/@note.Id">Details</a></th>
+            <th><a asp-action="Edit" asp-antiforgery="true" asp-route-id=@note.Id>Edit</a></th>
+            <th>
+                <form class="form-simple" method="post" asp-controller="Note" asp-action="Delete" id="delButton" asp-antiforgery="true">
+                    <a href="#" onclick="document.getElementById('delButton').submit()">Delete</a>
+                </form>
+            </th>
+        </tr>
+    }
+</table>
+
+<a class="button" asp-action="Add">Add record</a>
