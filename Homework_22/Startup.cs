@@ -5,7 +5,6 @@ using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
-using Microsoft.AspNetCore.Authentication.Cookies;
 using Microsoft.AspNetCore.Identity;
 using Homework_22.Models;
 
@@ -26,12 +25,15 @@ namespace Homework_22
             services.AddDbContext<DiaryContext>(options => options.UseSqlServer(connection));
 
             services.AddIdentity<User, IdentityRole>()
-                .AddEntityFrameworkStores<DiaryContext>()
-                .AddDefaultTokenProviders();
+                .AddEntityFrameworkStores<DiaryContext>();
 
             services.Configure<IdentityOptions>(options =>
             {
                 options.Password.RequiredLength = 6;
+                options.Password.RequireNonAlphanumeric = false;
+                options.Password.RequireLowercase = false;
+                options.Password.RequireUppercase = false;
+                options.Password.RequireDigit = false;
                 options.Lockout.MaxFailedAccessAttempts = 10;
                 options.Lockout.DefaultLockoutTimeSpan = TimeSpan.FromMinutes(10);
                 options.Lockout.AllowedForNewUsers = true;
@@ -47,7 +49,7 @@ namespace Homework_22
                 //options.AccessDeniedPath = "/Account/AccessDenied";
             });
 
-            services.AddMvc();
+            services.AddControllersWithViews();
         }
 
         public void Configure(IApplicationBuilder app, IWebHostEnvironment env)
@@ -67,7 +69,7 @@ namespace Homework_22
             {
                 endpoints.MapControllerRoute(
                     name: "default",
-                    pattern: "{controller=Note}/{action=Index}/{id?}");
+                    pattern: "{controller=Home}/{action=Index}/{id?}");
             });
         }
     }

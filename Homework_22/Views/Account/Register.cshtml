@@ -1,11 +1,11 @@
-﻿@model Homework_22.ViewModels.RegistrationModel
+﻿@model Homework_22.ViewModels.RegistrationViewModel
 @{
     ViewData["Title"] = "Registration";
 }
 
 <h2 class="hform">@ViewData["Title"]</h2>
 
-<form asp-action="Register" asp-antiforgery="true">
+<form asp-action="Register" class="form-main" asp-antiforgery="true">
     <div class="validation" asp-validation-summary="ModelOnly"></div>
 
     <label class="lable" asp-for="Username">Username:</label>

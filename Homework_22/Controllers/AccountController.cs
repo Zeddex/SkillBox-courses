@@ -4,7 +4,6 @@ using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
-using System.Security.Claims;
 using Homework_22.ViewModels;
 using Homework_22.Models;
 
@@ -22,9 +21,9 @@ namespace Homework_22.Controllers
         }
 
         [HttpGet]
-        public IActionResult Login(string returnUrl)
+        public IActionResult Login(string returnUrl = null)
         {
-            return View(new LoginModel()
+            return View(new LoginViewModel()
             {
                 ReturnUrl = returnUrl
             });
@@ -32,56 +31,60 @@ namespace Homework_22.Controllers
 
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Login(LoginModel model)
+        public async Task<IActionResult> Login(LoginViewModel model)
         {
             if (ModelState.IsValid)
             {
-                var loginResult = await _signInManager.PasswordSignInAsync(model.Username,
+                var loginResult = await _signInManager.PasswordSignInAsync(
+                    model.Username,
                     model.Password,
                     false,
                     lockoutOnFailure: false);
 
                 if (loginResult.Succeeded)
                 {
-                    if (Url.IsLocalUrl(model.ReturnUrl))
+                    if (Url.IsLocalUrl(model.ReturnUrl) && !string.IsNullOrEmpty(model.ReturnUrl))
                     {
                         return Redirect(model.ReturnUrl);
                     }
 
-                    return RedirectToAction("Index", "Note");
+                    return RedirectToAction(nameof(Index), "Home");
                 }
             }
 
-            ModelState.AddModelError("", "No such user");
+            ModelState.AddModelError(String.Empty, "Wrong user or password");
             return View(model);
         }
 
         [HttpGet]
         public IActionResult Register()
         {
-            return View(new RegistrationModel());
+            return View(new RegistrationViewModel());
         }
 
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Register(RegistrationModel model)
+        public async Task<IActionResult> Register(RegistrationViewModel model)
         {
             if (ModelState.IsValid)
             {
                 var user = new User { UserName = model.Username };
+
+                // add user
                 var createResult = await _userManager.CreateAsync(user, model.Password);
 
                 if (createResult.Succeeded)
                 {
+                    // set cookies
                     await _signInManager.SignInAsync(user, false);
-                    return RedirectToAction("Index", "Note");
+                    return RedirectToAction(nameof(Index), "Home");
                 }
 
                 else
                 {
                     foreach (var identityError in createResult.Errors)
                     {
-                        ModelState.AddModelError("", identityError.Description);
+                        ModelState.AddModelError(String.Empty, identityError.Description);
                     }
                 }
             }
@@ -90,11 +93,11 @@ namespace Homework_22.Controllers
         }
 
         [HttpPost]
-        [ValidateAntiForgeryToken]
         public async Task<IActionResult> Logout()
         {
+            // remove cookies
             await _signInManager.SignOutAsync();
-            return RedirectToAction("Index", "Note");
+            return RedirectToAction(nameof(Index), "Home");
         }
     }
 }

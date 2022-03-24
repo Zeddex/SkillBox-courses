@@ -1,14 +1,12 @@
-﻿@model Homework_22.ViewModels.LoginModel
+﻿@model Homework_22.ViewModels.LoginViewModel
 @{
     ViewData["Title"] = "Login";
 }
 
 <h2 class="hform">@ViewData["Title"]</h2>
 
-<form asp-action="Login" asp-antiforgery="true">
+<form asp-action="Login" class="form-main" asp-antiforgery="true" asp-route-returnUrl="@Model.ReturnUrl">
     <div class="validation" asp-validation-summary="ModelOnly"></div>
-
-    <input type="hidden" asp-for="ReturnUrl" />
 
     <label class="lable" asp-for="Username">Username:</label>
     <input asp-for="Username" />
@@ -18,6 +16,10 @@
     <label class="lable" asp-for="Password">Password:</label>
     <input asp-for="Password" />
     <span asp-validation-for="Password"></span>
+    <br />
+
+    <label asp-for="RememberMe"></label><br />
+    <input asp-for="RememberMe" />
     <br />
 
     <input class="button" type="submit" value="Login" />

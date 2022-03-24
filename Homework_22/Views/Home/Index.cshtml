@@ -1,6 +1,5 @@
 ﻿@using Homework_22.Models
 @model List<Note>
-
 @{
     ViewData["Title"] = "Notes list";
 }
@@ -20,10 +19,10 @@
             <th>@note.Id</th>
             <th>@note.Name</th>
             <th>@note.Surname</th>
-            <th><a href="~/Note/Details/@note.Id">Details</a></th>
+            <th><a href="~/Home/Details/@note.Id">Details</a></th>
             <th><a asp-action="Edit" asp-antiforgery="true" asp-route-id=@note.Id>Edit</a></th>
             <th>
-                <form class="form-simple" method="post" asp-controller="Note" asp-action="Delete" id="delButton" asp-antiforgery="true">
+                <form class="form-simple" method="post" asp-controller="Home" asp-action="Delete" id="delButton" asp-antiforgery="true">
                     <a href="#" onclick="document.getElementById('delButton').submit()">Delete</a>
                 </form>
             </th>
