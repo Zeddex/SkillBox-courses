@@ -1,7 +1,6 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using Homework_22.ViewModels;
-using Homework_22.Models;
 
 namespace Homework_22.Models
 {
