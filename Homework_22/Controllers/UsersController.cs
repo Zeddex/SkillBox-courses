@@ -19,21 +19,21 @@ namespace Homework_22.Controllers
         }
 
         [HttpGet]
-        [Authorize]
+        [Authorize(Roles = "admin")]
         public IActionResult Index()
         {
             return View(_userManager.Users.ToList());
         }
 
         [HttpGet]
-        [Authorize]
+        [Authorize(Roles = "admin")]
         public IActionResult Create()
         {
             return View();
         }
 
         [HttpPost]
-        [Authorize]
+        [Authorize(Roles = "admin")]
         public async Task<IActionResult> Create(CreateUserViewModel model)
         {
             string defaultRole = "user";
@@ -67,7 +67,7 @@ namespace Homework_22.Controllers
         }
 
         [HttpPost]
-        [Authorize]
+        [Authorize(Roles = "admin")]
         public async Task<IActionResult> Delete(string id)
         {
             var user = await _userManager.FindByIdAsync(id);
