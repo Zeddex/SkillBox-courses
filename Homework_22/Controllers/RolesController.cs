@@ -3,7 +3,6 @@ using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Identity;
-using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using Microsoft.AspNetCore.Authorization;
 using Homework_22.Models;
 using Homework_22.ViewModels;
@@ -22,13 +21,14 @@ namespace Homework_22.Controllers
         }
 
         [HttpGet]
-        [Authorize]
+        [Authorize(Roles = "admin")]
         public IActionResult Index()
         {
             return RedirectToAction("Index", "Users");
         }
 
         [HttpGet]
+        [Authorize(Roles = "admin")]
         public async Task<IActionResult> Edit(string id)
         {
             User user = await _userManager.FindByIdAsync(id);
@@ -53,7 +53,7 @@ namespace Homework_22.Controllers
         }
 
         [HttpPost]
-        [Authorize]
+        [Authorize(Roles = "admin")]
         public async Task<IActionResult> Edit(string userId, List<string> roles)
         {
             User user = await _userManager.FindByIdAsync(userId);
@@ -61,7 +61,6 @@ namespace Homework_22.Controllers
             if (user != null)
             {
                 var userRoles = await _userManager.GetRolesAsync(user);
-                var allRoles = _roleManager.Roles.ToList();
                 var addedRoles = roles.Except(userRoles);
                 var removedRoles = userRoles.Except(roles);
 

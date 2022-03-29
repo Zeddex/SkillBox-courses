@@ -62,7 +62,7 @@ namespace Homework_22.Controllers
         }
 
         [HttpPost]
-        [Authorize]
+        [Authorize(Roles = "admin")]
         public async Task<IActionResult> Delete(int id)
         {
             var note = await _db.Notes.SingleOrDefaultAsync(x => x.Id == id);
@@ -78,7 +78,7 @@ namespace Homework_22.Controllers
         }
 
         [HttpGet]
-        [Authorize]
+        [Authorize(Roles = "admin")]
         public async Task<IActionResult> Edit(int id)
         {
             var note = await _db.Notes.SingleOrDefaultAsync(x => x.Id == id);
@@ -92,7 +92,7 @@ namespace Homework_22.Controllers
         }
 
         [HttpPost]
-        [Authorize]
+        [Authorize(Roles = "admin")]
         public async Task<IActionResult> Edit(Note note)
         {
             if (ModelState.IsValid)
@@ -111,6 +111,12 @@ namespace Homework_22.Controllers
         public IActionResult Error()
         {
             return View(new ErrorViewModel { RequestId = Activity.Current?.Id ?? HttpContext.TraceIdentifier });
+        }
+
+        [HttpGet]
+        public IActionResult AccessDenied()
+        {
+            return View();
         }
     }
 }

@@ -46,7 +46,7 @@ namespace Homework_22
                 options.ExpireTimeSpan = TimeSpan.FromMinutes(120);
                 options.LoginPath = "/Account/Login";
                 options.LogoutPath = "/Account/Logout";
-                //options.AccessDeniedPath = "/Account/AccessDenied";
+                options.AccessDeniedPath = "/Home/AccessDenied";
             });
 
             services.AddControllersWithViews();
