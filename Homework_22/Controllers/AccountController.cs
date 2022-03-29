@@ -66,6 +66,8 @@ namespace Homework_22.Controllers
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> Register(RegistrationViewModel model)
         {
+            string defaultRole = "user";
+
             if (ModelState.IsValid)
             {
                 var user = new User { UserName = model.Username };
@@ -73,7 +75,10 @@ namespace Homework_22.Controllers
                 // add user
                 var createResult = await _userManager.CreateAsync(user, model.Password);
 
-                if (createResult.Succeeded)
+                // set role to user
+                var addToRole = await _userManager.AddToRoleAsync(user, defaultRole);
+
+                if (createResult.Succeeded && addToRole.Succeeded)
                 {
                     // set cookies
                     await _signInManager.SignInAsync(user, false);
