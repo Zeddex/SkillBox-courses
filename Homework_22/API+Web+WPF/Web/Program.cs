@@ -1,16 +1,13 @@
 using Microsoft.AspNetCore.Hosting;
-using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.Hosting;
 using Microsoft.Extensions.Logging;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.Extensions.DependencyInjection;
 using System;
-using System.Collections.Generic;
-using System.Linq;
 using System.Threading.Tasks;
-using Homework_22.Models;
+using Homework_22_Web.Models;
 
-namespace Homework_22
+namespace Homework_22_Web
 {
     public class Program
     {

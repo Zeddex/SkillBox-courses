@@ -6,9 +6,9 @@ using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using Microsoft.AspNetCore.Identity;
-using Homework_22.Models;
+using Homework_22_Web.Models;
 
-namespace Homework_22
+namespace Homework_22_Web
 {
     public class Startup
     {

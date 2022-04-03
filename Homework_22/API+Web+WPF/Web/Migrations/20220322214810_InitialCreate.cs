@@ -1,7 +1,7 @@
 ﻿using System;
 using Microsoft.EntityFrameworkCore.Migrations;
 
-namespace Homework_22.Migrations
+namespace Homework_22_Web.Migrations
 {
     public partial class InitialCreate : Migration
     {

@@ -1,8 +1,8 @@
-﻿using Homework_22.Models;
+﻿using Homework_22_Web.Models;
 using Microsoft.AspNetCore.Identity;
 using System.Threading.Tasks;
 
-namespace Homework_22
+namespace Homework_22_Web
 {
     public class RoleInitializer
     {

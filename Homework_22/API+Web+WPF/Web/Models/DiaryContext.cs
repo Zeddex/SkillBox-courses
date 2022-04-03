@@ -1,7 +1,7 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 
-namespace Homework_22.Models
+namespace Homework_22_Web.Models
 {
     public class DiaryContext : IdentityDbContext<User>
     {

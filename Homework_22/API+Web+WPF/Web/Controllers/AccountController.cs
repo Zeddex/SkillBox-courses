@@ -4,10 +4,10 @@ using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
-using Homework_22.ViewModels;
-using Homework_22.Models;
+using Homework_22_Web.ViewModels;
+using Homework_22_Web.Models;
 
-namespace Homework_22.Controllers
+namespace Homework_22_Web.Controllers
 {
     public class AccountController : Controller
     {
