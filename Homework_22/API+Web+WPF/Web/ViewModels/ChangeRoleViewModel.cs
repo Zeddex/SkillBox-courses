@@ -1,7 +1,7 @@
 ﻿using Microsoft.AspNetCore.Identity;
 using System.Collections.Generic;
 
-namespace Homework_22.ViewModels
+namespace Homework_22_Web.ViewModels
 {
     public class ChangeRoleViewModel
     {

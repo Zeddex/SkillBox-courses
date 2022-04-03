@@ -1,4 +1,4 @@
-﻿using Homework_22.Models;
+﻿using Homework_22_Web.Models;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.Extensions.Logging;
@@ -9,7 +9,7 @@ using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.EntityFrameworkCore;
 
-namespace Homework_22.Controllers
+namespace Homework_22_Web.Controllers
 {
     public class HomeController : Controller
     {

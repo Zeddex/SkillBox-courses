@@ -4,10 +4,10 @@ using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Authorization;
-using Homework_22.Models;
-using Homework_22.ViewModels;
+using Homework_22_Web.Models;
+using Homework_22_Web.ViewModels;
 
-namespace Homework_22.Controllers
+namespace Homework_22_Web.Controllers
 {
     public class RolesController : Controller
     {

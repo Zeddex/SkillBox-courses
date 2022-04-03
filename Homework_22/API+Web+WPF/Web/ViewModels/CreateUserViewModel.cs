@@ -1,6 +1,6 @@
 ﻿using System.ComponentModel.DataAnnotations;
 
-namespace Homework_22.ViewModels
+namespace Homework_22_Web.ViewModels
 {
     public class CreateUserViewModel
     {

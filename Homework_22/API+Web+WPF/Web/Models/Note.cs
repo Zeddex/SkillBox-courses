@@ -1,7 +1,7 @@
 ﻿using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 
-namespace Homework_22.Models
+namespace Homework_22_Web.Models
 {
     public class Note
     {
