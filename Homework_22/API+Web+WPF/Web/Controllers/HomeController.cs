@@ -14,9 +14,9 @@ namespace Homework_22_Web.Controllers
 {
     public class HomeController : Controller
     {
-        private readonly DiaryStore _diaryStore;
+        private readonly IDiaryAsync _diaryStore;
 
-        public HomeController(DiaryStore diaryStore)
+        public HomeController(IDiaryAsync diaryStore)
         {
             _diaryStore = diaryStore;
         }
@@ -24,13 +24,13 @@ namespace Homework_22_Web.Controllers
         [HttpGet]
         public async Task<IActionResult> Index()
         {
-            var notes = await _diaryStore.AllNotesAsync();
+            var notes = await _diaryStore.AllNotes();
             return View(notes);
         }
 
         public async Task<IActionResult> Details(int id)
         {
-            var note = await _diaryStore.GetNoteByIdAsync(id);
+            var note = await _diaryStore.GetNoteById(id);
 
             if (note == null)
             {
@@ -53,7 +53,7 @@ namespace Homework_22_Web.Controllers
         {
             if (ModelState.IsValid)
             {
-                await _diaryStore.AddNoteAsync(note);
+                await _diaryStore.AddNote(note);
 
                 return RedirectToAction(nameof(Index));
             }
@@ -68,14 +68,14 @@ namespace Homework_22_Web.Controllers
         [Authorize(Roles = "admin")]
         public async Task<IActionResult> Delete(int id)
         {
-            var note = await _diaryStore.GetNoteByIdAsync(id);
+            var note = await _diaryStore.GetNoteById(id);
 
             if (note == null)
             {
                 return NotFound();
             }
 
-            await _diaryStore.DeleteNoteAsync(note);
+            await _diaryStore.DeleteNote(note);
 
             return RedirectToAction(nameof(Index));
         }
@@ -84,7 +84,7 @@ namespace Homework_22_Web.Controllers
         [Authorize(Roles = "admin")]
         public async Task<IActionResult> Edit(int id)
         {
-            var note = await _diaryStore.GetNoteByIdAsync(id);
+            var note = await _diaryStore.GetNoteById(id);
 
             if (note == null)
             {
@@ -100,7 +100,7 @@ namespace Homework_22_Web.Controllers
         {
             if (ModelState.IsValid)
             {
-                await _diaryStore.UpdateNoteAsync(note);
+                await _diaryStore.UpdateNote(note);
 
                 return RedirectToAction(nameof(Index));
             }
