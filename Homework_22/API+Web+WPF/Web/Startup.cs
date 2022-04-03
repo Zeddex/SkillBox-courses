@@ -7,6 +7,7 @@ using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using Microsoft.AspNetCore.Identity;
 using Homework_22_Web.Models;
+using Homework_22_Web.Data;
 
 namespace Homework_22_Web
 {
@@ -26,6 +27,8 @@ namespace Homework_22_Web
 
             services.AddIdentity<User, IdentityRole>()
                 .AddEntityFrameworkStores<DiaryContext>();
+
+            services.AddTransient<DiaryStore>();
 
             services.Configure<IdentityOptions>(options =>
             {

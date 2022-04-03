@@ -8,27 +8,29 @@ using System.Diagnostics;
 using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.EntityFrameworkCore;
+using Homework_22_Web.Data;
 
 namespace Homework_22_Web.Controllers
 {
     public class HomeController : Controller
     {
-        private readonly DiaryContext _db;
-        public HomeController(DiaryContext context)
+        private readonly DiaryStore _diaryStore;
+
+        public HomeController(DiaryStore diaryStore)
         {
-            _db = context;
+            _diaryStore = diaryStore;
         }
 
         [HttpGet]
         public async Task<IActionResult> Index()
         {
-            var notes = await _db.Notes.ToListAsync();
+            var notes = await _diaryStore.AllNotesAsync();
             return View(notes);
         }
 
         public async Task<IActionResult> Details(int id)
         {
-            var note = await _db.Notes.SingleOrDefaultAsync(x => x.Id == id);
+            var note = await _diaryStore.GetNoteByIdAsync(id);
 
             if (note == null)
             {
@@ -51,10 +53,11 @@ namespace Homework_22_Web.Controllers
         {
             if (ModelState.IsValid)
             {
-                _db.Notes.Add(note);
-                await _db.SaveChangesAsync();
+                await _diaryStore.AddNoteAsync(note);
+
                 return RedirectToAction(nameof(Index));
             }
+
             else
             {
                 return RedirectToAction(nameof(Add));
@@ -65,15 +68,15 @@ namespace Homework_22_Web.Controllers
         [Authorize(Roles = "admin")]
         public async Task<IActionResult> Delete(int id)
         {
-            var note = await _db.Notes.SingleOrDefaultAsync(x => x.Id == id);
+            var note = await _diaryStore.GetNoteByIdAsync(id);
 
             if (note == null)
             {
                 return NotFound();
             }
 
-            _db.Notes.Remove(note);
-            await _db.SaveChangesAsync();
+            await _diaryStore.DeleteNoteAsync(note);
+
             return RedirectToAction(nameof(Index));
         }
 
@@ -81,7 +84,7 @@ namespace Homework_22_Web.Controllers
         [Authorize(Roles = "admin")]
         public async Task<IActionResult> Edit(int id)
         {
-            var note = await _db.Notes.SingleOrDefaultAsync(x => x.Id == id);
+            var note = await _diaryStore.GetNoteByIdAsync(id);
 
             if (note == null)
             {
@@ -97,8 +100,8 @@ namespace Homework_22_Web.Controllers
         {
             if (ModelState.IsValid)
             {
-                _db.Notes.Update(note);
-                await _db.SaveChangesAsync();
+                await _diaryStore.UpdateNoteAsync(note);
+
                 return RedirectToAction(nameof(Index));
             }
             else
