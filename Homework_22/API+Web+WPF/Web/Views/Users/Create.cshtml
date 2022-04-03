@@ -1,0 +1,26 @@
+﻿@model Homework_22.ViewModels.CreateUserViewModel
+@{
+    ViewData["Title"] = "Create user";
+}
+
+<form class="form-main" asp-action="Create" asp-controller="Users" asp-antiforgery="true">
+    <div class="validation" asp-validation-summary="All "></div>
+
+     <label class="lable" asp-for="Username">Username:</label>
+    <input asp-for="Username" />
+    <span asp-validation-for="Username"></span>
+    <br />
+
+    <label class="lable" asp-for="Password">Password:</label>
+    <input asp-for="Password" />
+    <span asp-validation-for="Password"></span>
+    <br />
+
+    <label class="lable" asp-for="ConfirmPassword">Confirm password:</label>
+    <input asp-for="ConfirmPassword" />
+    <span asp-validation-for="ConfirmPassword"></span>
+    <br />
+
+    <input class="button" type="submit" value="Create" />
+    <a class="button" asp-action="Index">Cancel</a>
+</form>

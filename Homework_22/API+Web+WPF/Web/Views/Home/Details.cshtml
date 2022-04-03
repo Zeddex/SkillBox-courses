@@ -1,0 +1,25 @@
+﻿@model Homework_22.Models.Note
+@{
+    ViewData["Title"] = "Details";
+}
+
+<table class="simple-little-table" cellspacing='0'>
+    <tr style="font-size:20px;">
+        <th>ID</th>
+        <th>Name</th>
+        <th>Surname</th>
+        <th>Phone Number</th>
+        <th>Address</th>
+        <th>IBAN</th>
+    </tr>
+    <tr>
+        <th>@Model.Id</th>
+        <th>@Model.Name</th>
+        <th>@Model.Surname</th>
+        <th>@Model.Phone</th>
+        <th>@Model.Address</th>
+        <th>@Model.Iban</th>
+    </tr>
+</table>
+
+<a class="button" asp-action="Index">Back</a>
