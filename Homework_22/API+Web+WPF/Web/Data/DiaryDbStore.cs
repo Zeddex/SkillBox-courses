@@ -6,38 +6,38 @@ using Homework_22_Web.Models;
 
 namespace Homework_22_Web.Data
 {
-    public class DiaryStore
+    public class DiaryDbStore : IDiaryAsync
     {
         private readonly DiaryContext _db;
 
-        public DiaryStore(DiaryContext db)
+        public DiaryDbStore(DiaryContext db)
         {
             _db = db;
         }
 
-        public async Task<IReadOnlyList<Note>> AllNotesAsync()
+        public async Task<IReadOnlyList<Note>> AllNotes()
         {
             return await _db.Notes.ToListAsync();
         }
 
-        public async Task<Note> GetNoteByIdAsync(int id)
+        public async Task<Note> GetNoteById(int id)
         {
             return await _db.Notes.FirstOrDefaultAsync(x => x.Id == id);
         }
 
-        public async Task AddNoteAsync(Note note)
+        public async Task AddNote(Note note)
         {
             _db.Notes.Add(note);
             await _db.SaveChangesAsync();
         }
 
-        public async Task DeleteNoteAsync(Note note)
+        public async Task DeleteNote(Note note)
         {
             _db.Notes.Remove(note);
             await _db.SaveChangesAsync();
         }
 
-        public async Task UpdateNoteAsync(Note note)
+        public async Task UpdateNote(Note note)
         {
             _db.Notes.Update(note);
             await _db.SaveChangesAsync();
