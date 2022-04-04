@@ -6,14 +6,14 @@ namespace Homework_22_Web.Data
 {
     public interface IDiary
     {
-        void AddNote(Note note);
+        Task<List<Note>> AllNotesAsync();
 
-        IReadOnlyList<Note> AllNotes();
+        Task<Note> GetNoteByIdAsync(int id);
 
-        void DeleteNote(Note note);
+        Task AddNoteAsync(Note note);
 
-        Note GetNoteById(int id);
+        Task DeleteNoteAsync(int id);
 
-        void UpdateNote(Note note);
+        Task UpdateNoteAsync(Note note);
     }
 }
