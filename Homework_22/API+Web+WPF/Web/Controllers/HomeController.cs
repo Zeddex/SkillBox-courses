@@ -23,8 +23,17 @@ namespace Homework_22_Web.Controllers
         [HttpGet]
         public async Task<IActionResult> Index()
         {
-            var notes = await _diaryStore.AllNotesAsync();
-            return View(notes);
+            try
+            {
+                var notes = await _diaryStore.AllNotesAsync();
+                return View(notes);
+            }
+
+            catch (Exception ex)
+            {
+                return StatusCode(500, ex.Message);
+            }
+            
         }
 
         public async Task<IActionResult> Details(int id)
@@ -103,6 +112,7 @@ namespace Homework_22_Web.Controllers
 
                 return RedirectToAction(nameof(Index));
             }
+
             else
             {
                 return RedirectToAction(nameof(Edit), new { id = note.Id });

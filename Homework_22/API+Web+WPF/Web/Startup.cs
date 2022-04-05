@@ -28,7 +28,7 @@ namespace Homework_22_Web
             services.AddIdentity<User, IdentityRole>()
                 .AddEntityFrameworkStores<DiaryContext>();
 
-            services.AddTransient<IDiary, DiaryDbStore>();
+            services.AddTransient<IDiary, DiaryApiStore>();
 
             services.Configure<IdentityOptions>(options =>
             {

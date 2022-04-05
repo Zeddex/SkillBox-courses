@@ -32,19 +32,21 @@ namespace Homework_22_Web.Data
 
         public async Task AddNoteAsync(Note note)
         {
-            var content = new StringContent(JsonConvert.SerializeObject(note), Encoding.UTF8);
-            _ = await _httpClient.PostAsync(_apiUrl, content);
+            var json = JsonConvert.SerializeObject(note);
+            var content = new StringContent(json, Encoding.UTF8, "application/json");
+            await _httpClient.PostAsync(_apiUrl, content);
         }
 
         public async Task DeleteNoteAsync(int id)
         {
-            _ = await _httpClient.DeleteAsync(_apiUrl + $"/{id}");
+            await _httpClient.DeleteAsync(_apiUrl + $"/{id}");
             
         }
 
         public async Task UpdateNoteAsync(Note note)
         {
-            var content = new StringContent(JsonConvert.SerializeObject(note), Encoding.UTF8);
+            var json = JsonConvert.SerializeObject(note);
+            var content = new StringContent(json, Encoding.UTF8, "application/json");
             await _httpClient.PutAsync(_apiUrl, content);
         }
     }
