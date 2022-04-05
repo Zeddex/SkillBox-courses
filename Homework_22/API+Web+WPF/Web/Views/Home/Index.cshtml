@@ -22,8 +22,8 @@
             <th><a href="~/Home/Details/@note.Id">Details</a></th>
             <th><a asp-action="Edit" asp-antiforgery="true" asp-route-id=@note.Id>Edit</a></th>
             <th>
-                <form class="form-simple" method="post" asp-controller="Home" asp-action="Delete" id="delButton" asp-antiforgery="true">
-                    <a href="#" onclick="document.getElementById('delButton').submit()">Delete</a>
+                <form class="form-simple" method="post" class="action-form">
+                    <button class="button-as-link2" asp-action="Delete" asp-route-id="@note.Id">Delete</button>
                 </form>
             </th>
         </tr>
