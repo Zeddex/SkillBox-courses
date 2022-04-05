@@ -28,7 +28,7 @@ namespace Homework_22.Controllers
 
         public async Task<IActionResult> Details(int id)
         {
-            var note = await _db.Notes.SingleOrDefaultAsync(x => x.Id == id);
+            var note = await _db.Notes.FirstOrDefaultAsync(x => x.Id == id);
 
             if (note == null)
             {
@@ -65,7 +65,7 @@ namespace Homework_22.Controllers
         [Authorize(Roles = "admin")]
         public async Task<IActionResult> Delete(int id)
         {
-            var note = await _db.Notes.SingleOrDefaultAsync(x => x.Id == id);
+            var note = await _db.Notes.FirstOrDefaultAsync(x => x.Id == id);
 
             if (note == null)
             {
@@ -81,7 +81,7 @@ namespace Homework_22.Controllers
         [Authorize(Roles = "admin")]
         public async Task<IActionResult> Edit(int id)
         {
-            var note = await _db.Notes.SingleOrDefaultAsync(x => x.Id == id);
+            var note = await _db.Notes.FirstOrDefaultAsync(x => x.Id == id);
 
             if (note == null)
             {

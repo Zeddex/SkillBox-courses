@@ -251,10 +251,10 @@ a.navbar-brand {
 	font-size: 16px;
 }
 
-	input:focus, textarea:focus {
-		box-shadow: 0 0 5px rgba(81, 203, 238, 1);
-		border: 1px solid rgba(81, 203, 238, 1);
-	}
+input:focus, textarea:focus {
+	box-shadow: 0 0 5px rgba(81, 203, 238, 1);
+	border: 1px solid rgba(81, 203, 238, 1);
+}
 
 .field-validation-error {
 	color: #b94a48;
@@ -321,6 +321,21 @@ select {
 	padding: 0;
 	margin: 0;
 	cursor: pointer;
+}
+
+.button-as-link2 {
+	background: none;
+	border: none;
+	font: unset;
+	color: #666666;
+	padding: 0;
+	margin: 0;
+	cursor: pointer;
+}
+
+.button-as-link2:hover {
+	color: #bd5a35;
+	text-decoration: underline;
 }
 
 .button {
