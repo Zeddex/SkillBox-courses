@@ -26,7 +26,7 @@ namespace Homework_22_Web.Data
 
         public async Task<Note> GetNoteByIdAsync(int id)
         {
-            string json = await _httpClient.GetStringAsync(_apiUrl + $"//{id}");
+            string json = await _httpClient.GetStringAsync(_apiUrl + $"/{id}");
             return JsonConvert.DeserializeObject<Note>(json);
         }
 
@@ -38,7 +38,7 @@ namespace Homework_22_Web.Data
 
         public async Task DeleteNoteAsync(int id)
         {
-            _ = await _httpClient.DeleteAsync(_apiUrl + $"//{id}");
+            _ = await _httpClient.DeleteAsync(_apiUrl + $"/{id}");
             
         }
 
