@@ -5,8 +5,85 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:Homework_22_WPF"
         mc:Ignorable="d"
-        Title="MainWindow" Height="450" Width="800">
+        Title="Diary" Height="600" Width="1000" MinHeight="200" MinWidth="300">
+    
     <Grid>
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="100*"/>
+            <ColumnDefinition Width="auto"/>
+            <ColumnDefinition Width="50*"/>
+        </Grid.ColumnDefinitions>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="auto"/>
+            <RowDefinition Height="*"/>
+        </Grid.RowDefinitions>
 
+        <ListView Grid.Row="0" Grid.Column="0" Grid.RowSpan="2" d:ItemsSource="{d:SampleData ItemCount=5}">
+            <ListView.View>
+                <GridView>
+                    <GridViewColumn Width="50">
+                        <GridViewColumn.Header>
+                            <GridViewColumnHeader Tag="Name">ID</GridViewColumnHeader>
+                        </GridViewColumn.Header>
+                    </GridViewColumn>
+                    <GridViewColumn Width="100">
+                        <GridViewColumn.Header>
+                            <GridViewColumnHeader Tag="Name">Name</GridViewColumnHeader>
+                        </GridViewColumn.Header>
+                    </GridViewColumn>
+                    <GridViewColumn Width="100">
+                        <GridViewColumn.Header>
+                            <GridViewColumnHeader Tag="Name">Surname</GridViewColumnHeader>
+                        </GridViewColumn.Header>
+                    </GridViewColumn>
+                    <GridViewColumn Width="100">
+                        <GridViewColumn.Header>
+                            <GridViewColumnHeader Tag="Name">Phone</GridViewColumnHeader>
+                        </GridViewColumn.Header>
+                    </GridViewColumn>
+                    <GridViewColumn Width="200">
+                        <GridViewColumn.Header>
+                            <GridViewColumnHeader Tag="Name">Address</GridViewColumnHeader>
+                        </GridViewColumn.Header>
+                    </GridViewColumn>
+                    <GridViewColumn Width="100">
+                        <GridViewColumn.Header>
+                            <GridViewColumnHeader Tag="Name">IBAN</GridViewColumnHeader>
+                        </GridViewColumn.Header>
+                    </GridViewColumn>
+                </GridView>
+            </ListView.View>
+        </ListView>
+
+        <GridSplitter Grid.Row="0" Grid.Column="1" Grid.RowSpan="2"
+                      ShowsPreview="False" 
+                      Width="3" 
+                      HorizontalAlignment="Center" 
+                      VerticalAlignment="Stretch" />
+
+        <TextBlock Grid.Row="0" Grid.Column="2" FontWeight="Bold" Margin="5 0" Text="Details:"/>
+
+        <ListBox Grid.Row="1" Grid.Column="2">
+            <StackPanel Grid.Column="2">
+                <TextBlock Text="Name" Margin="5"/>
+                <TextBox Text="" Margin="5"/>
+
+                <TextBlock Text="Surname" Margin="5"/>
+                <TextBox Text="" Margin="5"/>
+
+                <TextBlock Text="Phone" Margin="5"/>
+                <TextBox Text="" Margin="5"/>
+
+                <TextBlock Text="Address" Margin="5"/>
+                <TextBox Text="" Margin="5"/>
+
+                <TextBlock Text="IBAN" Margin="5"/>
+                <TextBox Text="" Margin="5"/>
+
+                <Button HorizontalAlignment="Left" Width="100" Margin="0, 20, 0, 0" Content="Edit"/>
+                <Button HorizontalAlignment="Left" Width="100" Margin="0, 5, 0, 0" Content="Add"/>
+                <Button HorizontalAlignment="Left" Width="100" Margin="0, 5, 0, 0" Content="Delete"/>
+            </StackPanel>
+        </ListBox>
     </Grid>
 </Window>
