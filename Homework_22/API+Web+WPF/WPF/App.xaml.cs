@@ -1,9 +1,7 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Configuration;
-using System.Data;
-using System.Linq;
-using System.Threading.Tasks;
+﻿using MediatR;
+using Microsoft.Extensions.DependencyInjection;
+using Homework_22_WPF.Views;
+using Homework_22_WPF.ViewModels;
 using System.Windows;
 
 namespace Homework_22_WPF
@@ -13,5 +11,21 @@ namespace Homework_22_WPF
     /// </summary>
     public partial class App : Application
     {
+        //public ServiceProvider Provider { get; }
+
+        //public App()
+        //{
+        //    ServiceCollection serviceCollection = new();
+        //    ConfigureServices(serviceCollection);
+        //    Provider = serviceCollection.BuildServiceProvider();
+        //}
+
+        //private void ConfigureServices(IServiceCollection services)
+        //{
+        //    services.AddSingleton<MainWindow>();
+        //    services.AddScoped<MainWindowViewModel, MainWindowViewModel>();
+        //    services.AddMediatR(typeof(MediatREntryPoint).Assembly);
+        //}
+
     }
 }
