@@ -56,7 +56,10 @@ namespace Homework_22_WPF.Data
             var currentNote = data.FirstOrDefault(x => x.Id == note.Id);
 
             if (currentNote != null)
-                data[currentNote.Id] = note;
+            {
+                int noteIndex = data.IndexOf(currentNote);
+                data[noteIndex] = note;
+            }
         }
     }
 }
