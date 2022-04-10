@@ -18,6 +18,7 @@ namespace Homework_22_WPF.ViewModels
         private readonly IDiaryData _data;
 
         public ObservableCollection<Note> NotesList { get; set; }
+        public int Id { get; set; }
         public string Name { get; set; }
         public string Surname { get; set; }
         public string Phone { get; set; }
@@ -48,6 +49,20 @@ namespace Homework_22_WPF.ViewModels
             Iban = string.Empty;
         }
 
+        private Note GetCurrentNote()
+        {
+            var note = new Note();
+
+            note.Id = Id;
+            note.Name = Name;
+            note.Surname = Surname;
+            note.Phone = Phone;
+            note.Address = Address;
+            note.Iban = Iban;
+
+            return note;
+        }
+
         private Note _selectedNote;
         public Note SelectedNote
         {
@@ -59,6 +74,8 @@ namespace Homework_22_WPF.ViewModels
                 if (SelectedNote != null)
                 {
                     var currentNote = _data.GetNoteById(SelectedNote.Id);
+                    
+                    Id = currentNote.Id;
                     Name = currentNote.Name;
                     Surname = currentNote.Surname;
                     Phone = currentNote.Phone;
@@ -75,20 +92,26 @@ namespace Homework_22_WPF.ViewModels
             }
         }
 
-
-
         #region Commands
 
         private readonly ICommand _addNoteCommand;
         public ICommand AddNoteCommand => _addNoteCommand ?? new RelayCommand(() =>
         {
+            var note = GetCurrentNote();
 
+            _data.AddNote(note);
+
+            RefreshView();
         });
 
         private readonly ICommand _editNoteCommand;
         public ICommand EditNoteCommand => _editNoteCommand ?? new RelayCommand(() =>
         {
+            var note = GetCurrentNote();
 
+            _data.UpdateNote(note);
+
+            RefreshView();
         });
 
         private readonly ICommand _clearDetailsCommand;

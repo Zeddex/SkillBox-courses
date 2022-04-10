@@ -26,11 +26,6 @@
         <ListView Grid.Row="0" Grid.Column="0" Grid.RowSpan="2" ItemsSource="{Binding NotesList}" SelectedItem="{Binding SelectedNote}">
             <ListView.View>
                 <GridView>
-                    <GridViewColumn Width="30" DisplayMemberBinding="{Binding Id}">
-                        <GridViewColumn.Header>
-                            <GridViewColumnHeader Tag="Name">ID</GridViewColumnHeader>
-                        </GridViewColumn.Header>
-                    </GridViewColumn>
                     <GridViewColumn Width="100" DisplayMemberBinding="{Binding Name}">
                         <GridViewColumn.Header>
                             <GridViewColumnHeader Tag="Name">Name</GridViewColumnHeader>
@@ -46,7 +41,7 @@
                             <GridViewColumnHeader Tag="Name">Phone</GridViewColumnHeader>
                         </GridViewColumn.Header>
                     </GridViewColumn>
-                    <GridViewColumn Width="200" DisplayMemberBinding="{Binding Address}">
+                    <GridViewColumn Width="180" DisplayMemberBinding="{Binding Address}">
                         <GridViewColumn.Header>
                             <GridViewColumnHeader Tag="Name">Address</GridViewColumnHeader>
                         </GridViewColumn.Header>
@@ -85,7 +80,7 @@
                 <TextBlock Text="IBAN" Margin="5"/>
                 <TextBox Text="{Binding Iban}" Margin="5"/>
 
-                <Button Command="{Binding EditNoteCommand}" HorizontalAlignment="Left" Width="100" Margin="0, 20, 0, 0" Content="Edit Note"/>
+                <Button Command="{Binding EditNoteCommand}" HorizontalAlignment="Left" Width="100" Margin="0, 20, 0, 0" Content="Save Changes"/>
                 <Button Command="{Binding AddNoteCommand}" HorizontalAlignment="Left" Width="100" Margin="0, 5, 0, 0" Content="Add Note"/>
                 <Button Command="{Binding ClearDetailsCommand}" HorizontalAlignment="Left" Width="100" Margin="0, 5, 0, 0" Content="Clear Details"/>
                 <Button Command="{Binding DeleteNoteCommand}" HorizontalAlignment="Left" Width="100" Margin="0, 5, 0, 0" Content="Delete Note"/>
