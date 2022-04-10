@@ -3,9 +3,14 @@
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:l="clr-namespace:Homework_22_WPF"
         xmlns:vm="clr-namespace:Homework_22_WPF.ViewModels"
         mc:Ignorable="d"
         Title="Diary" Height="600" Width="1000" MinHeight="200" MinWidth="300">
+    
+    <Window.DataContext>
+        <vm:MainWindowViewModel/>
+    </Window.DataContext>
     
     <Grid>
         <Grid.ColumnDefinitions>
@@ -18,35 +23,35 @@
             <RowDefinition Height="*"/>
         </Grid.RowDefinitions>
 
-        <ListView Grid.Row="0" Grid.Column="0" Grid.RowSpan="2" d:ItemsSource="{d:SampleData ItemCount=5}">
+        <ListView Grid.Row="0" Grid.Column="0" Grid.RowSpan="2" ItemsSource="{Binding NotesList}" SelectedItem="{Binding SelectedNote}">
             <ListView.View>
                 <GridView>
-                    <GridViewColumn Width="50">
+                    <GridViewColumn Width="30" DisplayMemberBinding="{Binding Id}">
                         <GridViewColumn.Header>
                             <GridViewColumnHeader Tag="Name">ID</GridViewColumnHeader>
                         </GridViewColumn.Header>
                     </GridViewColumn>
-                    <GridViewColumn Width="100">
+                    <GridViewColumn Width="100" DisplayMemberBinding="{Binding Name}">
                         <GridViewColumn.Header>
                             <GridViewColumnHeader Tag="Name">Name</GridViewColumnHeader>
                         </GridViewColumn.Header>
                     </GridViewColumn>
-                    <GridViewColumn Width="100">
+                    <GridViewColumn Width="100" DisplayMemberBinding="{Binding Surname}">
                         <GridViewColumn.Header>
                             <GridViewColumnHeader Tag="Name">Surname</GridViewColumnHeader>
                         </GridViewColumn.Header>
                     </GridViewColumn>
-                    <GridViewColumn Width="100">
+                    <GridViewColumn Width="100" DisplayMemberBinding="{Binding Phone}">
                         <GridViewColumn.Header>
                             <GridViewColumnHeader Tag="Name">Phone</GridViewColumnHeader>
                         </GridViewColumn.Header>
                     </GridViewColumn>
-                    <GridViewColumn Width="200">
+                    <GridViewColumn Width="200" DisplayMemberBinding="{Binding Address}">
                         <GridViewColumn.Header>
                             <GridViewColumnHeader Tag="Name">Address</GridViewColumnHeader>
                         </GridViewColumn.Header>
                     </GridViewColumn>
-                    <GridViewColumn Width="100">
+                    <GridViewColumn Width="150" DisplayMemberBinding="{Binding Iban}">
                         <GridViewColumn.Header>
                             <GridViewColumnHeader Tag="Name">IBAN</GridViewColumnHeader>
                         </GridViewColumn.Header>
@@ -66,23 +71,24 @@
         <ListBox Grid.Row="1" Grid.Column="2">
             <StackPanel Grid.Column="2">
                 <TextBlock Text="Name" Margin="5"/>
-                <TextBox Text="" Margin="5"/>
+                <TextBox Text="{Binding Name}" Margin="5"/>
 
                 <TextBlock Text="Surname" Margin="5"/>
-                <TextBox Text="" Margin="5"/>
+                <TextBox Text="{Binding Surname}" Margin="5"/>
 
                 <TextBlock Text="Phone" Margin="5"/>
-                <TextBox Text="" Margin="5"/>
+                <TextBox Text="{Binding Phone}" Margin="5"/>
 
                 <TextBlock Text="Address" Margin="5"/>
-                <TextBox Text="" Margin="5"/>
+                <TextBox Text="{Binding Address}" Margin="5"/>
 
                 <TextBlock Text="IBAN" Margin="5"/>
-                <TextBox Text="" Margin="5"/>
+                <TextBox Text="{Binding Iban}" Margin="5"/>
 
-                <Button HorizontalAlignment="Left" Width="100" Margin="0, 20, 0, 0" Content="Edit"/>
-                <Button HorizontalAlignment="Left" Width="100" Margin="0, 5, 0, 0" Content="Add"/>
-                <Button HorizontalAlignment="Left" Width="100" Margin="0, 5, 0, 0" Content="Delete"/>
+                <Button Command="{Binding EditNoteCommand}" HorizontalAlignment="Left" Width="100" Margin="0, 20, 0, 0" Content="Edit Note"/>
+                <Button Command="{Binding AddNoteCommand}" HorizontalAlignment="Left" Width="100" Margin="0, 5, 0, 0" Content="Add Note"/>
+                <Button Command="{Binding ClearDetailsCommand}" HorizontalAlignment="Left" Width="100" Margin="0, 5, 0, 0" Content="Clear Details"/>
+                <Button Command="{Binding DeleteNoteCommand}" HorizontalAlignment="Left" Width="100" Margin="0, 5, 0, 0" Content="Delete Note"/>
             </StackPanel>
         </ListBox>
     </Grid>
