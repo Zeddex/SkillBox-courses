@@ -18,7 +18,7 @@ namespace Homework_22_Web.Data
             _httpClient = new HttpClient();
         }
 
-        public async Task<List<Note>> AllNotesAsync()
+        public async Task<IEnumerable<Note>> AllNotesAsync()
         {
             string json = await _httpClient.GetStringAsync(_apiUrl);
             return JsonConvert.DeserializeObject<List<Note>>(json);
@@ -40,7 +40,6 @@ namespace Homework_22_Web.Data
         public async Task DeleteNoteAsync(int id)
         {
             await _httpClient.DeleteAsync(_apiUrl + $"/{id}");
-            
         }
 
         public async Task UpdateNoteAsync(Note note)

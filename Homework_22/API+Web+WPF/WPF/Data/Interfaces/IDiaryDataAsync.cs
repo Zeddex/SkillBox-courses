@@ -9,7 +9,7 @@ namespace Homework_22_WPF.Data.Interfaces
 {
     public interface IDiaryDataAsync
     {
-        Task<List<Note>> AllNotesAsync();
+        Task<IEnumerable<Note>> AllNotesAsync();
 
         Task<Note> GetNoteByIdAsync(int id);
 

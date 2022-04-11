@@ -15,7 +15,7 @@ namespace Homework_22_Web.Data
             _db = db;
         }
 
-        public async Task<List<Note>> AllNotesAsync()
+        public async Task<IEnumerable<Note>> AllNotesAsync()
         {
             return await _db.Notes.ToListAsync();
         }
