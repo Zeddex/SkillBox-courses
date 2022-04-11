@@ -34,7 +34,7 @@ namespace Homework_22_Web.Data
         {
             var json = JsonConvert.SerializeObject(note);
             var content = new StringContent(json, Encoding.UTF8, "application/json");
-            await _httpClient.PostAsync(_apiUrl, content);
+            var result = await _httpClient.PostAsync(_apiUrl, content);
         }
 
         public async Task DeleteNoteAsync(int id)
@@ -46,7 +46,7 @@ namespace Homework_22_Web.Data
         {
             var json = JsonConvert.SerializeObject(note);
             var content = new StringContent(json, Encoding.UTF8, "application/json");
-            await _httpClient.PutAsync(_apiUrl, content);
+            var result = await _httpClient.PutAsync(_apiUrl, content);
         }
     }
 }

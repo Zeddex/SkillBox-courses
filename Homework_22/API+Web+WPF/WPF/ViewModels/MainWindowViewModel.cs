@@ -13,13 +13,11 @@ namespace Homework_22_WPF.ViewModels
 {
     public class MainWindowViewModel : ViewModel
     {
-        private readonly IDiaryData _data;
+        IDiaryData _data = new DiaryDataTest();
+        //IDiaryData _data = new DiaryDataApi();
 
         public MainWindowViewModel()
         {
-            _data = new DiaryDataTest();
-            //_data = new DiaryDataApi();
-
             IEnumerable<Note> allNotes = _data.AllNotes();
 
             NotesList = (ObservableCollection<Note>)allNotes;           // for test data
