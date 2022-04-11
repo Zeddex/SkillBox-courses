@@ -21,7 +21,7 @@ namespace Homework_22_Web.Data
         public async Task<IEnumerable<Note>> AllNotesAsync()
         {
             string json = await _httpClient.GetStringAsync(_apiUrl);
-            return JsonConvert.DeserializeObject<List<Note>>(json);
+            return JsonConvert.DeserializeObject<IEnumerable<Note>>(json);
         }
 
         public async Task<Note> GetNoteByIdAsync(int id)

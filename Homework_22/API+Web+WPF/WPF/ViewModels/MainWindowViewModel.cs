@@ -28,7 +28,11 @@ namespace Homework_22_WPF.ViewModels
         public MainWindowViewModel()
         {
             _data = new DiaryDataTest();
-            NotesList = (ObservableCollection<Note>)_data.AllNotes();
+            //_data = new DiaryDataApi();
+
+            IEnumerable<Note> allNotes = _data.AllNotes();
+            //NotesList = new ObservableCollection<Note>(allNotes);     // for api data
+            NotesList = (ObservableCollection<Note>)allNotes;           // for test data
         }
 
         private void RefreshView()
