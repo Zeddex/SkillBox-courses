@@ -26,27 +26,27 @@
         <ListView Grid.Row="0" Grid.Column="0" Grid.RowSpan="2" ItemsSource="{Binding NotesList}" SelectedItem="{Binding SelectedNote}">
             <ListView.View>
                 <GridView>
-                    <GridViewColumn Width="100" DisplayMemberBinding="{Binding Name}">
+                    <GridViewColumn Width="100" DisplayMemberBinding="{Binding Name, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" >
                         <GridViewColumn.Header>
                             <GridViewColumnHeader Tag="Name">Name</GridViewColumnHeader>
                         </GridViewColumn.Header>
                     </GridViewColumn>
-                    <GridViewColumn Width="100" DisplayMemberBinding="{Binding Surname}">
+                    <GridViewColumn Width="100" DisplayMemberBinding="{Binding Surname, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}">
                         <GridViewColumn.Header>
                             <GridViewColumnHeader Tag="Name">Surname</GridViewColumnHeader>
                         </GridViewColumn.Header>
                     </GridViewColumn>
-                    <GridViewColumn Width="100" DisplayMemberBinding="{Binding Phone}">
+                    <GridViewColumn Width="100" DisplayMemberBinding="{Binding Phone, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}">
                         <GridViewColumn.Header>
                             <GridViewColumnHeader Tag="Name">Phone</GridViewColumnHeader>
                         </GridViewColumn.Header>
                     </GridViewColumn>
-                    <GridViewColumn Width="180" DisplayMemberBinding="{Binding Address}">
+                    <GridViewColumn Width="180" DisplayMemberBinding="{Binding Address, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}">
                         <GridViewColumn.Header>
                             <GridViewColumnHeader Tag="Name">Address</GridViewColumnHeader>
                         </GridViewColumn.Header>
                     </GridViewColumn>
-                    <GridViewColumn Width="150" DisplayMemberBinding="{Binding Iban}">
+                    <GridViewColumn Width="150" DisplayMemberBinding="{Binding Iban, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}">
                         <GridViewColumn.Header>
                             <GridViewColumnHeader Tag="Name">IBAN</GridViewColumnHeader>
                         </GridViewColumn.Header>
@@ -80,7 +80,7 @@
                 <TextBlock Text="IBAN" Margin="5"/>
                 <TextBox Text="{Binding Iban}" Margin="5"/>
 
-                <Button Command="{Binding EditNoteCommand}" HorizontalAlignment="Left" Width="100" Margin="0, 20, 0, 0" Content="Save Changes"/>
+                <Button Command="{Binding UpdateNoteCommand}" HorizontalAlignment="Left" Width="100" Margin="0, 20, 0, 0" Content="Update Details"/>
                 <Button Command="{Binding AddNoteCommand}" HorizontalAlignment="Left" Width="100" Margin="0, 5, 0, 0" Content="Add Note"/>
                 <Button Command="{Binding ClearDetailsCommand}" HorizontalAlignment="Left" Width="100" Margin="0, 5, 0, 0" Content="Clear Details"/>
                 <Button Command="{Binding DeleteNoteCommand}" HorizontalAlignment="Left" Width="100" Margin="0, 5, 0, 0" Content="Delete Note"/>

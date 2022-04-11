@@ -1,9 +1,7 @@
 ﻿using System;
-using System.Windows;
 using System.Windows.Input;
 using System.Collections.Generic;
 using System.Linq;
-using System.Text;
 using System.Threading.Tasks;
 using System.Collections.ObjectModel;
 using Homework_22_WPF.Infrastructure.Commands;
@@ -17,54 +15,66 @@ namespace Homework_22_WPF.ViewModels
     {
         private readonly IDiaryData _data;
 
-        public ObservableCollection<Note> NotesList { get; set; }
-        public int Id { get; set; }
-        public string Name { get; set; }
-        public string Surname { get; set; }
-        public string Phone { get; set; }
-        public string Address { get; set; }
-        public string Iban { get; set; }
-
         public MainWindowViewModel()
         {
             _data = new DiaryDataTest();
             //_data = new DiaryDataApi();
 
             IEnumerable<Note> allNotes = _data.AllNotes();
-            //NotesList = new ObservableCollection<Note>(allNotes);     // for api data
+
             NotesList = (ObservableCollection<Note>)allNotes;           // for test data
+            //NotesList = new ObservableCollection<Note>(allNotes);     // for api data
         }
 
-        private void RefreshView()
+        #region Properties
+
+        private ObservableCollection<Note> _NotesList;
+        public ObservableCollection<Note> NotesList
         {
-            OnPropertyChanged(nameof(Name));
-            OnPropertyChanged(nameof(Surname));
-            OnPropertyChanged(nameof(Phone));
-            OnPropertyChanged(nameof(Address));
-            OnPropertyChanged(nameof(Iban));
+            get => _NotesList;
+            set => Set(ref _NotesList, value);
         }
 
-        private void ClearDetails()
+        private int _Id;
+        public int Id
         {
-            Name = string.Empty;
-            Surname = string.Empty;
-            Phone = string.Empty;
-            Address = string.Empty;
-            Iban = string.Empty;
+            get => _Id;
+            set => Set(ref _Id, value);
         }
 
-        private Note GetCurrentNote()
+        private string _Name;
+        public string Name
         {
-            var note = new Note();
+            get => _Name;
+            set => Set(ref _Name, value);
+        }
 
-            note.Id = Id;
-            note.Name = Name;
-            note.Surname = Surname;
-            note.Phone = Phone;
-            note.Address = Address;
-            note.Iban = Iban;
+        private string _Surname;
+        public string Surname
+        {
+            get => _Surname;
+            set => Set(ref _Surname, value);
+        }
 
-            return note;
+        private string _Phone;
+        public string Phone
+        {
+            get => _Phone;
+            set => Set(ref _Phone, value);
+        }
+
+        private string _Address;
+        public string Address
+        {
+            get => _Address;
+            set => Set(ref _Address, value);
+        }
+
+        private string _Iban;
+        public string Iban
+        {
+            get => _Iban;
+            set => Set(ref _Iban, value);
         }
 
         private Note _selectedNote;
@@ -91,10 +101,10 @@ namespace Homework_22_WPF.ViewModels
                 {
                     ClearDetails();
                 }
-
-                RefreshView();
             }
         }
+
+        #endregion
 
         #region Commands
 
@@ -104,18 +114,14 @@ namespace Homework_22_WPF.ViewModels
             var note = GetCurrentNote();
 
             _data.AddNote(note);
-
-            RefreshView();
         });
 
-        private readonly ICommand _editNoteCommand;
-        public ICommand EditNoteCommand => _editNoteCommand ?? new RelayCommand(() =>
+        private readonly ICommand _updateNoteCommand;
+        public ICommand UpdateNoteCommand => _updateNoteCommand ?? new RelayCommand(() =>
         {
             var note = GetCurrentNote();
 
             _data.UpdateNote(note);
-
-            RefreshView();
         });
 
         private readonly ICommand _clearDetailsCommand;
@@ -133,5 +139,28 @@ namespace Homework_22_WPF.ViewModels
         });
 
         #endregion
+
+        private void ClearDetails()
+        {
+            Name = string.Empty;
+            Surname = string.Empty;
+            Phone = string.Empty;
+            Address = string.Empty;
+            Iban = string.Empty;
+        }
+
+        private Note GetCurrentNote()
+        {
+            var note = new Note();
+
+            note.Id = Id;
+            note.Name = Name;
+            note.Surname = Surname;
+            note.Phone = Phone;
+            note.Address = Address;
+            note.Iban = Iban;
+
+            return note;
+        }
     }
 }
