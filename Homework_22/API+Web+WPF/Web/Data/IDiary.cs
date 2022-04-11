@@ -6,7 +6,7 @@ namespace Homework_22_Web.Data
 {
     public interface IDiary
     {
-        Task<List<Note>> AllNotesAsync();
+        Task<IEnumerable<Note>> AllNotesAsync();
 
         Task<Note> GetNoteByIdAsync(int id);
 
