@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Collections.ObjectModel;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -10,7 +11,7 @@ using Homework_22_WPF.Models;
 
 namespace Homework_22_WPF.Data
 {
-    public class DiaryDataApi : IDiaryDataAsync
+    public class DiaryDataApi : IDiaryData
     {
         private readonly HttpClient _httpClient;
         private const string _apiUrl = @"http://localhost:41444/api/diary";
@@ -20,35 +21,35 @@ namespace Homework_22_WPF.Data
             _httpClient = new HttpClient();
         }
 
-        public async Task<IEnumerable<Note>> AllNotesAsync()
+        public IEnumerable<Note> AllNotes()
         {
-            string json = await _httpClient.GetStringAsync(_apiUrl);
-            return JsonConvert.DeserializeObject<List<Note>>(json);
+            string json = _httpClient.GetStringAsync(_apiUrl).Result;
+            return JsonConvert.DeserializeObject<IEnumerable<Note>>(json);
         }
 
-        public async Task<Note> GetNoteByIdAsync(int id)
+        public Note GetNoteById(int id)
         {
-            string json = await _httpClient.GetStringAsync(_apiUrl + $"/{id}");
+            string json = _httpClient.GetStringAsync(_apiUrl + $"/{id}").Result;
             return JsonConvert.DeserializeObject<Note>(json);
         }
 
-        public async Task AddNoteAsync(Note note)
+        public void AddNote(Note note)
         {
             var json = JsonConvert.SerializeObject(note);
             var content = new StringContent(json, Encoding.UTF8, "application/json");
-            await _httpClient.PostAsync(_apiUrl, content);
+            _ = _httpClient.PostAsync(_apiUrl, content).Result;
         }
 
-        public async Task DeleteNoteAsync(int id)
+        public void DeleteNote(int id)
         {
-            await _httpClient.DeleteAsync(_apiUrl + $"/{id}");
+            _ = _httpClient.DeleteAsync(_apiUrl + $"/{id}").Result;
         }
 
-        public async Task UpdateNoteAsync(Note note)
+        public void UpdateNote(Note note)
         {
             var json = JsonConvert.SerializeObject(note);
             var content = new StringContent(json, Encoding.UTF8, "application/json");
-            await _httpClient.PutAsync(_apiUrl, content);
+            _ = _httpClient.PutAsync(_apiUrl, content).Result;
         }
     }
 }

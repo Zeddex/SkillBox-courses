@@ -32,32 +32,15 @@ namespace Homework_22_WPF.Data
             return data;
         }
 
-        public async Task<IEnumerable<Note>> AllNotesAsync()
-        {
-            var data = await Task.Run(() => AllNotes());
-
-            return data;
-        }
-
         public Note GetNoteById(int id)
         {
             var note = data.FirstOrDefault(x => x.Id == id);
             return note;
         }
 
-        public async Task<Note> GetNoteByIdAsync(int id)
-        {
-            return await Task.Run(() => GetNoteById(id));
-        }
-
         public void AddNote(Note note)
         {
             data.Add(note);
-        }
-
-        public async Task AddNoteAsync(Note note)
-        {
-            await Task.Run(() => AddNote(note));
         }
 
         public void DeleteNote(int id)
@@ -66,11 +49,6 @@ namespace Homework_22_WPF.Data
 
             if (note != null)
                 data.Remove(note);
-        }
-
-        public async Task DeleteNoteAsync(int id)
-        {
-            await Task.Run(() => DeleteNote(id));
         }
 
         public void UpdateNote(Note note)
@@ -82,11 +60,6 @@ namespace Homework_22_WPF.Data
                 int noteIndex = data.IndexOf(currentNote);
                 data[noteIndex] = note;
             }
-        }
-
-        public async Task UpdateNoteAsync(Note note)
-        {
-            await Task.Run(() => UpdateNote(note));
         }
     }
 }
