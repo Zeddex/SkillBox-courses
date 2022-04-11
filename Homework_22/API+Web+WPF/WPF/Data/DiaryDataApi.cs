@@ -37,19 +37,19 @@ namespace Homework_22_WPF.Data
         {
             var json = JsonConvert.SerializeObject(note);
             var content = new StringContent(json, Encoding.UTF8, "application/json");
-            _ = _httpClient.PostAsync(_apiUrl, content).Result;
+            var result = _httpClient.PostAsync(_apiUrl, content).Result;
         }
 
         public void DeleteNote(int id)
         {
-            _ = _httpClient.DeleteAsync(_apiUrl + $"/{id}").Result;
+            var result = _httpClient.DeleteAsync(_apiUrl + $"/{id}").Result;
         }
 
         public void UpdateNote(Note note)
         {
             var json = JsonConvert.SerializeObject(note);
             var content = new StringContent(json, Encoding.UTF8, "application/json");
-            _ = _httpClient.PutAsync(_apiUrl, content).Result;
+            var result = _httpClient.PutAsync(_apiUrl, content).Result;
         }
     }
 }
