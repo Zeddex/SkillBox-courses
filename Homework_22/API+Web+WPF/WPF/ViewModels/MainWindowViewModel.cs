@@ -8,6 +8,7 @@ using Homework_22_WPF.Infrastructure.Commands;
 using Homework_22_WPF.Models;
 using Homework_22_WPF.Data;
 using Homework_22_WPF.Data.Interfaces;
+using Homework_22_WPF.Infrastructure.Extensions;
 
 namespace Homework_22_WPF.ViewModels
 {
@@ -18,61 +19,62 @@ namespace Homework_22_WPF.ViewModels
 
         public MainWindowViewModel()
         {
-            IEnumerable<Note> allNotes = _data.AllNotes();
+            NotesList = (ObservableCollection<Note>)_data.AllNotes();
 
-            NotesList = (ObservableCollection<Note>)allNotes;           // for test data
-            //NotesList = new ObservableCollection<Note>(allNotes);     // for api data
+            //IEnumerable<Note> allNotes = _data.AllNotes();
+            //NotesList = (ObservableCollection<Note>)allNotes;
+
         }
 
         #region Properties
 
-        private ObservableCollection<Note> _NotesList;
+        private ObservableCollection<Note> _notesList;
         public ObservableCollection<Note> NotesList
         {
-            get => _NotesList;
-            set => Set(ref _NotesList, value);
+            get => _notesList;
+            set => Set(ref _notesList, value);
         }
 
-        private int _Id;
+        private int _id;
         public int Id
         {
-            get => _Id;
-            set => Set(ref _Id, value);
+            get => _id;
+            set => Set(ref _id, value);
         }
 
-        private string _Name;
+        private string _name;
         public string Name
         {
-            get => _Name;
-            set => Set(ref _Name, value);
+            get => _name;
+            set => Set(ref _name, value);
         }
 
-        private string _Surname;
+        private string _surname;
         public string Surname
         {
-            get => _Surname;
-            set => Set(ref _Surname, value);
+            get => _surname;
+            set => Set(ref _surname, value);
         }
 
-        private string _Phone;
+        private string _phone;
         public string Phone
         {
-            get => _Phone;
-            set => Set(ref _Phone, value);
+            get => _phone;
+            set => Set(ref _phone, value);
         }
 
-        private string _Address;
+        private string _address;
         public string Address
         {
-            get => _Address;
-            set => Set(ref _Address, value);
+            get => _address;
+            set => Set(ref _address, value);
         }
 
-        private string _Iban;
+        private string _iban;
         public string Iban
         {
-            get => _Iban;
-            set => Set(ref _Iban, value);
+            get => _iban;
+            set => Set(ref _iban, value);
         }
 
         private Note _selectedNote;
@@ -134,6 +136,12 @@ namespace Homework_22_WPF.ViewModels
         {
             if (SelectedNote != null)
                 _data.DeleteNote(SelectedNote.Id);
+        });
+
+        private readonly ICommand _debugCommand;
+        public ICommand DebugCommand => _debugCommand ?? new RelayCommand(() =>
+        {
+            var testNotesList = _notesList;
         });
 
         #endregion

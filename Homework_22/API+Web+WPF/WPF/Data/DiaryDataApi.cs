@@ -8,6 +8,7 @@ using System.Net.Http;
 using Newtonsoft.Json;
 using Homework_22_WPF.Data.Interfaces;
 using Homework_22_WPF.Models;
+using Homework_22_WPF.Infrastructure.Extensions;
 
 namespace Homework_22_WPF.Data
 {
@@ -24,7 +25,8 @@ namespace Homework_22_WPF.Data
         public IEnumerable<Note> AllNotes()
         {
             string json = _httpClient.GetStringAsync(_apiUrl).Result;
-            return JsonConvert.DeserializeObject<IEnumerable<Note>>(json);
+            var notes = JsonConvert.DeserializeObject<IEnumerable<Note>>(json).ToObservableCollection();
+            return notes;
         }
 
         public Note GetNoteById(int id)
