@@ -84,7 +84,6 @@
                 <Button Command="{Binding AddNoteCommand}" HorizontalAlignment="Left" Width="100" Margin="0, 5, 0, 0" Content="Add Note"/>
                 <Button Command="{Binding ClearDetailsCommand}" HorizontalAlignment="Left" Width="100" Margin="0, 5, 0, 0" Content="Clear Details"/>
                 <Button Command="{Binding DeleteNoteCommand}" HorizontalAlignment="Left" Width="100" Margin="0, 5, 0, 0" Content="Delete Note"/>
-                <Button Command="{Binding DebugCommand}" HorizontalAlignment="Left" Width="100" Margin="0, 5, 0, 0" Content="Debug"/>
             </StackPanel>
         </ListBox>
     </Grid>
