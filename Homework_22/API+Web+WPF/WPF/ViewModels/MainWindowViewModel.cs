@@ -20,9 +20,6 @@ namespace Homework_22_WPF.ViewModels
         public MainWindowViewModel()
         {
             NotesList = (ObservableCollection<Note>)_data.AllNotes();
-
-            //IEnumerable<Note> allNotes = _data.AllNotes();
-            //NotesList = (ObservableCollection<Note>)allNotes;
         }
 
         #region Properties
@@ -111,16 +108,18 @@ namespace Homework_22_WPF.ViewModels
         public ICommand AddNoteCommand => _addNoteCommand ?? new RelayCommand(() =>
         {
             var note = GetCurrentNote();
-
             _data.AddNote(note);
+
+            RefreshData();
         });
 
         private readonly ICommand _updateNoteCommand;
         public ICommand UpdateNoteCommand => _updateNoteCommand ?? new RelayCommand(() =>
         {
             var note = GetCurrentNote();
-
             _data.UpdateNote(note);
+
+            RefreshData();
         });
 
         private readonly ICommand _clearDetailsCommand;
@@ -135,6 +134,8 @@ namespace Homework_22_WPF.ViewModels
         {
             if (SelectedNote != null)
                 _data.DeleteNote(SelectedNote.Id);
+
+            RefreshData();
         });
 
         #endregion
@@ -160,6 +161,11 @@ namespace Homework_22_WPF.ViewModels
             note.Iban = Iban;
 
             return note;
+        }
+
+        private void RefreshData()      // workaround for api mode
+        {
+            NotesList = (ObservableCollection<Note>)_data.AllNotes();
         }
     }
 }
