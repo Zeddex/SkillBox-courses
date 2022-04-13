@@ -23,7 +23,6 @@ namespace Homework_22_WPF.ViewModels
 
             //IEnumerable<Note> allNotes = _data.AllNotes();
             //NotesList = (ObservableCollection<Note>)allNotes;
-
         }
 
         #region Properties
@@ -136,12 +135,6 @@ namespace Homework_22_WPF.ViewModels
         {
             if (SelectedNote != null)
                 _data.DeleteNote(SelectedNote.Id);
-        });
-
-        private readonly ICommand _debugCommand;
-        public ICommand DebugCommand => _debugCommand ?? new RelayCommand(() =>
-        {
-            var testNotesList = _notesList;
         });
 
         #endregion
