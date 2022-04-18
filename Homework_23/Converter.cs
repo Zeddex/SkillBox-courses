@@ -1,6 +1,4 @@
-﻿using System.Globalization;
-
-public static class Converter
+﻿public static class Converter
 {
     public static double StringToDouble(string str)
     {
@@ -14,7 +12,7 @@ public static class Converter
         double number = integer + fraction;
 
         if (isNegative)
-            number = number * -1;
+            number *= -1;
 
         return number;
     }
@@ -99,6 +97,5 @@ public static class Converter
 
         return result;
     }
-
 }
 
